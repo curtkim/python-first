@@ -45,11 +45,8 @@ def test_write_read():
 def test_schemaless_write_read():
     new_file = MemoryIO()
     fastavro.schemaless_writer(new_file, parsed_schema, records[0])
-    new_file.seek(0)
 
-    # bytes로 변환?
     new_file.seek(0)
-
     new_record = fastavro.schemaless_reader(new_file, parsed_schema)
     assert records[0] == new_record
 

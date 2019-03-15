@@ -1,2 +1,3 @@
 fastavro==0.21.19
 pytest==4.3.1
+kafka-python==1.4.4

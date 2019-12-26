@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "pyside-first"
+version = "0.1.0"
+description = ""
+authors = ["curt <iamteri@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+rx = "^3.0.1"
+PyQt5 = "5.13.1"
+PyQt5-stubs = "5.13.1.3"
+PyOpenGL = "^3.1.4"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"

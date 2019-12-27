@@ -5,9 +5,38 @@ from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
 
-cubeVertices = ((1,1,1),(1,1,-1),(1,-1,-1),(1,-1,1),(-1,1,1),(-1,-1,-1),(-1,-1,1),(-1,1,-1))
-cubeEdges = ((0,1),(0,3),(0,4),(1,2),(1,7),(2,5),(2,3),(3,6),(4,6),(4,7),(5,6),(5,7))
-cubeQuads = ((0,3,6,4),(2,5,6,3),(1,2,5,7),(1,0,4,7),(7,4,6,5),(2,3,0,1))
+cubeVertices = (
+    (1,1,1),
+    (1,1,-1),
+    (1,-1,-1),
+    (1,-1,1),
+    (-1,1,1),
+    (-1,-1,-1),
+    (-1,-1,1),
+    (-1,1,-1)
+)
+cubeEdges = (
+    (0,1),
+    (0,3),
+    (0,4),
+    (1,2),
+    (1,7),
+    (2,5),
+    (2,3),
+    (3,6),
+    (4,6),
+    (4,7),
+    (5,6),
+    (5,7)
+)
+cubeQuads = (
+    (0,3,6,4),
+    (2,5,6,3),
+    (1,2,5,7),
+    (1,0,4,7),
+    (7,4,6,5),
+    (2,3,0,1)
+)
 
 def wireCube():
     glBegin(GL_LINES)
@@ -40,8 +69,8 @@ def main():
 
         glRotatef(1, 1, 1, 1)
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
-        solidCube()
-        #wireCube()
+        #solidCube()
+        wireCube()
         pg.display.flip()
         pg.time.wait(10)
 

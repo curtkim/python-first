@@ -1,3 +1,4 @@
+#https://github.com/ReactiveX/RxPY/blob/master/examples/chess/chess.py
 import sys
 from os.path import dirname, join
 
@@ -7,10 +8,6 @@ from rx import operators as ops
 from rx.subject import Subject
 from rx.scheduler.mainloop import PyGameScheduler
 
-
-#FORMAT = '%(asctime)-15s %(threadName)s %(message)s'
-#logging.basicConfig(format=FORMAT, level=logging.DEBUG)
-#log = logging.getLogger('Rx')
 
 def main():
     pygame.init()
@@ -23,10 +20,6 @@ def main():
     background = pygame.Surface(screen.get_size())
     background.fill(black)             # fill the background black
     background = background.convert()  # prepare for faster blitting
-
-    scheduler = PyGameScheduler(pygame)
-
-    mousemove = Subject()
 
     color = "white"
     base = dirname(__file__)
@@ -42,32 +35,39 @@ def main():
     ]]
     images = [pygame.image.load(image).convert_alpha() for image in files]
 
-    old = [None] * len(images)
-    draw = []
-    erase = []
+    def accumulator(acc, ev):
+        new_arr = []
+        for i, rect in enumerate(acc):
+            new_rect = rect.copy()
+            new_rect.top = ev[1]
+            new_rect.left = ev[0] + i * 32
+            new_arr.append(new_rect)
+        return new_arr
 
-    def handle_image(i, image):
-        imagerect = image.get_rect()
+    def on_error(err):
+        print("Got error: %s" % err)
+        sys.exit()
 
-        def on_next(ev):
-            imagerect.top = ev[1]
-            imagerect.left = ev[0] + i * 32
+    def render(arr_pair):
+        (erase, draw) = arr_pair #tuple destruction
+        for rect in erase:
+            screen.blit(background, (rect.x, rect.y), rect)
 
-            if old[i]:
-                erase.append(old[i])
-            old[i] = imagerect.copy()
-            draw.append((image, imagerect.copy()))
+        for idx, rect in enumerate(draw):
+            screen.blit(images[idx], rect)
 
-        def on_error(err):
-            print("Got error: %s" % err)
-            sys.exit()
+        pygame.display.update(erase+draw)
+        pygame.display.flip()
 
-        mousemove.pipe(
-            ops.delay(0.1 * i, scheduler=scheduler)
-        ).subscribe(on_next, on_error=on_error)
+    scheduler = PyGameScheduler(pygame)
+    mousemove = Subject()
 
-    for i, image in enumerate(images):
-        handle_image(i, image)
+    mousemove.pipe(
+        #ops.delay(0.1 * i, scheduler=scheduler),
+        ops.scan(accumulator, [image.get_rect() for image in images]),
+        ops.pairwise(),
+        ops.observe_on(scheduler)
+    ).subscribe(render, on_error)
 
     while True:
         for event in pygame.event.get():
@@ -76,21 +76,6 @@ def main():
                 mousemove.on_next(pos)
             elif event.type == pygame.QUIT:
                 sys.exit()
-
-        if len(draw):
-            update = []
-            for rect in erase:
-                screen.blit(background, (rect.x, rect.y), rect)
-                update.append(rect)
-
-            for image, rect in draw:
-                screen.blit(image, rect)
-                update.append(rect)
-
-            pygame.display.update(update)
-            pygame.display.flip()
-            draw = []
-            erase = []
 
         scheduler.run()
 

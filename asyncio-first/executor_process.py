@@ -2,6 +2,8 @@ import concurrent.futures
 import math
 import threading
 import time
+import os
+
 
 PRIMES = [
     112272535095293,
@@ -12,7 +14,7 @@ PRIMES = [
     1099726899285419]
 
 def is_prime(n):
-    print(threading.get_ident())
+    print(os.getpid(), threading.get_ident())
 
     if n < 2:
         return False
@@ -41,14 +43,12 @@ def main():
         end = time.perf_counter() - start
         print(f"---> (took {end:0.2f} seconds).")
 
-    '''
     start = time.perf_counter()
     with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
         for number, prime in zip(PRIMES, executor.map(is_prime, PRIMES)):
             print('[%s] %d is prime: %s' % (threading.get_ident(), number, prime))
     end = time.perf_counter() - start
     print(f"---> (took {end:0.2f} seconds).")
-    '''
 
 if __name__ == '__main__':
     main()

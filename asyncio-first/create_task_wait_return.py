@@ -28,6 +28,9 @@ if __name__ == "__main__":
         loop.set_debug(1)
         d1, d2, d3 = loop.run_until_complete(main())
         print(d1.result())
+        print(d2.result())
+        print(d3.result())
+
     except Exception as e:
         # logging...etc
         pass

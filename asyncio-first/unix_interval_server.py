@@ -1,11 +1,16 @@
 import asyncio
+import numpy as np
 
 i = 0
 
 async def handle_interval(reader, writer):
     global  i
     while(i < 100):
-        writer.write(str(i).encode())
+        a = np.empty([2, 2], dtype=np.uint8)
+        a.fill(i)
+        print(a.shape)
+        writer.write(a.tobytes('C'))
+        #writer.write(str(i).encode())
         await writer.drain()
         i += 1
         await asyncio.sleep(1)

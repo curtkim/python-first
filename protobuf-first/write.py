@@ -1,5 +1,4 @@
 from google.protobuf.internal.encoder import _VarintBytes
-from google.protobuf.internal.decoder import _DecodeVarint32
 
 import metric_pb2
 

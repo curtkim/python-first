@@ -1,6 +1,6 @@
 ## howto
 
-    download_model_binary.py models/bvlc_reference_caffenet
+    ./download_model_binary.py models/bvlc_reference_caffenet
     docker run --gpus all -v $(pwd):/workspace -it bvlc/caffe:gpu python test.py
 
     281

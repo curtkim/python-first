@@ -932,7 +932,7 @@ def game_loop(args):
     try:
         client = carla.Client(args.host, args.port)
         client.set_timeout(2.0)
-        client.generate_opendrive_world('Town04.xodr')
+        client.load_world("/Game/Carla/Maps/Town01")
 
         display = pygame.display.set_mode(
             (args.width, args.height),
@@ -949,7 +949,7 @@ def game_loop(args):
             if controller.parse_events(client, world, clock):
                 return
             wp = map.get_waypoint(world.player.get_location())
-            print(wp.road_id, wp.s, world.player.get_transform().rotation)
+            #print(wp.road_id, wp.s, world.player.get_transform().rotation)
             
 
             world.tick(clock)

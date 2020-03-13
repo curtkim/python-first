@@ -67,7 +67,7 @@ class Camera():
         self.build_projection()
 
         #self._camera_position = Vector3([0.0, 0.0, -40.0])
-        self._camera_position = Vector3([-10.0, 0.0, 2.0])
+        self._camera_position = Vector3([-10.0, 0.0, -5.0])
         #self._camera_front = Vector3([0.0, 0.0, 1.0])
         self._camera_front = Vector3([1.0, 0.0, 0.0])
         self._camera_up = Vector3([0.0, 0.0, -1.0])
@@ -147,7 +147,7 @@ class PerspectiveProjection(Example):
                 out vec4 frag_color;
 
                 void main() {
-                    frag_color = mix(vec4(0.0, 0.0, 1.0, 1.0), vec4(0.0, 1.0, 0.0, 1.0), in_vert.z);
+                    frag_color = mix(vec4(0.0, 0.0, 1.0, 1.0), vec4(0.0, 1.0, 0.0, 1.0), abs(sin(in_vert.z)));
                     gl_Position = Mvp * vec4(in_vert, 1.0);
                 }
             ''',
@@ -235,6 +235,8 @@ class PerspectiveProjection(Example):
 
         self.mvp.write((self.camera.mat_projection * self.camera.mat_lookat).astype('f4').tobytes())
         self.vao.render(moderngl.POINTS)
+
+        #print(time, frame_time)
 
 
 if __name__ == '__main__':

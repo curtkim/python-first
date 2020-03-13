@@ -46,7 +46,9 @@ vao = ctx.simple_vertex_array(prog, vbo, 'in_vert', 'in_color')
 fbo = ctx.simple_framebuffer((512, 512))
 fbo.use()
 fbo.clear(0.0, 0.0, 0.0, 1.0)
-vao.render(moderngl.LINE_STRIP)
+#vao.render(moderngl.LINE_STRIP)
+ctx.point_size = 10
+vao.render(moderngl.POINTS)
 
 Image.frombytes('RGB', fbo.size, fbo.read(), 'raw', 'RGB', 0, -1).show()
 

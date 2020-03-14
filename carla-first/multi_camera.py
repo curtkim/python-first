@@ -6,6 +6,7 @@
 import glob
 import os
 import sys
+import threading
 
 try:
     sys.path.append(glob.glob('../carla/dist/carla-*%d.%d-%s.egg' % (
@@ -36,41 +37,6 @@ import weakref
 
 try:
     import pygame
-    from pygame.locals import KMOD_CTRL
-    from pygame.locals import KMOD_SHIFT
-    from pygame.locals import K_0
-    from pygame.locals import K_9
-    from pygame.locals import K_BACKQUOTE
-    from pygame.locals import K_BACKSPACE
-    from pygame.locals import K_COMMA
-    from pygame.locals import K_DOWN
-    from pygame.locals import K_ESCAPE
-    from pygame.locals import K_F1
-    from pygame.locals import K_LEFT
-    from pygame.locals import K_PERIOD
-    from pygame.locals import K_RIGHT
-    from pygame.locals import K_SLASH
-    from pygame.locals import K_SPACE
-    from pygame.locals import K_TAB
-    from pygame.locals import K_UP
-    from pygame.locals import K_a
-    from pygame.locals import K_c
-    from pygame.locals import K_g
-    from pygame.locals import K_d
-    from pygame.locals import K_h
-    from pygame.locals import K_m
-    from pygame.locals import K_n
-    from pygame.locals import K_p
-    from pygame.locals import K_q
-    from pygame.locals import K_r
-    from pygame.locals import K_s
-    from pygame.locals import K_w
-    from pygame.locals import K_l
-    from pygame.locals import K_i
-    from pygame.locals import K_z
-    from pygame.locals import K_x
-    from pygame.locals import K_MINUS
-    from pygame.locals import K_EQUALS
 except ImportError:
     raise RuntimeError('cannot import pygame, make sure pygame package is installed')
 
@@ -90,8 +56,6 @@ def game_loop(args):
     pygame.font.init()
     world = None
     actor_list = []
-
-    #surfaces = [None, None, None, None, None, None, None, None]
 
     UNIT_WIDTH = args.width / 3
     UNIT_HEIGHT = args.height / 3
@@ -122,7 +86,7 @@ def game_loop(args):
         vehicle.set_autopilot(True)
         actor_list.append(vehicle)
 
-        def make_listener(config):
+        def make_listener(config, idx):
             def callback(image):
                 image.convert(cc.Raw)
                 array = np.frombuffer(image.raw_data, dtype=np.dtype("uint8"))
@@ -130,6 +94,7 @@ def game_loop(args):
                 array = array[:, :, :3]
                 array = array[:, :, ::-1]
                 config[3] = pygame.surfarray.make_surface(array.swapaxes(0, 1))
+                print(f"idx={idx} {threading.get_ident()}")
             return callback
 
         for i, config in enumerate(CAMERA_CONFIGS):
@@ -142,7 +107,7 @@ def game_loop(args):
             rgb_camera = world.spawn_actor(rgb_bp, config[0], attach_to=vehicle)
             actor_list.append(rgb_camera)
             print('created %s %d' % (rgb_camera.type_id, i))
-            rgb_camera.listen(make_listener(config))
+            rgb_camera.listen(make_listener(config, i))
 
 
         display = pygame.display.set_mode(

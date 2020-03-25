@@ -508,8 +508,8 @@ class World(object):
 
         # Create Surfaces
         self.map_image = MapImage(
-            carla_world=self.world,
             carla_map=self.town_map,
+            actors=self.world.get_actors(),
             pixels_per_meter=Constants.PIXELS_PER_METER,
             show_triggers=self.args.show_triggers,
             show_connections=self.args.show_connections,

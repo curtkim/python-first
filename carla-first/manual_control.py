@@ -932,7 +932,14 @@ def game_loop(args):
     try:
         client = carla.Client(args.host, args.port)
         client.set_timeout(2.0)
-        client.load_world("/Game/Carla/Maps/Town01")
+        
+        if args.opendrive:
+            print(f"load opendrive file({args.opendrive})")
+            with open(args.opendrive, 'r') as xodr_file:
+                xodr = xodr_file.read()
+                client.generate_opendrive_world(xodr)
+        else:
+            client.load_world("/Game/Carla/Maps/Town01")
 
         display = pygame.display.set_mode(
             (args.width, args.height),
@@ -1015,6 +1022,10 @@ def main():
         default=2.2,
         type=float,
         help='Gamma correction of the camera (default: 2.2)')
+    argparser.add_argument(
+        '-od', '--opendrive',
+        help='opendrive map file')
+
     args = argparser.parse_args()
 
     args.width, args.height = [int(x) for x in args.res.split('x')]

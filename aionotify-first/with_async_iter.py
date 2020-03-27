@@ -8,11 +8,6 @@ async def aiter(watcher):
         yield event
 
 
-async def run(loop, watcher):
-    async for event in aiter(loop, watcher):
-        print(event)
-
-
 async def main(loop):
     # Setup the watcher
     watcher = aionotify.Watcher()

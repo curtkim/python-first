@@ -1,7 +1,4 @@
-# ==============================================================================
-# -- find carla module ---------------------------------------------------------
-# ==============================================================================
-
+# carla - moderngl - pygame
 
 import glob
 import os
@@ -33,6 +30,15 @@ import math
 import random
 import re
 import weakref
+
+import rx
+from rx import operators as ops
+from rx.scheduler.mainloop import PyGameScheduler
+
+import moderngl
+from pyrr import Matrix44, Quaternion, Vector3, vector
+
+from camera import Camera
 
 try:
     import pygame
@@ -80,94 +86,32 @@ except ImportError:
     raise RuntimeError('cannot import numpy, make sure numpy package is installed')
 
 
-class Camera():
+def lidar_carla2numpy(measurement):
+    array = np.frombuffer(measurement.raw_data, dtype=np.dtype("float32"))
+    return np.reshape(array, (-1, 3))
 
-    def __init__(self, ratio):
-        self._zoom_step = 0.1
-        self._move_vertically = 0.1
-        self._move_horizontally = 0.1
-        self._rotate_horizontally = 0.1
-        self._rotate_vertically = 0.1
 
-        self._field_of_view_degrees = 60.0
-        self._z_near = 0.1
-        self._z_far = 100
-        self._ratio = ratio
-        self.build_projection()
+def from_sensor(sensor):
+    def subscribe(observer, scheduler):
+        def callback(measurement):
+            #print('from_sensor', idx, threading.get_ident())
+            observer.on_next(lidar_carla2numpy(measurement))
+        sensor.listen(callback)
 
-        #self._camera_position = Vector3([0.0, 0.0, -40.0])
-        self._camera_position = Vector3([-10.0, 0.0, -5.0])
-        #self._camera_front = Vector3([0.0, 0.0, 1.0])
-        self._camera_front = Vector3([1.0, 0.0, 0.0])
-        self._camera_up = Vector3([0.0, 0.0, -1.0])
-        self._cameras_target = (self._camera_position + self._camera_front)
-        self.build_look_at()
+    return rx.create(subscribe)
 
-    def zoom_in(self):
-        self._field_of_view_degrees = self._field_of_view_degrees - self._zoom_step
-        self.build_projection()
-
-    def zoom_out(self):
-        self._field_of_view_degrees = self._field_of_view_degrees + self._zoom_step
-        self.build_projection()
-
-    def move_forward(self):
-        self._camera_position = self._camera_position + self._camera_front * self._move_horizontally
-        self.build_look_at()
-
-    def move_backwards(self):
-        self._camera_position = self._camera_position - self._camera_front * self._move_horizontally
-        self.build_look_at()
-
-    def strafe_left(self):
-        self._camera_position = self._camera_position - vector.normalize(self._camera_front ^ self._camera_up) * self._move_horizontally
-        self.build_look_at()
-
-    def strafe_right(self):
-        self._camera_position = self._camera_position + vector.normalize(self._camera_front ^ self._camera_up) * self._move_horizontally
-        self.build_look_at()
-
-    def strafe_up(self):
-        self._camera_position = self._camera_position + self._camera_up * self._move_vertically
-        self.build_look_at()
-
-    def strafe_down(self):
-        self._camera_position = self._camera_position - self._camera_up * self._move_vertically
-        self.build_look_at()
-
-    def rotate_left(self):
-        rotation = Quaternion.from_y_rotation(2 * float(self._rotate_horizontally) * np.pi / 180)
-        self._camera_front = rotation * self._camera_front
-        self.build_look_at()
-
-    def rotate_right(self):
-        rotation = Quaternion.from_y_rotation(-2 * float(self._rotate_horizontally) * np.pi / 180)
-        self._camera_front = rotation * self._camera_front
-        self.build_look_at()
-
-    def build_look_at(self):
-        self._cameras_target = (self._camera_position + self._camera_front)
-        self.mat_lookat = Matrix44.look_at(
-            self._camera_position,
-            self._cameras_target,
-            self._camera_up)
-
-    def build_projection(self):
-        self.mat_projection = Matrix44.perspective_projection(
-            self._field_of_view_degrees,
-            self._ratio,
-            self._z_near,
-            self._z_far)
 
 
 # ==============================================================================
 # -- game_loop() ---------------------------------------------------------------
 # ==============================================================================
 
-
 def game_loop(args):
     pygame.init()
     pygame.font.init()
+
+    scheduler = PyGameScheduler(pygame)
+
     world = None
     actor_list = []
 
@@ -196,27 +140,70 @@ def game_loop(args):
         actor_list.append(lidar_sensor)
         print('created %s' % lidar_sensor.type_id)
 
-        def lidar_callback(measurement):
-            print(f"frame={measurement.frame} horizontal_angle={measurement.horizontal_angle} {measurement.get_point_count(1)} {len(measurement.raw_data)}")
-            array = np.frombuffer(measurement.raw_data, dtype=np.dtype("float32"))
-            xyz = np.reshape(array, (-1, 3))
-
-
-        lidar_sensor.listen(lidar_callback)
-
 
         display = pygame.display.set_mode(
             (args.width, args.height),
-            pygame.HWSURFACE | pygame.DOUBLEBUF)
+            pygame.OPENGL | pygame.DOUBLEBUF)
 
-        
-        clock = pygame.time.Clock()
-        while True:
-            clock.tick_busy_loop(60)            
-            for i, config in enumerate(CAMERA_CONFIGS):
-                if config[3]:
-                    display.blit(config[3], config[2])
+        lidar_obs = from_sensor(lidar_sensor)
+
+        ctx = moderngl.create_context()
+        prog = ctx.program(
+            vertex_shader='''
+                #version 330
+                uniform mat4 Mvp;
+
+                in vec3 in_vert;
+                out vec4 frag_color;
+                void main() {
+                    frag_color = mix(vec4(0.0, 0.0, 1.0, 1.0), vec4(0.0, 1.0, 0.0, 1.0), abs(sin(in_vert.z)));
+                    gl_Position = Mvp * vec4(in_vert, 1.0);
+                }
+            ''',
+            fragment_shader='''
+                #version 330
+                in vec4 frag_color;
+                out vec4 f_color;
+                void main() {
+                    f_color = frag_color;
+                    //f_color = vec4(0.1, 0.1, 0.1, 1.0);
+                }
+            ''',
+        )
+        mvp = prog['Mvp']
+
+        camera = Camera(args.width / args.height)
+
+
+        def lidar_draw(params):
+            frame = params[0]
+            xyz = params[1]
+
+            ctx.clear(1.0, 1.0, 1.0)
+            ctx.enable(moderngl.DEPTH_TEST)
+
+            vbo = ctx.buffer(xyz.astype('f4').tobytes())
+            vao = ctx.simple_vertex_array(prog, vbo, 'in_vert')
+            mvp.write((camera.mat_projection * camera.mat_lookat).astype('f4').tobytes())
+            vao.render(moderngl.POINTS)
+
             pygame.display.flip()
+
+
+        rx.interval(0.033).pipe(
+            ops.with_latest_from(lidar_obs),
+            ops.observe_on(scheduler),
+        ).subscribe(lidar_draw)
+
+        clock = pygame.time.Clock()
+        running = True
+        while running:
+            clock.tick_busy_loop(60)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+            scheduler.run()
+
 
     finally:
         print('destroying actors')
@@ -263,8 +250,8 @@ def main():
     argparser.add_argument(
         '--res',
         metavar='WIDTHxHEIGHT',
-        default='2100x2100',
-        help='window resolution (default: 2100x2100)')
+        default='1920x1600',
+        help='window resolution (default: 1920x1600)')
     argparser.add_argument(
         '--filter',
         metavar='PATTERN',

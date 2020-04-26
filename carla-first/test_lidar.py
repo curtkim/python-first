@@ -6,15 +6,16 @@ import carla
 import random
 import time
 
-
+# o3d를 통해서 load하고 ply로 저장
 def main():
     actor_list = []
 
     try:
         client = carla.Client('localhost', 2000)
         client.set_timeout(2.0)
-        world = client.get_world()
+        client.load_world("/Game/Carla/Maps/Town04")
 
+        world = client.get_world()
         blueprint_library = world.get_blueprint_library()
         bp = random.choice(blueprint_library.filter('vehicle'))
 

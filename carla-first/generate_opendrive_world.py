@@ -61,9 +61,9 @@ def game_loop(args):
         client = carla.Client(args.host, args.port)
         client.set_timeout(2.0)
 
-        #with open('Town01.xodr', 'r') as xodr_file:
-        #    xodr = xodr_file.read()
-        #    client.generate_opendrive_world(xodr)
+        with open('Town01.xodr', 'r') as xodr_file:
+            xodr = xodr_file.read()
+            client.generate_opendrive_world(xodr)
 
         world = client.get_world()
         map = world.get_map()

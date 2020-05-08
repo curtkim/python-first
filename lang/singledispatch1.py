@@ -1,3 +1,4 @@
+# https://rednafi.github.io/digressions/python/2020/04/05/python-singledispatch.html
 # single_dispatch.py
 from functools import singledispatch
 

@@ -1,0 +1,35 @@
+{
+  "type":"xviz/metadata",
+  "data":{
+    "version":"2.0.0",
+    "streams":{
+      "/points":{
+        "category":"PRIMITIVE",
+        "primitive_type":"POINT",
+        "stream_style":{"radius_pixels":6.0},
+        "coordinate":"VEHICLE_RELATIVE"
+      },
+      "/vehicle_pose":{
+        "category":"POSE"
+      },
+      "/ground_grid_v":{
+        "category":"PRIMITIVE",
+        "primitive_type":"POLYLINE",
+        "stream_style":{"stroke_color":[0,255,0,128],"stroke_width":0.200000003,"stroked":true},
+        "coordinate":"IDENTITY"
+      },
+      "/circle":{
+        "category":"PRIMITIVE",
+        "primitive_type":"CIRCLE",
+        "stream_style":{"fill_color":[200,0,70,128]},
+        "coordinate":"IDENTITY"
+      },
+      "/ground_grid_h":{
+        "category":"PRIMITIVE",
+        "primitive_type":"POLYLINE",
+        "stream_style":{"stroke_color":[0,255,0,128],"stroke_width":0.200000003,"stroked":true},
+        "coordinate":"IDENTITY"
+      }
+    }
+  }
+}

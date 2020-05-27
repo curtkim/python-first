@@ -3,6 +3,17 @@
   "data": {
     "version": "2.0.0",
     "streams": {
+      "/points": {
+        "category": "PRIMITIVE",
+        "primitive_type": "POINT",
+        "stream_style": {
+          "radius_pixels": 6.0
+        },
+        "coordinate": "VEHICLE_RELATIVE"
+      },
+      "/vehicle_pose": {
+        "category": "POSE"
+      },
       "/ground_grid_v": {
         "category": "PRIMITIVE",
         "primitive_type": "POLYLINE",
@@ -46,17 +57,14 @@
         },
         "coordinate": "IDENTITY"
       },
-      "/points": {
+      "/camera": {
         "category": "PRIMITIVE",
-        "primitive_type": "POINT",
-        "stream_style": {
-          "radius_pixels": 6.0
-        },
-        "coordinate": "VEHICLE_RELATIVE"
-      },
-      "/vehicle_pose": {
-        "category": "POSE"
+        "primitive_type": "IMAGE"
       }
+    },
+    "log_info" : {
+        "start_time": 1590560750.3628714,
+        "end_time": 1590560751.3628714
     }
   }
 }

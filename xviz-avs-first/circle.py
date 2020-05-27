@@ -9,6 +9,9 @@ import json
 import xviz_avs as xviz
 import xviz_avs.builder as xbuilder
 
+from PIL import Image
+import numpy as np
+
 DEG_1_AS_RAD = math.pi / 180
 DEG_90_AS_RAD = 90 * DEG_1_AS_RAD
 
@@ -55,6 +58,10 @@ class CircleScenario:
                 .stream_style({
                     'radius_pixels': 6
                 })
+            builder.stream("/camera")\
+                .category(xviz.CATEGORY.PRIMITIVE)\
+                .type(2)
+
             self._metadata = builder.get_message()
 
         return self._metadata
@@ -82,6 +89,9 @@ class CircleScenario:
         builder = xviz.XVIZBuilder(metadata=self._metadata)
         self._draw_pose(builder, timestamp)
         self._draw_grid(builder)
+
+        image = Image.open('cat.jpg')
+        self._put_image(builder, np.asarray(image))
         return builder.get_message()
 
     def get_message(self, time_offset):
@@ -91,6 +101,12 @@ class CircleScenario:
             'type': 'xviz/state_update',
             'data': data.to_object()
         }
+
+    def _put_image(self, builder, numpy_image):
+        builder \
+            .primitive("/camera") \
+            .image(numpy_image.tostring()) \
+            .dimensions(numpy_image.shape[0], numpy_image.shape[1])
 
     def _draw_pose(self, builder, timestamp):
         circumference = math.pi * self._radius * 2

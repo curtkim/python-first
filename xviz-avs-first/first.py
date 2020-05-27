@@ -3,7 +3,8 @@ from circle import CircleScenario
 
 scenario = CircleScenario(live=False)
 
-#, xi.XVIZGLBWriter(xi.DirectorySource("output_glb"))
+#writer = xi.XVIZProtobufWriter(xi.DirectorySource("output_pb"))
+#writer = xi.XVIZGLBWriter(xi.DirectorySource("output_glb"))
 writer = xi.XVIZJsonWriter(xi.DirectorySource("output"))
 writer.write_message(scenario.get_metadata_inner())
 writer.write_message(scenario.get_message_inner(0))

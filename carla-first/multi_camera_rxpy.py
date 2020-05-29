@@ -13,8 +13,12 @@ from rx import operators as ops
 from rx.scheduler.mainloop import PyGameScheduler
 
 
-WIDTH = 1920*2
-HEIGHT = 1200*2
+#WIDTH, HEIGHT = pygame.display.get_surface().get_size()
+#WIDTH = 1920 #*2
+#HEIGHT = 1200 #*2
+
+WIDTH = 2560
+HEIGHT = 1440
 
 UNIT_WIDTH = int(WIDTH / 3)
 UNIT_HEIGHT = int(HEIGHT / 3)
@@ -73,7 +77,7 @@ def main():
     try:
         pygame.init()
         pygame.font.init()
-        scheduler = PyGameScheduler(pygame)
+        pygame_scheduler = PyGameScheduler(pygame)
 
         display = pygame.display.set_mode(
             (WIDTH, HEIGHT),
@@ -110,7 +114,7 @@ def main():
 
         rx.interval(0.033).pipe(
             ops.with_latest_from(*image_obs),
-            ops.observe_on(scheduler),
+            ops.observe_on(pygame_scheduler),
         ).subscribe(grid_draw)
 
         clock = pygame.time.Clock()
@@ -120,7 +124,7 @@ def main():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
-            scheduler.run()
+            pygame_scheduler.run()
 
 
     finally:

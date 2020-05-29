@@ -182,6 +182,7 @@ def main():
         image_ob = from_sensor(sensor)
 
         def grid_draw(params):
+            print(threading.get_ident(), datetime.now(), "grid_draw")
             frame = params[0]
             image = params[1]
             scores, boxes = detect(Image.fromarray(image), detr, transform)
@@ -193,6 +194,7 @@ def main():
             plot_results(display, myfont, scores, boxes)
 
             pygame.display.flip()
+
 
         rx.interval(0.1).pipe(
             ops.with_latest_from(image_ob),
@@ -207,6 +209,8 @@ def main():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
+
+            print(threading.get_ident(), datetime.now(), "main")
             pygame_scheduler.run()
 
     except Exception as ex:

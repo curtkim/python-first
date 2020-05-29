@@ -48,7 +48,7 @@ def doit(v):
 
 lidar1.pipe(
     ops.with_latest_from(lidar2, lidar3, lidar1.pipe(ops.pairwise()), gps.pipe(ops.buffer(lidar1))),
-    ops.map()
+    #ops.map()
     #ops.observe_on(pool_scheduler)
 ).subscribe(doit)
 

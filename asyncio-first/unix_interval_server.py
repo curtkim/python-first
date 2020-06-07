@@ -1,5 +1,6 @@
 import asyncio
 import numpy as np
+import threading
 
 i = 0
 
@@ -8,7 +9,7 @@ async def handle_interval(reader, writer):
     while(i < 100):
         a = np.empty([2, 2], dtype=np.uint8)
         a.fill(i)
-        print(a.shape)
+        print(threading.get_ident(), i, a.shape)
         writer.write(a.tobytes('C'))
         #writer.write(str(i).encode())
         await writer.drain()
@@ -17,6 +18,7 @@ async def handle_interval(reader, writer):
     writer.close()
 
 async def main():
+    print(threading.get_ident(), "main thread")
     server = await asyncio.start_unix_server(
         handle_interval, '/tmp/python_asyncio')
 

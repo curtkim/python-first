@@ -50,6 +50,5 @@ module.exports = (env = {}) => {
     config = require('../webpack.config.local')(config)(env);
   }
   */
-
   return config;
 };

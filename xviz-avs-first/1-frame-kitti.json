@@ -1,0 +1,355 @@
+{
+  "type": "xviz/metadata",
+  "data": {
+    "version": "2.0.0",
+    "streams": {
+      "/vehicle_pose": {
+        "category": "pose"
+      },
+      "/vehicle/acceleration": {
+        "category": "time_series",
+        "units": "m/s^2",
+        "scalar_type": "float"
+      },
+      "/vehicle/velocity": {
+        "category": "time_series",
+        "units": "m/s",
+        "scalar_type": "float"
+      },
+      "/vehicle/wheel_angle": {
+        "category": "time_series",
+        "units": "deg/s",
+        "scalar_type": "float"
+      },
+      "/vehicle/autonomy_state": {
+        "category": "time_series",
+        "scalar_type": "string"
+      },
+      "/vehicle/trajectory": {
+        "category": "primitive",
+        "coordinate": "VEHICLE_RELATIVE",
+        "stream_style": {
+          "stroke_color": "#47B27588",
+          "stroke_width": 1.4,
+          "stroke_width_min_pixels": 1
+        },
+        "primitive_type": "polyline"
+      },
+      "/tracklets/objects": {
+        "category": "primitive",
+        "coordinate": "VEHICLE_RELATIVE",
+        "stream_style": {
+          "extruded": true,
+          "fill_color": "#00000080"
+        },
+        "style_classes": [
+          {
+            "name": "Car",
+            "style": {
+              "fill_color": "#50B3FF80",
+              "stroke_color": "#50B3FF"
+            }
+          },
+          {
+            "name": "Cyclist",
+            "style": {
+              "fill_color": "#957FCE80",
+              "stroke_color": "#957FCE"
+            }
+          },
+          {
+            "name": "Pedestrian",
+            "style": {
+              "fill_color": "#FFC6AF80",
+              "stroke_color": "#FFC6AF"
+            }
+          },
+          {
+            "name": "Van",
+            "style": {
+              "fill_color": "#5B91F480",
+              "stroke_color": "#5B91F4"
+            }
+          },
+          {
+            "name": "Unknown",
+            "style": {
+              "fill_color": "#E2E2E280",
+              "stroke_color": "#E2E2E2"
+            }
+          }
+        ],
+        "transform": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0.81,
+          -0.32,
+          1.73,
+          1
+        ],
+        "primitive_type": "polygon"
+      },
+      "/tracklets/tracking_point": {
+        "category": "primitive",
+        "stream_style": {
+          "radius": 0.2,
+          "stroke_width": 0,
+          "fill_color": "#FFC043"
+        },
+        "coordinate": "VEHICLE_RELATIVE",
+        "transform": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0.81,
+          -0.32,
+          1.73,
+          1
+        ],
+        "primitive_type": "circle"
+      },
+      "/tracklets/label": {
+        "category": "primitive",
+        "stream_style": {
+          "text_size": 18,
+          "fill_color": "#DCDCCD"
+        },
+        "coordinate": "VEHICLE_RELATIVE",
+        "transform": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0.81,
+          -0.32,
+          1.73,
+          1
+        ],
+        "primitive_type": "text"
+      },
+      "/tracklets/trajectory": {
+        "category": "primitive",
+        "stream_style": {
+          "stroke_color": "#FFC043",
+          "stroke_width": 0.1,
+          "stroke_width_min_pixels": 1
+        },
+        "coordinate": "VEHICLE_RELATIVE",
+        "transform": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0.81,
+          -0.32,
+          1.73,
+          1
+        ],
+        "primitive_type": "polyline"
+      },
+      "/lidar/points": {
+        "category": "primitive",
+        "stream_style": {
+          "fill_color": "#00a",
+          "radius_pixels": 1
+        },
+        "coordinate": "VEHICLE_RELATIVE",
+        "transform": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0.81,
+          -0.32,
+          1.73,
+          1
+        ],
+        "primitive_type": "point"
+      },
+      "/camera/image_02": {
+        "category": "primitive",
+        "primitive_type": "image"
+      },
+      "/camera/image_03": {
+        "category": "primitive",
+        "primitive_type": "image"
+      },
+      "/tracklets/objects/futures": {
+        "category": "future_instance",
+        "stream_style": {
+          "stroke_width": 0.1,
+          "extruded": false,
+          "fill_color": "#00000080"
+        },
+        "style_classes": [
+          {
+            "name": "Car",
+            "style": {
+              "fill_color": "#50B3FF80",
+              "stroke_color": "#50B3FF"
+            }
+          },
+          {
+            "name": "Cyclist",
+            "style": {
+              "fill_color": "#957FCE80",
+              "stroke_color": "#957FCE"
+            }
+          },
+          {
+            "name": "Pedestrian",
+            "style": {
+              "fill_color": "#FFC6AF80",
+              "stroke_color": "#FFC6AF"
+            }
+          },
+          {
+            "name": "Van",
+            "style": {
+              "fill_color": "#5B91F480",
+              "stroke_color": "#5B91F4"
+            }
+          },
+          {
+            "name": "Unknown",
+            "style": {
+              "fill_color": "#E2E2E280",
+              "stroke_color": "#E2E2E2"
+            }
+          }
+        ],
+        "coordinate": "VEHICLE_RELATIVE",
+        "transform": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0.81,
+          -0.32,
+          1.73,
+          1
+        ],
+        "primitive_type": "polygon"
+      }
+    },
+    "log_info": {
+      "description": "Conversion of KITTI data set into XVIZ",
+      "license": "CC BY-NC-SA 3.0",
+      "license link": "<a href=\"http://creativecommons.org/licenses/by-nc-sa/3.0/\">http://creativecommons.org/licenses/by-nc-sa/3.0/</a>",
+      "uri": "<a href=\"https://github.com/uber/xviz-data\">https://github.com/uber/xviz-data</a>",
+      "source": {
+        "title": "Vision meets Robotics: The KITTI Dataset",
+        "author": "Andreas Geiger and Philip Lenz and Christoph Stiller and Raquel Urtasun",
+        "link": "<a href=\"http://www.cvlibs.net/datasets/kitti/raw_data.php\">http://www.cvlibs.net/datasets/kitti/raw_data.php</a>",
+        "copyright": "All datasets and benchmarks on <a href=\"http://www.cvlibs.net/datasets/kitti\">this page</a> are copyright by us and published under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 License. This means that you must attribute the work in the manner specified by the authors, you may not use this work for commercial purposes and if you alter, transform, or build upon this work, you may distribute the resulting work only under the same license."
+      },
+      "start_time": 1317042272.349,
+      "end_time": 1317042288.15
+    },
+    "ui_config": {
+      "Metrics": {
+        "type": "panel",
+        "children": [
+          {
+            "type": "container",
+            "children": [
+              {
+                "type": "metric",
+                "streams": [
+                  "/vehicle/acceleration"
+                ],
+                "title": "Acceleration",
+                "description": "The acceleration of the vehicle"
+              },
+              {
+                "type": "metric",
+                "streams": [
+                  "/vehicle/velocity"
+                ],
+                "title": "Velocity",
+                "description": "The velocity of the vehicle"
+              },
+              {
+                "type": "metric",
+                "streams": [
+                  "/vehicle/wheel_angle"
+                ],
+                "title": "Wheel",
+                "description": "The angular rate of the vehicle"
+              }
+            ],
+            "name": "Metrics Panel",
+            "layout": "vertical"
+          }
+        ],
+        "name": "Metrics"
+      },
+      "Camera": {
+        "type": "panel",
+        "children": [
+          {
+            "type": "video",
+            "cameras": [
+              "/camera/image_00",
+              "/camera/image_01",
+              "/camera/image_02",
+              "/camera/image_03"
+            ]
+          }
+        ],
+        "name": "Camera"
+      }
+    }
+  }
+}

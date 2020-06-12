@@ -9,6 +9,8 @@ import json
 import xviz_avs as xviz
 import xviz_avs.builder as xbuilder
 
+
+
 from PIL import Image
 import numpy as np
 
@@ -24,7 +26,7 @@ class CircleScenario:
         self._live = live
         self._metadata = None
 
-    def get_metadata_inner(self):
+    def get_metadata_inner(self) -> xviz.message.XVIZMessage:
         if not self._metadata:
             builder = xviz.XVIZMetadataBuilder()
             builder.stream("/vehicle_pose").category(xviz.CATEGORY.POSE)
@@ -56,11 +58,19 @@ class CircleScenario:
                 .category(xviz.CATEGORY.PRIMITIVE)\
                 .type(xviz.PRIMITIVE_TYPES.POINT)\
                 .stream_style({
-                    'radius_pixels': 6
+                    'radius_pixels': 15
                 })
+
+            '''
             builder.stream("/camera")\
                 .category(xviz.CATEGORY.PRIMITIVE)\
                 .type(2)
+            '''
+
+            builder.log_info({
+                "start_time": self._timestamp,
+                "end_time": self._timestamp+self._duration
+            })
 
             self._metadata = builder.get_message()
 
@@ -83,15 +93,15 @@ class CircleScenario:
 
         return metadata
 
-    def get_message_inner(self, time_offset):
+    def get_message_inner(self, time_offset) -> xviz.message.XVIZMessage:
         timestamp = self._timestamp + time_offset
 
         builder = xviz.XVIZBuilder(metadata=self._metadata)
         self._draw_pose(builder, timestamp)
         self._draw_grid(builder)
 
-        image = Image.open('cat.jpg')
-        self._put_image(builder, np.asarray(image))
+        #image = Image.open('cat.jpg')
+        #self._put_image(builder, np.asarray(image))
         return builder.get_message()
 
     def get_message(self, time_offset):
@@ -133,9 +143,21 @@ class CircleScenario:
         for x in grid:
             builder.primitive('/ground_grid_h').polyline([x, -grid_size, 0, x, grid_size, 0])
             builder.primitive('/ground_grid_v').polyline([-grid_size, x, 0, grid_size, x, 0])
-        builder.primitive('/circle').circle([0.0, 0.0, 0.0], self._radius)
-        builder.primitive('/circle').circle([self._radius, 0.0, 0.1], 1)\
+
+        builder\
+            .primitive('/circle')\
+            .circle([0.0, 0.0, 0.0], self._radius)
+
+        builder\
+            .primitive('/circle')\
+            .circle([self._radius, 0.0, 0.1], 1)\
             .style({'fill_color': [0, 0, 255]})
-        builder.primitive('/points').points([3, 0, 0, 0, 3, 0, 0, 0, 3])\
-            .colors([200,40,80,80,40,200,80,200,40])\
+
+        builder\
+            .primitive('/points')\
+            .points([13, 0, 0, 0, 13, 0, 0, 0, 13])\
+            .colors([
+                255,0,0,
+                80,40,200,
+                80,200,40])\
             .id("indicator")

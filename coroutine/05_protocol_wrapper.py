@@ -45,7 +45,10 @@ def frame_receiver():
     """
     while True:
         frame = (yield)
+        for c in frame:
+            print(hex(ord(c)))
         print(frame)
+        print("-------------")
 
 bytes = ''.join(chr(b) for b in
             [0x70, 0x24,

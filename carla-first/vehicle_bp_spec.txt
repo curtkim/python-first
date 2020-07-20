@@ -1,0 +1,1076 @@
+=============================================
+vehicle.audi.a2
+
+max_rpm=4000.0, 
+moi=0.6000000238418579,
+damping_rate_full_throttle=0.15000000596046448, 
+damping_rate_zero_throttle_clutch_engaged=2.0,
+damping_rate_zero_throttle_clutch_disengaged=0.3499999940395355,
+use_gear_autobox=True,
+gear_switch_time=0.5, 
+clutch_strength=10.0, 
+final_ratio=4.0,
+mass=1005.0,
+drag_coefficient=0.30000001192092896, 
+center_of_mass=Location(x=0.600000, y=0.000000, z=-0.250000),
+torque_curve=[
+	Vector2D(x=0.000000, y=400.000000)
+	Vector2D(x=2116.448730, y=560.773438)
+	Vector2D(x=5729.577637, y=400.000000)
+],
+forward_gears=[
+	GearPhysicsControl(ratio=3.780000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=2.120000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=1.360000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=0.970000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=0.760000, down_ratio=0.200000, up_ratio=0.350000)
+],
+steering_curve=[
+	Vector2D(x=0.000000, y=1.000000)
+	Vector2D(x=20.000000, y=0.900000)
+	Vector2D(x=60.000000, y=0.800000)
+	Vector2D(x=120.000000, y=0.700000)
+],
+wheels=[
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=79.999992, radius=32.799999, max_brake_torque=1500.000000, max_handbrake_torque=0.000000, position=Vector3D(x=1425.000000, y=1747.684326, z=61.298080))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=79.999992, radius=32.799999, max_brake_torque=1500.000000, max_handbrake_torque=0.000000, position=Vector3D(x=1514.734619, y=1859.254517, z=61.155125))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=32.799999, max_brake_torque=1500.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=1229.426025, y=1904.425659, z=61.430744))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=32.799999, max_brake_torque=1500.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=1319.300293, y=2016.196167, z=61.259224))
+]
+
+=============================================
+vehicle.audi.tt
+
+max_rpm=6000.0, 
+moi=1.0,
+damping_rate_full_throttle=0.15000000596046448, 
+damping_rate_zero_throttle_clutch_engaged=2.0,
+damping_rate_zero_throttle_clutch_disengaged=0.3499999940395355,
+use_gear_autobox=True,
+gear_switch_time=0.5, 
+clutch_strength=10.0, 
+final_ratio=4.0,
+mass=1400.0,
+drag_coefficient=0.30000001192092896, 
+center_of_mass=Location(x=0.600000, y=0.000000, z=-0.500000),
+torque_curve=[
+	Vector2D(x=0.000000, y=400.000000)
+	Vector2D(x=1890.760742, y=500.000000)
+	Vector2D(x=5729.577637, y=400.000000)
+],
+forward_gears=[
+	GearPhysicsControl(ratio=3.360000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=2.090000, down_ratio=0.200000, up_ratio=0.500000)
+	GearPhysicsControl(ratio=1.470000, down_ratio=0.200000, up_ratio=0.500000)
+	GearPhysicsControl(ratio=1.150000, down_ratio=0.200000, up_ratio=0.500000)
+	GearPhysicsControl(ratio=1.190000, down_ratio=0.200000, up_ratio=0.500000)
+	GearPhysicsControl(ratio=0.980000, down_ratio=0.000000, up_ratio=0.350000)
+],
+steering_curve=[
+	Vector2D(x=0.000000, y=1.000000)
+	Vector2D(x=20.000000, y=0.900000)
+	Vector2D(x=60.000000, y=0.800000)
+	Vector2D(x=120.000000, y=0.700000)
+],
+wheels=[
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=69.999992, radius=34.349998, max_brake_torque=2000.000000, max_handbrake_torque=0.000000, position=Vector3D(x=-8389.079102, y=11013.481445, z=87.163040))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=69.999992, radius=34.349998, max_brake_torque=2000.000000, max_handbrake_torque=0.000000, position=Vector3D(x=-8540.978516, y=11014.043945, z=87.163040))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=34.349998, max_brake_torque=2000.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=-8395.958984, y=10749.297852, z=87.163040))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=34.349998, max_brake_torque=2000.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=-8536.057617, y=10749.817383, z=87.163040))
+]
+
+=============================================
+vehicle.mercedes-benz.coupe
+
+max_rpm=5300.0, 
+moi=1.0,
+damping_rate_full_throttle=0.15000000596046448, 
+damping_rate_zero_throttle_clutch_engaged=2.0,
+damping_rate_zero_throttle_clutch_disengaged=0.3499999940395355,
+use_gear_autobox=True,
+gear_switch_time=0.5, 
+clutch_strength=10.0, 
+final_ratio=4.0,
+mass=1405.0,
+drag_coefficient=0.30000001192092896, 
+center_of_mass=Location(x=0.600000, y=0.000000, z=-0.500000),
+torque_curve=[
+	Vector2D(x=0.000000, y=400.000000)
+	Vector2D(x=1890.760742, y=500.000000)
+	Vector2D(x=5729.577637, y=400.000000)
+],
+forward_gears=[
+	GearPhysicsControl(ratio=5.350000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=3.240000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=2.250000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=1.640000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=1.210000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=1.000000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=0.860000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=0.720000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=0.600000, down_ratio=0.200000, up_ratio=0.350000)
+],
+steering_curve=[
+	Vector2D(x=0.000000, y=1.000000)
+	Vector2D(x=20.000000, y=0.900000)
+	Vector2D(x=60.000000, y=0.800000)
+	Vector2D(x=120.000000, y=0.700000)
+],
+wheels=[
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=69.999992, radius=39.500000, max_brake_torque=1500.000000, max_handbrake_torque=0.000000, position=Vector3D(x=17770.625000, y=6154.645996, z=52.845268))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=69.999992, radius=39.500000, max_brake_torque=1500.000000, max_handbrake_torque=0.000000, position=Vector3D(x=17771.046875, y=6319.164551, z=52.845291))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=39.500000, max_brake_torque=1500.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=17441.705078, y=6155.888184, z=55.206215))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=39.500000, max_brake_torque=1500.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=17442.189453, y=6319.704590, z=55.120831))
+]
+
+=============================================
+vehicle.bmw.grandtourer
+
+max_rpm=4500.0, 
+moi=1.0,
+damping_rate_full_throttle=0.15000000596046448, 
+damping_rate_zero_throttle_clutch_engaged=2.0,
+damping_rate_zero_throttle_clutch_disengaged=0.3499999940395355,
+use_gear_autobox=True,
+gear_switch_time=0.5, 
+clutch_strength=10.0, 
+final_ratio=4.0,
+mass=1370.0,
+drag_coefficient=0.30000001192092896, 
+center_of_mass=Location(x=0.600000, y=0.000000, z=-0.250000),
+torque_curve=[
+	Vector2D(x=0.000000, y=400.000000)
+	Vector2D(x=1890.760742, y=500.000000)
+	Vector2D(x=5729.577637, y=400.000000)
+],
+forward_gears=[
+	GearPhysicsControl(ratio=3.620000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=1.950000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=1.240000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=0.970000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=0.810000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=0.680000, down_ratio=0.200000, up_ratio=0.350000)
+],
+steering_curve=[
+	Vector2D(x=0.000000, y=1.000000)
+	Vector2D(x=20.000000, y=0.900000)
+	Vector2D(x=60.000000, y=0.800000)
+	Vector2D(x=120.000000, y=0.700000)
+],
+wheels=[
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=74.999992, radius=36.000000, max_brake_torque=1500.000000, max_handbrake_torque=0.000000, position=Vector3D(x=8776.506836, y=333.331604, z=56.081093))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=74.999992, radius=36.000000, max_brake_torque=1500.000000, max_handbrake_torque=0.000000, position=Vector3D(x=8773.526367, y=532.885681, z=56.081116))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=36.000000, max_brake_torque=1500.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=8483.057617, y=328.948059, z=56.081093))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=36.000000, max_brake_torque=1500.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=8480.077148, y=528.502136, z=56.081116))
+]
+
+=============================================
+vehicle.yamaha.yzf
+
+max_rpm=9000.0, 
+moi=1.0,
+damping_rate_full_throttle=0.15000000596046448, 
+damping_rate_zero_throttle_clutch_engaged=2.0,
+damping_rate_zero_throttle_clutch_disengaged=0.3499999940395355,
+use_gear_autobox=True,
+gear_switch_time=0.5, 
+clutch_strength=10.0, 
+final_ratio=4.0,
+mass=140.0,
+drag_coefficient=0.30000001192092896, 
+center_of_mass=Location(x=-0.550000, y=0.000000, z=-0.550000),
+torque_curve=[
+	Vector2D(x=0.000000, y=400.000000)
+	Vector2D(x=1890.760742, y=500.000000)
+	Vector2D(x=5729.577637, y=400.000000)
+],
+forward_gears=[
+	GearPhysicsControl(ratio=2.833000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=1.875000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=1.364000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=1.143000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=0.957000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=0.840000, down_ratio=0.200000, up_ratio=0.350000)
+],
+steering_curve=[
+	Vector2D(x=0.000000, y=1.000000)
+	Vector2D(x=20.741636, y=0.904878)
+	Vector2D(x=89.304947, y=0.737483)
+	Vector2D(x=132.907501, y=0.700000)
+],
+wheels=[
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=45.000000, radius=33.000000, max_brake_torque=1500.000000, max_handbrake_torque=0.000000, position=Vector3D(x=-5426.773926, y=36.850479, z=64.000809))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=45.000000, radius=33.000000, max_brake_torque=1500.000000, max_handbrake_torque=0.000000, position=Vector3D(x=-5427.937500, y=76.833549, z=64.000809))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=33.000000, max_brake_torque=1500.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=-5582.759766, y=72.327942, z=64.000809))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=33.000000, max_brake_torque=1500.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=-5581.596191, y=32.344872, z=64.000809))
+]
+
+=============================================
+vehicle.audi.etron
+
+max_rpm=13300.0, 
+moi=1.0,
+damping_rate_full_throttle=0.15000000596046448, 
+damping_rate_zero_throttle_clutch_engaged=2.0,
+damping_rate_zero_throttle_clutch_disengaged=0.3499999940395355,
+use_gear_autobox=True,
+gear_switch_time=0.5, 
+clutch_strength=10.0, 
+final_ratio=4.0,
+mass=2565.0,
+drag_coefficient=0.30000001192092896, 
+center_of_mass=Location(x=0.600000, y=0.000000, z=-0.250000),
+torque_curve=[
+	Vector2D(x=0.000000, y=400.000000)
+	Vector2D(x=1890.760742, y=500.000000)
+	Vector2D(x=5729.577637, y=400.000000)
+],
+forward_gears=[
+	GearPhysicsControl(ratio=2.300000, down_ratio=0.200000, up_ratio=0.350000)
+],
+steering_curve=[
+	Vector2D(x=0.000000, y=1.000000)
+	Vector2D(x=20.000000, y=0.900000)
+	Vector2D(x=60.000000, y=0.800000)
+	Vector2D(x=120.000000, y=0.700000)
+],
+wheels=[
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=69.999992, radius=34.349998, max_brake_torque=2000.000000, max_handbrake_torque=0.000000, position=Vector3D(x=19789.201172, y=-463.831604, z=65.457954))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=69.999992, radius=34.349998, max_brake_torque=2000.000000, max_handbrake_torque=0.000000, position=Vector3D(x=19791.910156, y=-645.143799, z=65.457954))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=34.349998, max_brake_torque=2000.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=20079.175781, y=-459.499939, z=65.457954))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=34.349998, max_brake_torque=2000.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=20081.884766, y=-640.812134, z=65.457954))
+]
+
+=============================================
+vehicle.nissan.micra
+
+max_rpm=6300.0, 
+moi=1.0,
+damping_rate_full_throttle=0.15000000596046448, 
+damping_rate_zero_throttle_clutch_engaged=2.0,
+damping_rate_zero_throttle_clutch_disengaged=0.3499999940395355,
+use_gear_autobox=True,
+gear_switch_time=0.5, 
+clutch_strength=10.0, 
+final_ratio=4.0,
+mass=977.0,
+drag_coefficient=0.30000001192092896, 
+center_of_mass=Location(x=0.750000, y=0.000000, z=-0.450000),
+torque_curve=[
+	Vector2D(x=0.000000, y=400.000000)
+	Vector2D(x=1890.760742, y=500.000000)
+	Vector2D(x=5729.577637, y=400.000000)
+],
+forward_gears=[
+	GearPhysicsControl(ratio=3.730000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=2.050000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=1.390000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=1.030000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=0.820000, down_ratio=0.200000, up_ratio=0.350000)
+],
+steering_curve=[
+	Vector2D(x=0.000000, y=1.000000)
+	Vector2D(x=20.000000, y=0.897898)
+	Vector2D(x=60.000000, y=0.760000)
+	Vector2D(x=120.000000, y=0.700000)
+],
+wheels=[
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=45.000000, radius=34.250000, max_brake_torque=1500.000000, max_handbrake_torque=0.000000, position=Vector3D(x=-8388.326172, y=11006.573242, z=87.940628))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=45.000000, radius=34.250000, max_brake_torque=1500.000000, max_handbrake_torque=0.000000, position=Vector3D(x=-8529.375000, y=11007.095703, z=87.940628))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=35.000000, max_brake_torque=1500.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=-8389.249023, y=10757.554688, z=87.940628))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=35.000000, max_brake_torque=1500.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=-8530.297852, y=10758.077148, z=87.936157))
+]
+
+=============================================
+vehicle.bh.crossbike
+
+max_rpm=800.0, 
+moi=1.0,
+damping_rate_full_throttle=0.15000000596046448, 
+damping_rate_zero_throttle_clutch_engaged=2.0,
+damping_rate_zero_throttle_clutch_disengaged=0.3499999940395355,
+use_gear_autobox=True,
+gear_switch_time=0.5, 
+clutch_strength=10.0, 
+final_ratio=4.0,
+mass=120.0,
+drag_coefficient=0.30000001192092896, 
+center_of_mass=Location(x=-0.200000, y=0.000000, z=-0.480000),
+torque_curve=[
+	Vector2D(x=0.000000, y=60.000000)
+	Vector2D(x=255.616638, y=100.000000)
+	Vector2D(x=700.000000, y=60.000000)
+],
+forward_gears=[
+	GearPhysicsControl(ratio=1.000000, down_ratio=0.000000, up_ratio=0.000000)
+],
+steering_curve=[
+	Vector2D(x=0.000000, y=1.000000)
+	Vector2D(x=20.000000, y=0.900000)
+	Vector2D(x=60.000000, y=0.800000)
+	Vector2D(x=120.000000, y=0.700000)
+],
+wheels=[
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=45.000000, radius=26.700001, max_brake_torque=1500.000000, max_handbrake_torque=0.000000, position=Vector3D(x=-4909.152832, y=13488.042969, z=54.249805))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=45.000000, radius=26.700001, max_brake_torque=1500.000000, max_handbrake_torque=0.000000, position=Vector3D(x=-4908.247559, y=13528.033203, z=54.249805))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=26.700001, max_brake_torque=1500.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=-5003.794434, y=13530.195312, z=54.249966))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=26.700001, max_brake_torque=1500.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=-5004.699707, y=13490.206055, z=54.249966))
+]
+
+=============================================
+vehicle.lincoln.mkz2017
+
+max_rpm=5800.0, 
+moi=1.0,
+damping_rate_full_throttle=0.15000000596046448, 
+damping_rate_zero_throttle_clutch_engaged=2.0,
+damping_rate_zero_throttle_clutch_disengaged=0.3499999940395355,
+use_gear_autobox=True,
+gear_switch_time=0.5, 
+clutch_strength=10.0, 
+final_ratio=4.0,
+mass=2404.0,
+drag_coefficient=0.30000001192092896, 
+center_of_mass=Location(x=0.600000, y=0.000000, z=-0.250000),
+torque_curve=[
+	Vector2D(x=0.000000, y=400.000000)
+	Vector2D(x=1890.760742, y=500.000000)
+	Vector2D(x=5729.577637, y=400.000000)
+],
+forward_gears=[
+	GearPhysicsControl(ratio=3.590000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=2.190000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=1.410000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=1.000000, down_ratio=0.500000, up_ratio=0.500000)
+	GearPhysicsControl(ratio=0.830000, down_ratio=0.200000, up_ratio=0.350000)
+],
+steering_curve=[
+	Vector2D(x=0.000000, y=1.000000)
+	Vector2D(x=20.000000, y=0.900000)
+	Vector2D(x=60.000000, y=0.800000)
+	Vector2D(x=120.000000, y=0.700000)
+],
+wheels=[
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=69.999992, radius=35.799999, max_brake_torque=1500.000000, max_handbrake_torque=0.000000, position=Vector3D(x=12558.856445, y=-232.237549, z=59.638412))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=69.999992, radius=35.799999, max_brake_torque=1500.000000, max_handbrake_torque=0.000000, position=Vector3D(x=12561.192383, y=-388.646240, z=59.638412))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=35.799999, max_brake_torque=1500.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=12845.936523, y=-227.949081, z=59.638409))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=35.799999, max_brake_torque=1500.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=12848.273438, y=-384.357788, z=59.638409))
+]
+
+=============================================
+vehicle.gazelle.omafiets
+
+max_rpm=1000.0, 
+moi=1.0,
+damping_rate_full_throttle=0.15000000596046448, 
+damping_rate_zero_throttle_clutch_engaged=2.0,
+damping_rate_zero_throttle_clutch_disengaged=0.3499999940395355,
+use_gear_autobox=True,
+gear_switch_time=0.10000000149011612, 
+clutch_strength=10.0, 
+final_ratio=5.0,
+mass=150.0,
+drag_coefficient=0.30000001192092896, 
+center_of_mass=Location(x=-0.400000, y=0.000000, z=-0.430000),
+torque_curve=[
+	Vector2D(x=0.000000, y=40.000000)
+	Vector2D(x=800.000000, y=100.000000)
+	Vector2D(x=1000.000000, y=40.000000)
+],
+forward_gears=[
+	GearPhysicsControl(ratio=2.360000, down_ratio=0.500000, up_ratio=0.500000)
+	GearPhysicsControl(ratio=2.000000, down_ratio=0.500000, up_ratio=0.550000)
+	GearPhysicsControl(ratio=1.730000, down_ratio=0.500000, up_ratio=0.600000)
+	GearPhysicsControl(ratio=1.530000, down_ratio=0.500000, up_ratio=0.650000)
+	GearPhysicsControl(ratio=1.370000, down_ratio=0.500000, up_ratio=0.700000)
+	GearPhysicsControl(ratio=1.240000, down_ratio=0.500000, up_ratio=0.750000)
+	GearPhysicsControl(ratio=1.080000, down_ratio=0.500000, up_ratio=0.800000)
+	GearPhysicsControl(ratio=0.930000, down_ratio=0.500000, up_ratio=0.850000)
+	GearPhysicsControl(ratio=0.810000, down_ratio=0.500000, up_ratio=0.900000)
+	GearPhysicsControl(ratio=0.720000, down_ratio=0.500000, up_ratio=0.950000)
+],
+steering_curve=[
+	Vector2D(x=0.000000, y=1.000000)
+	Vector2D(x=24.642958, y=0.908805)
+	Vector2D(x=68.906403, y=0.800000)
+	Vector2D(x=120.000000, y=0.700000)
+],
+wheels=[
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=45.000000, radius=36.000000, max_brake_torque=1500.000000, max_handbrake_torque=0.000000, position=Vector3D(x=8309.584961, y=-8006.430664, z=867.628479))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=45.000000, radius=36.000000, max_brake_torque=1500.000000, max_handbrake_torque=0.000000, position=Vector3D(x=8349.560547, y=-8005.018066, z=867.628479))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=36.000000, max_brake_torque=1500.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=8345.581055, y=-7892.431152, z=868.094238))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=36.000000, max_brake_torque=1500.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=8305.606445, y=-7893.844238, z=868.094238))
+]
+
+=============================================
+vehicle.tesla.cybertruck
+
+max_rpm=5729.57763671875, 
+moi=1.0,
+damping_rate_full_throttle=0.15000000596046448, 
+damping_rate_zero_throttle_clutch_engaged=2.0,
+damping_rate_zero_throttle_clutch_disengaged=0.3499999940395355,
+use_gear_autobox=True,
+gear_switch_time=0.5, 
+clutch_strength=10.0, 
+final_ratio=4.0,
+mass=1500.0,
+drag_coefficient=0.30000001192092896, 
+center_of_mass=Location(x=0.600000, y=0.000000, z=-0.250000),
+torque_curve=[
+	Vector2D(x=0.000000, y=400.000000)
+	Vector2D(x=1890.760742, y=500.000000)
+	Vector2D(x=5729.577637, y=400.000000)
+],
+forward_gears=[
+	GearPhysicsControl(ratio=4.000000, down_ratio=0.500000, up_ratio=0.650000)
+	GearPhysicsControl(ratio=2.000000, down_ratio=0.500000, up_ratio=0.650000)
+	GearPhysicsControl(ratio=1.500000, down_ratio=0.500000, up_ratio=0.650000)
+	GearPhysicsControl(ratio=1.100000, down_ratio=0.500000, up_ratio=0.650000)
+	GearPhysicsControl(ratio=1.000000, down_ratio=0.500000, up_ratio=0.650000)
+],
+steering_curve=[
+	Vector2D(x=0.000000, y=1.000000)
+	Vector2D(x=20.000000, y=0.900000)
+	Vector2D(x=60.000000, y=0.800000)
+	Vector2D(x=120.000000, y=0.700000)
+],
+wheels=[
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=69.999992, radius=53.500000, max_brake_torque=1500.000000, max_handbrake_torque=0.000000, position=Vector3D(x=-8350.218750, y=6909.487305, z=167.476410))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=69.999992, radius=53.500000, max_brake_torque=1500.000000, max_handbrake_torque=0.000000, position=Vector3D(x=-8579.439453, y=6910.336914, z=167.476410))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=53.500000, max_brake_torque=1500.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=-8351.729492, y=6501.964844, z=167.476410))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=53.500000, max_brake_torque=1500.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=-8580.949219, y=6502.814453, z=167.476410))
+]
+
+=============================================
+vehicle.dodge_charger.police
+
+max_rpm=5729.57763671875, 
+moi=1.0,
+damping_rate_full_throttle=0.15000000596046448, 
+damping_rate_zero_throttle_clutch_engaged=2.0,
+damping_rate_zero_throttle_clutch_disengaged=0.3499999940395355,
+use_gear_autobox=True,
+gear_switch_time=0.5, 
+clutch_strength=10.0, 
+final_ratio=4.0,
+mass=1500.0,
+drag_coefficient=0.30000001192092896, 
+center_of_mass=Location(x=0.600000, y=0.000000, z=-0.500000),
+torque_curve=[
+	Vector2D(x=0.000000, y=400.000000)
+	Vector2D(x=1890.760742, y=500.000000)
+	Vector2D(x=5729.577637, y=400.000000)
+],
+forward_gears=[
+	GearPhysicsControl(ratio=3.590000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=2.190000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=1.410000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=1.000000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=0.830000, down_ratio=0.200000, up_ratio=0.350000)
+],
+steering_curve=[
+	Vector2D(x=0.000000, y=1.000000)
+	Vector2D(x=20.000000, y=0.900000)
+	Vector2D(x=60.000000, y=0.800000)
+	Vector2D(x=120.000000, y=0.700000)
+],
+wheels=[
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=69.999992, radius=37.000000, max_brake_torque=1500.000000, max_handbrake_torque=0.000000, position=Vector3D(x=17116.855469, y=-155.450943, z=66.228745))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=69.999992, radius=37.000000, max_brake_torque=1500.000000, max_handbrake_torque=0.000000, position=Vector3D(x=17118.966797, y=-329.209503, z=66.228745))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=37.000000, max_brake_torque=1500.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=17416.214844, y=-151.869873, z=67.530716))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=37.000000, max_brake_torque=1500.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=17418.300781, y=-324.060028, z=67.530716))
+]
+
+=============================================
+vehicle.tesla.model3
+
+max_rpm=15000.0, 
+moi=1.0,
+damping_rate_full_throttle=0.15000000596046448, 
+damping_rate_zero_throttle_clutch_engaged=2.0,
+damping_rate_zero_throttle_clutch_disengaged=0.3499999940395355,
+use_gear_autobox=True,
+gear_switch_time=0.5, 
+clutch_strength=10.0, 
+final_ratio=4.0,
+mass=1845.0,
+drag_coefficient=0.30000001192092896, 
+center_of_mass=Location(x=0.600000, y=0.000000, z=-0.250000),
+torque_curve=[
+	Vector2D(x=0.000000, y=400.000000)
+	Vector2D(x=1890.760742, y=500.000000)
+	Vector2D(x=5729.577637, y=400.000000)
+],
+forward_gears=[
+	GearPhysicsControl(ratio=1.300000, down_ratio=0.200000, up_ratio=0.350000)
+],
+steering_curve=[
+	Vector2D(x=0.000000, y=1.000000)
+	Vector2D(x=20.000000, y=0.900000)
+	Vector2D(x=60.000000, y=0.800000)
+	Vector2D(x=120.000000, y=0.700000)
+],
+wheels=[
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=69.999992, radius=36.700001, max_brake_torque=1500.000000, max_handbrake_torque=0.000000, position=Vector3D(x=-8385.079102, y=9274.612305, z=121.223587))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=69.999992, radius=36.700001, max_brake_torque=1500.000000, max_handbrake_torque=0.000000, position=Vector3D(x=-8527.061523, y=9275.138672, z=121.223595))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=36.000000, max_brake_torque=1500.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=-8386.192383, y=8974.150391, z=121.223595))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=36.000000, max_brake_torque=1500.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=-8528.174805, y=8974.676758, z=121.223663))
+]
+
+=============================================
+vehicle.harley-davidson.low_rider
+
+max_rpm=3000.0, 
+moi=1.0,
+damping_rate_full_throttle=0.15000000596046448, 
+damping_rate_zero_throttle_clutch_engaged=2.0,
+damping_rate_zero_throttle_clutch_disengaged=0.3499999940395355,
+use_gear_autobox=True,
+gear_switch_time=0.5, 
+clutch_strength=10.0, 
+final_ratio=4.0,
+mass=286.0,
+drag_coefficient=0.30000001192092896, 
+center_of_mass=Location(x=-0.500000, y=0.000000, z=-0.450000),
+torque_curve=[
+	Vector2D(x=0.000000, y=250.000000)
+	Vector2D(x=3500.000000, y=350.000000)
+	Vector2D(x=6000.000000, y=250.000000)
+],
+forward_gears=[
+	GearPhysicsControl(ratio=9.311000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=6.454000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=4.793000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=3.882000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=3.307000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=2.790000, down_ratio=0.200000, up_ratio=0.350000)
+],
+steering_curve=[
+	Vector2D(x=0.000000, y=1.000000)
+	Vector2D(x=8.506593, y=0.900000)
+	Vector2D(x=28.456274, y=0.800000)
+	Vector2D(x=120.000000, y=0.700000)
+],
+wheels=[
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=45.000000, radius=35.000000, max_brake_torque=1500.000000, max_handbrake_torque=0.000000, position=Vector3D(x=17190.857422, y=-571.307190, z=65.744812))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=45.000000, radius=35.000000, max_brake_torque=1500.000000, max_handbrake_torque=0.000000, position=Vector3D(x=17191.455078, y=-611.302734, z=65.744812))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=35.500000, max_brake_torque=1500.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=17353.470703, y=-608.882507, z=65.745270))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=35.500000, max_brake_torque=1500.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=17352.873047, y=-568.886963, z=65.745270))
+]
+
+=============================================
+vehicle.toyota.prius
+
+max_rpm=5200.0, 
+moi=1.0,
+damping_rate_full_throttle=0.15000000596046448, 
+damping_rate_zero_throttle_clutch_engaged=2.0,
+damping_rate_zero_throttle_clutch_disengaged=0.3499999940395355,
+use_gear_autobox=True,
+gear_switch_time=0.5, 
+clutch_strength=10.0, 
+final_ratio=4.0,
+mass=1775.0,
+drag_coefficient=0.30000001192092896, 
+center_of_mass=Location(x=0.600000, y=0.000000, z=-0.250000),
+torque_curve=[
+	Vector2D(x=0.000000, y=400.000000)
+	Vector2D(x=1890.760742, y=500.000000)
+	Vector2D(x=5729.577637, y=400.000000)
+],
+forward_gears=[
+	GearPhysicsControl(ratio=2.600000, down_ratio=0.200000, up_ratio=0.350000)
+],
+steering_curve=[
+	Vector2D(x=0.000000, y=1.000000)
+	Vector2D(x=20.000000, y=0.900000)
+	Vector2D(x=60.000000, y=0.800000)
+	Vector2D(x=120.000000, y=0.700000)
+],
+wheels=[
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=69.999992, radius=37.000000, max_brake_torque=1500.000000, max_handbrake_torque=0.000000, position=Vector3D(x=-4816.583008, y=13415.905273, z=60.903847))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=69.999992, radius=37.000000, max_brake_torque=1500.000000, max_handbrake_torque=0.000000, position=Vector3D(x=-4812.509766, y=13595.829102, z=60.903419))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=37.000000, max_brake_torque=1500.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=-5098.316895, y=13427.230469, z=60.903847))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=37.000000, max_brake_torque=1500.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=-5094.468262, y=13597.263672, z=60.903870))
+]
+
+=============================================
+vehicle.seat.leon
+
+max_rpm=3500.0, 
+moi=1.0,
+damping_rate_full_throttle=0.15000000596046448, 
+damping_rate_zero_throttle_clutch_engaged=2.0,
+damping_rate_zero_throttle_clutch_disengaged=0.3499999940395355,
+use_gear_autobox=True,
+gear_switch_time=0.5, 
+clutch_strength=10.0, 
+final_ratio=4.0,
+mass=1235.0,
+drag_coefficient=0.30000001192092896, 
+center_of_mass=Location(x=0.200000, y=0.000000, z=-0.300000),
+torque_curve=[
+	Vector2D(x=0.000000, y=400.000000)
+	Vector2D(x=1890.760742, y=500.000000)
+	Vector2D(x=5729.577637, y=400.000000)
+],
+forward_gears=[
+	GearPhysicsControl(ratio=3.460000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=2.050000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=1.300000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=0.900000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=0.910000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=0.760000, down_ratio=0.200000, up_ratio=0.350000)
+],
+steering_curve=[
+	Vector2D(x=0.000000, y=1.000000)
+	Vector2D(x=20.000000, y=0.900000)
+	Vector2D(x=60.000000, y=0.800000)
+	Vector2D(x=120.000000, y=0.700000)
+],
+wheels=[
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=79.999992, radius=33.500000, max_brake_torque=1500.000000, max_handbrake_torque=0.000000, position=Vector3D(x=-7862.690430, y=-14986.083008, z=61.534515))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=79.999992, radius=33.500000, max_brake_torque=1500.000000, max_handbrake_torque=0.000000, position=Vector3D(x=-7739.465820, y=-14982.713867, z=61.534443))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=33.500000, max_brake_torque=1500.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=-7870.164062, y=-14712.586914, z=61.534431))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=33.500000, max_brake_torque=1500.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=-7746.939453, y=-14709.220703, z=61.534447))
+]
+
+=============================================
+vehicle.kawasaki.ninja
+
+max_rpm=10000.0, 
+moi=1.0,
+damping_rate_full_throttle=0.15000000596046448, 
+damping_rate_zero_throttle_clutch_engaged=2.0,
+damping_rate_zero_throttle_clutch_disengaged=0.3499999940395355,
+use_gear_autobox=True,
+gear_switch_time=0.5, 
+clutch_strength=10.0, 
+final_ratio=4.0,
+mass=166.0,
+drag_coefficient=0.30000001192092896, 
+center_of_mass=Location(x=-0.450000, y=0.000000, z=-0.450000),
+torque_curve=[
+	Vector2D(x=0.000000, y=400.000000)
+	Vector2D(x=1890.760742, y=500.000000)
+	Vector2D(x=5729.577637, y=400.000000)
+],
+forward_gears=[
+	GearPhysicsControl(ratio=2.929000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=2.056000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=1.619000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=1.333000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=1.154000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=1.037000, down_ratio=0.200000, up_ratio=0.350000)
+],
+steering_curve=[
+	Vector2D(x=0.000000, y=1.000000)
+	Vector2D(x=20.000000, y=0.900000)
+	Vector2D(x=60.000000, y=0.800000)
+	Vector2D(x=120.000000, y=0.700000)
+],
+wheels=[
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=45.000000, radius=32.000000, max_brake_torque=1500.000000, max_handbrake_torque=0.000000, position=Vector3D(x=-9796.763672, y=1971.165283, z=59.353806))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=45.000000, radius=32.000000, max_brake_torque=1500.000000, max_handbrake_torque=0.000000, position=Vector3D(x=-9825.207031, y=1943.041138, z=59.353806))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=32.000000, max_brake_torque=1500.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=-9727.722656, y=1844.450928, z=59.353565))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=32.000000, max_brake_torque=1500.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=-9699.279297, y=1872.575195, z=59.353565))
+]
+
+=============================================
+vehicle.nissan.patrol
+
+max_rpm=3600.0, 
+moi=1.0,
+damping_rate_full_throttle=0.15000000596046448, 
+damping_rate_zero_throttle_clutch_engaged=2.0,
+damping_rate_zero_throttle_clutch_disengaged=0.3499999940395355,
+use_gear_autobox=True,
+gear_switch_time=0.5, 
+clutch_strength=10.0, 
+final_ratio=4.0,
+mass=2355.0,
+drag_coefficient=0.30000001192092896, 
+center_of_mass=Location(x=0.600000, y=0.000000, z=-0.600000),
+torque_curve=[
+	Vector2D(x=0.000000, y=400.000000)
+	Vector2D(x=1890.760742, y=500.000000)
+	Vector2D(x=5729.577637, y=400.000000)
+],
+forward_gears=[
+	GearPhysicsControl(ratio=4.560000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=2.630000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=1.590000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=1.000000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=0.840000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=0.800000, down_ratio=0.200000, up_ratio=0.350000)
+],
+steering_curve=[
+	Vector2D(x=0.000000, y=1.000000)
+	Vector2D(x=20.000000, y=0.900000)
+	Vector2D(x=60.000000, y=0.800000)
+	Vector2D(x=120.000000, y=0.700000)
+],
+wheels=[
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=45.000000, radius=39.000000, max_brake_torque=1500.000000, max_handbrake_torque=0.000000, position=Vector3D(x=17129.052734, y=-505.363831, z=65.361984))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=45.000000, radius=39.000000, max_brake_torque=1500.000000, max_handbrake_torque=0.000000, position=Vector3D(x=17131.648438, y=-679.093750, z=65.362000))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=39.000000, max_brake_torque=1500.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=17405.376953, y=-501.236053, z=65.457870))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=39.000000, max_brake_torque=1500.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=17407.972656, y=-674.965942, z=65.457886))
+]
+
+=============================================
+vehicle.mini.cooperst
+
+max_rpm=4000.0, 
+moi=1.0,
+damping_rate_full_throttle=0.15000000596046448, 
+damping_rate_zero_throttle_clutch_engaged=2.0,
+damping_rate_zero_throttle_clutch_disengaged=0.3499999940395355,
+use_gear_autobox=True,
+gear_switch_time=0.5, 
+clutch_strength=10.0, 
+final_ratio=4.0,
+mass=1220.0,
+drag_coefficient=0.30000001192092896, 
+center_of_mass=Location(x=0.250000, y=0.000000, z=-0.600000),
+torque_curve=[
+	Vector2D(x=0.000000, y=400.000000)
+	Vector2D(x=1890.760742, y=500.000000)
+	Vector2D(x=5729.577637, y=400.000000)
+],
+forward_gears=[
+	GearPhysicsControl(ratio=3.920000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=2.140000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=1.280000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=0.920000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=0.760000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=0.630000, down_ratio=0.200000, up_ratio=0.350000)
+],
+steering_curve=[
+	Vector2D(x=0.000000, y=1.000000)
+	Vector2D(x=20.000000, y=0.900000)
+	Vector2D(x=60.000000, y=0.800000)
+	Vector2D(x=120.000000, y=0.700000)
+],
+wheels=[
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=69.999992, radius=37.500000, max_brake_torque=1500.000000, max_handbrake_torque=0.000000, position=Vector3D(x=-10066.133789, y=1768.557495, z=60.773529))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=69.999992, radius=37.500000, max_brake_torque=1500.000000, max_handbrake_torque=0.000000, position=Vector3D(x=-10188.440430, y=1647.623291, z=60.773499))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=37.500000, max_brake_torque=1500.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=-9889.566406, y=1589.985962, z=60.773529))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=37.500000, max_brake_torque=1500.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=-10011.873047, y=1469.051758, z=60.773499))
+]
+
+=============================================
+vehicle.jeep.wrangler_rubicon
+
+max_rpm=4300.0, 
+moi=1.0,
+damping_rate_full_throttle=0.15000000596046448, 
+damping_rate_zero_throttle_clutch_engaged=2.0,
+damping_rate_zero_throttle_clutch_disengaged=0.3499999940395355,
+use_gear_autobox=True,
+gear_switch_time=0.5, 
+clutch_strength=10.0, 
+final_ratio=4.0,
+mass=1900.0,
+drag_coefficient=0.30000001192092896, 
+center_of_mass=Location(x=0.300000, y=0.000000, z=-0.500000),
+torque_curve=[
+	Vector2D(x=0.000000, y=400.000000)
+	Vector2D(x=1890.760742, y=500.000000)
+	Vector2D(x=5729.577637, y=400.000000)
+],
+forward_gears=[
+	GearPhysicsControl(ratio=4.710000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=3.140000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=2.110000, down_ratio=0.200000, up_ratio=0.350000)
+],
+steering_curve=[
+	Vector2D(x=0.000000, y=1.000000)
+	Vector2D(x=20.000000, y=0.900000)
+	Vector2D(x=60.000000, y=0.800000)
+	Vector2D(x=120.000000, y=0.700000)
+],
+wheels=[
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=69.999992, radius=41.608002, max_brake_torque=2000.000000, max_handbrake_torque=0.000000, position=Vector3D(x=-8722.047852, y=11019.444336, z=92.975220))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=69.999992, radius=41.608002, max_brake_torque=2000.000000, max_handbrake_torque=0.000000, position=Vector3D(x=-8907.504883, y=11020.143555, z=92.963058))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=41.608002, max_brake_torque=2000.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=-8723.636719, y=10788.698242, z=93.071533))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=41.608002, max_brake_torque=2000.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=-8908.399414, y=10789.356445, z=93.050827))
+]
+
+=============================================
+vehicle.mustang.mustang
+
+max_rpm=3600.0, 
+moi=1.0,
+damping_rate_full_throttle=0.15000000596046448, 
+damping_rate_zero_throttle_clutch_engaged=2.0,
+damping_rate_zero_throttle_clutch_disengaged=0.3499999940395355,
+use_gear_autobox=True,
+gear_switch_time=0.5, 
+clutch_strength=10.0, 
+final_ratio=4.0,
+mass=1395.0,
+drag_coefficient=0.30000001192092896, 
+center_of_mass=Location(x=0.600000, y=0.000000, z=-0.250000),
+torque_curve=[
+	Vector2D(x=0.000000, y=400.000000)
+	Vector2D(x=1890.760742, y=500.000000)
+	Vector2D(x=5729.577637, y=400.000000)
+],
+forward_gears=[
+	GearPhysicsControl(ratio=2.780000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=1.930000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=1.360000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=1.000000, down_ratio=0.200000, up_ratio=0.350000)
+],
+steering_curve=[
+	Vector2D(x=0.000000, y=1.000000)
+	Vector2D(x=20.000000, y=0.900000)
+	Vector2D(x=60.000000, y=0.800000)
+	Vector2D(x=120.000000, y=0.700000)
+],
+wheels=[
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=69.999992, radius=31.940252, max_brake_torque=1500.000000, max_handbrake_torque=0.000000, position=Vector3D(x=-578.127502, y=4416.317383, z=60.070484))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=69.999992, radius=31.940252, max_brake_torque=1500.000000, max_handbrake_torque=0.000000, position=Vector3D(x=-734.607605, y=4417.307129, z=60.070484))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=31.940252, max_brake_torque=1500.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=-579.771973, y=4127.702637, z=60.070484))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=31.940252, max_brake_torque=1500.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=-736.615662, y=4128.694824, z=60.070484))
+]
+
+=============================================
+vehicle.volkswagen.t2
+
+max_rpm=3200.0, 
+moi=1.0,
+damping_rate_full_throttle=0.15000000596046448, 
+damping_rate_zero_throttle_clutch_engaged=2.0,
+damping_rate_zero_throttle_clutch_disengaged=0.3499999940395355,
+use_gear_autobox=True,
+gear_switch_time=0.5, 
+clutch_strength=10.0, 
+final_ratio=4.0,
+mass=1250.0,
+drag_coefficient=0.30000001192092896, 
+center_of_mass=Location(x=0.600000, y=0.000000, z=-0.500000),
+torque_curve=[
+	Vector2D(x=0.000000, y=400.000000)
+	Vector2D(x=1890.760742, y=500.000000)
+	Vector2D(x=5729.577637, y=400.000000)
+],
+forward_gears=[
+	GearPhysicsControl(ratio=3.800000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=2.060000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=1.220000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=0.820000, down_ratio=0.200000, up_ratio=0.350000)
+],
+steering_curve=[
+	Vector2D(x=0.000000, y=1.000000)
+	Vector2D(x=20.000000, y=0.900000)
+	Vector2D(x=60.000000, y=0.800000)
+	Vector2D(x=120.000000, y=0.700000)
+],
+wheels=[
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=69.999992, radius=35.020000, max_brake_torque=4000.000000, max_handbrake_torque=0.000000, position=Vector3D(x=-14814.010742, y=-7127.286133, z=94.207405))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=69.999992, radius=35.020000, max_brake_torque=4000.000000, max_handbrake_torque=0.000000, position=Vector3D(x=-14978.329102, y=-7127.371582, z=94.207405))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=35.049999, max_brake_torque=4000.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=-14813.883789, y=-7371.652344, z=94.207405))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=35.049999, max_brake_torque=4000.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=-14980.277344, y=-7371.738770, z=94.207405))
+]
+
+=============================================
+vehicle.chevrolet.impala
+
+max_rpm=5800.0, 
+moi=1.0,
+damping_rate_full_throttle=0.15000000596046448, 
+damping_rate_zero_throttle_clutch_engaged=2.0,
+damping_rate_zero_throttle_clutch_disengaged=0.3499999940395355,
+use_gear_autobox=True,
+gear_switch_time=0.5, 
+clutch_strength=10.0, 
+final_ratio=4.0,
+mass=1613.0,
+drag_coefficient=0.30000001192092896, 
+center_of_mass=Location(x=0.600000, y=0.000000, z=-0.250000),
+torque_curve=[
+	Vector2D(x=0.000000, y=400.000000)
+	Vector2D(x=1890.760742, y=500.000000)
+	Vector2D(x=5729.577637, y=400.000000)
+],
+forward_gears=[
+	GearPhysicsControl(ratio=2.900000, down_ratio=0.200000, up_ratio=0.300000)
+	GearPhysicsControl(ratio=1.560000, down_ratio=0.200000, up_ratio=0.300000)
+	GearPhysicsControl(ratio=1.000000, down_ratio=0.200000, up_ratio=0.300000)
+	GearPhysicsControl(ratio=0.700000, down_ratio=0.200000, up_ratio=0.300000)
+],
+steering_curve=[
+	Vector2D(x=0.000000, y=1.000000)
+	Vector2D(x=20.000000, y=0.900000)
+	Vector2D(x=60.000000, y=0.800000)
+	Vector2D(x=120.000000, y=0.700000)
+],
+wheels=[
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=79.999992, radius=30.000000, max_brake_torque=1500.000000, max_handbrake_torque=0.000000, position=Vector3D(x=-5640.660156, y=-224.830429, z=62.262512))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=79.999992, radius=30.000000, max_brake_torque=1500.000000, max_handbrake_torque=0.000000, position=Vector3D(x=-5639.982422, y=-356.644470, z=62.262512))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=30.000000, max_brake_torque=1500.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=-5342.481445, y=-223.297180, z=62.262512))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=30.000000, max_brake_torque=1500.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=-5341.803223, y=-355.111237, z=62.262512))
+]
+
+=============================================
+vehicle.citroen.c3
+
+max_rpm=3750.0, 
+moi=1.0,
+damping_rate_full_throttle=0.15000000596046448, 
+damping_rate_zero_throttle_clutch_engaged=2.0,
+damping_rate_zero_throttle_clutch_disengaged=0.3499999940395355,
+use_gear_autobox=True,
+gear_switch_time=0.5, 
+clutch_strength=10.0, 
+final_ratio=4.0,
+mass=1365.0,
+drag_coefficient=0.30000001192092896, 
+center_of_mass=Location(x=0.600000, y=0.000000, z=-0.400000),
+torque_curve=[
+	Vector2D(x=0.000000, y=400.000000)
+	Vector2D(x=1890.760742, y=500.000000)
+	Vector2D(x=5729.577637, y=400.000000)
+],
+forward_gears=[
+	GearPhysicsControl(ratio=3.460000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=1.870000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=1.160000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=0.820000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=0.660000, down_ratio=0.200000, up_ratio=0.350000)
+],
+steering_curve=[
+	Vector2D(x=0.000000, y=1.000000)
+	Vector2D(x=20.000000, y=0.900000)
+	Vector2D(x=60.000000, y=0.800000)
+	Vector2D(x=120.000000, y=0.700000)
+],
+wheels=[
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=69.999992, radius=34.000000, max_brake_torque=1500.000000, max_handbrake_torque=0.000000, position=Vector3D(x=-29.194401, y=-12496.235352, z=57.654922))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=69.999992, radius=34.000000, max_brake_torque=1500.000000, max_handbrake_torque=0.000000, position=Vector3D(x=-150.735611, y=-12499.234375, z=57.654938))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=34.000000, max_brake_torque=1500.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=-22.574661, y=-12764.503906, z=57.654926))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=34.000000, max_brake_torque=1500.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=-144.115860, y=-12767.502930, z=57.654938))
+]
+
+=============================================
+vehicle.diamondback.century
+
+max_rpm=1000.0, 
+moi=1.0,
+damping_rate_full_throttle=0.15000000596046448, 
+damping_rate_zero_throttle_clutch_engaged=2.0,
+damping_rate_zero_throttle_clutch_disengaged=0.3499999940395355,
+use_gear_autobox=True,
+gear_switch_time=0.5, 
+clutch_strength=10.0, 
+final_ratio=4.0,
+mass=120.0,
+drag_coefficient=0.30000001192092896, 
+center_of_mass=Location(x=-0.330000, y=0.000000, z=-0.300000),
+torque_curve=[
+	Vector2D(x=0.000000, y=40.000000)
+	Vector2D(x=700.000000, y=100.000000)
+	Vector2D(x=1000.000000, y=40.000000)
+],
+forward_gears=[
+	GearPhysicsControl(ratio=2.360000, down_ratio=0.500000, up_ratio=0.650000)
+	GearPhysicsControl(ratio=2.000000, down_ratio=0.500000, up_ratio=0.650000)
+	GearPhysicsControl(ratio=1.730000, down_ratio=0.500000, up_ratio=0.650000)
+	GearPhysicsControl(ratio=1.530000, down_ratio=0.500000, up_ratio=0.650000)
+	GearPhysicsControl(ratio=1.370000, down_ratio=0.500000, up_ratio=0.650000)
+	GearPhysicsControl(ratio=1.240000, down_ratio=0.500000, up_ratio=0.650000)
+	GearPhysicsControl(ratio=1.080000, down_ratio=0.500000, up_ratio=0.650000)
+	GearPhysicsControl(ratio=0.930000, down_ratio=0.500000, up_ratio=0.650000)
+	GearPhysicsControl(ratio=0.810000, down_ratio=0.500000, up_ratio=0.650000)
+	GearPhysicsControl(ratio=0.720000, down_ratio=0.500000, up_ratio=0.650000)
+],
+steering_curve=[
+	Vector2D(x=0.000000, y=1.000000)
+	Vector2D(x=20.000000, y=0.900000)
+	Vector2D(x=60.000000, y=0.800000)
+	Vector2D(x=120.000000, y=0.700000)
+],
+wheels=[
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=45.000000, radius=33.000000, max_brake_torque=1500.000000, max_handbrake_torque=0.000000, position=Vector3D(x=24062.931641, y=5310.617676, z=62.501427))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=45.000000, radius=33.000000, max_brake_torque=1500.000000, max_handbrake_torque=0.000000, position=Vector3D(x=24102.919922, y=5311.591309, z=62.501427))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=33.500000, max_brake_torque=1500.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=24100.583984, y=5407.546875, z=62.501431))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=33.500000, max_brake_torque=1500.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=24060.595703, y=5406.573242, z=62.501431))
+]
+
+=============================================
+vehicle.bmw.isetta
+
+max_rpm=1500.0, 
+moi=1.0,
+damping_rate_full_throttle=0.15000000596046448, 
+damping_rate_zero_throttle_clutch_engaged=2.0,
+damping_rate_zero_throttle_clutch_disengaged=0.3499999940395355,
+use_gear_autobox=True,
+gear_switch_time=0.5, 
+clutch_strength=10.0, 
+final_ratio=4.0,
+mass=513.0,
+drag_coefficient=0.30000001192092896, 
+center_of_mass=Location(x=0.210046, y=0.000000, z=-0.400287),
+torque_curve=[
+	Vector2D(x=0.000000, y=400.000000)
+	Vector2D(x=2180.582031, y=436.040283)
+	Vector2D(x=5729.577637, y=400.000000)
+],
+forward_gears=[
+	GearPhysicsControl(ratio=0.370000, down_ratio=0.200000, up_ratio=0.350000)
+],
+steering_curve=[
+	Vector2D(x=0.000000, y=1.000000)
+	Vector2D(x=20.000000, y=0.900000)
+	Vector2D(x=63.086758, y=0.703473)
+	Vector2D(x=119.119682, y=0.573047)
+],
+wheels=[
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=60.000000, radius=25.000000, max_brake_torque=1500.000000, max_handbrake_torque=0.000000, position=Vector3D(x=-27.370720, y=-12555.212891, z=51.878746))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=60.000000, radius=25.000000, max_brake_torque=1500.000000, max_handbrake_torque=0.000000, position=Vector3D(x=-149.162827, y=-12558.218750, z=51.878761))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=25.000000, max_brake_torque=1500.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=-46.836372, y=-12708.212891, z=52.740356))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=25.000000, max_brake_torque=1500.000000, max_handbrake_torque=3000.000000, position=Vector3D(x=-122.174812, y=-12710.071289, z=52.740364))
+]
+
+=============================================
+vehicle.carlamotors.carlacola
+
+max_rpm=3200.0, 
+moi=1.0,
+damping_rate_full_throttle=0.15000000596046448, 
+damping_rate_zero_throttle_clutch_engaged=2.0,
+damping_rate_zero_throttle_clutch_disengaged=0.3499999940395355,
+use_gear_autobox=True,
+gear_switch_time=0.5, 
+clutch_strength=10.0, 
+final_ratio=4.0,
+mass=4600.0,
+drag_coefficient=0.30000001192092896, 
+center_of_mass=Location(x=0.600000, y=0.000000, z=-1.000000),
+torque_curve=[
+	Vector2D(x=0.000000, y=400.000000)
+	Vector2D(x=1315.472900, y=654.445312)
+	Vector2D(x=5729.577637, y=400.000000)
+],
+forward_gears=[
+	GearPhysicsControl(ratio=5.015999, down_ratio=0.200000, up_ratio=0.700000)
+	GearPhysicsControl(ratio=2.672000, down_ratio=0.200000, up_ratio=0.600000)
+	GearPhysicsControl(ratio=1.585000, down_ratio=0.200000, up_ratio=0.450000)
+	GearPhysicsControl(ratio=1.000000, down_ratio=0.200000, up_ratio=0.350000)
+	GearPhysicsControl(ratio=0.770000, down_ratio=0.200000, up_ratio=0.350000)
+],
+steering_curve=[
+	Vector2D(x=0.000000, y=1.000000)
+	Vector2D(x=20.000000, y=0.900000)
+	Vector2D(x=60.000000, y=0.800000)
+	Vector2D(x=120.000000, y=0.700000)
+],
+wheels=[
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=69.999992, radius=46.000000, max_brake_torque=4000.000000, max_handbrake_torque=0.000000, position=Vector3D(x=-7536.670898, y=7419.025391, z=155.472839))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=69.999992, radius=46.000000, max_brake_torque=4000.000000, max_handbrake_torque=0.000000, position=Vector3D(x=-7342.208496, y=7418.495605, z=155.472855))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=46.000000, max_brake_torque=4000.000000, max_handbrake_torque=4500.000000, position=Vector3D(x=-7550.388184, y=7685.562500, z=157.092743))
+	WheelPhysicsControl(tire_friction=3.500000, damping_rate=0.250000, max_steer_angle=0.000000, radius=46.000000, max_brake_torque=4000.000000, max_handbrake_torque=4500.000000, position=Vector3D(x=-7327.037598, y=7684.953613, z=157.092758))
+]

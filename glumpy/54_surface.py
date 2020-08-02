@@ -129,6 +129,7 @@ b_indices = np.array(I, dtype=np.uint32).view(gloo.IndexBuffer)
 
 def func3(x,y):
     return (1-x/2+x**5+y**3)*np.exp(-x**2-y**2)
+
 x = np.linspace(-2.0, 2.0, 32).astype(np.float32)
 y = np.linspace(-2.0, 2.0, 32).astype(np.float32)
 X,Y = np.meshgrid(x, y)

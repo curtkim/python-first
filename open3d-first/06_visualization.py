@@ -79,7 +79,8 @@ def draw_premitives():
     mesh_frame = o3d.geometry.TriangleMesh.create_coordinate_frame(size=0.6, origin=[-2, -2, -2])
 
     print("We draw a few primitives using collection.")
-    o3d.visualization.draw_geometries([mesh_box, mesh_sphere, mesh_cylinder, mesh_frame])
+    o3d.visualization.draw_geometries(
+        [mesh_box, mesh_sphere, mesh_cylinder, mesh_frame])
 
     #o3d.visualization.draw_geometries([mesh_box + mesh_sphere + mesh_cylinder + mesh_frame])
 

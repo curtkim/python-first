@@ -11,7 +11,6 @@
         0.0
       ],
       "name": "buffer-0-accessor-indices-buffer-0-mesh-0",
-      "normalized": true,
       "type": "SCALAR"
     },
     {
@@ -29,7 +28,6 @@
         -167.22898864746094
       ],
       "name": "buffer-0-accessor-position-buffer-0-mesh-0",
-      "normalized": true,
       "type": "VEC3"
     }
   ],

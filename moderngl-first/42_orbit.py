@@ -1,3 +1,7 @@
+# reference
+# https://stackoverflow.com/questions/21603412/algorithm-3d-orbiting-camera-control-with-mouse-drag
+# https://threejs.org/examples/misc_controls_map.html
+
 import math
 import moderngl
 import numpy as np

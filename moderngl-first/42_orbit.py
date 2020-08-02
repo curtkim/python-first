@@ -51,56 +51,68 @@ class CrateExample(Example):
         self.vao = self.scene.root_nodes[0].mesh.vao.instance(self.prog)
         self.texture = self.load_texture_2d('crate.png')
 
+        self.coords = [
+            (-2, -2, 0),
+            (-2, 0, 0),
+            (-2, 2, 0),
+            (0, -2, 0),
+            (0, 0, 0),
+            (0, 2, 0),
+            (2, -2, 0),
+            (2, 0, 0),
+            (2, 2, 0),
+        ]
+
         self.angleX = 0
         self.angleY = 3.14 / 6
-        #self.lastX;
-        #self.lastY;
+        self.distance = 6
+        self.origin = np.array([0.0,0.0,0.0])
+        self.mouse_button = 0
+
 
     def render(self, time, frame_time):
         self.ctx.clear(1.0, 1.0, 1.0)
         self.ctx.enable(moderngl.DEPTH_TEST)
 
-        camera_pos = np.array([np.cos(self.angleY)*np.cos(self.angleX), np.sin(self.angleX), np.sin(self.angleY)]) * 3
-
         proj = Matrix44.perspective_projection(45.0, self.aspect_ratio, 0.1, 100.0)
 
-        lookat = Matrix44.look_at(
-            tuple(camera_pos),  # eye
-            (0.0, 0.0, 0.0),    # target
-            (0.0, 0.0, 1.0),    # up
-        )
-        model = Matrix44.from_translation((0, 0, -0.5))
+        camera_pos = np.array([np.cos(self.angleY)*np.cos(self.angleX), np.sin(self.angleX), np.sin(self.angleY)]) * self.distance
 
-        self.mvp.write((proj * lookat * model).astype('f4'))
-        self.light.value = tuple(camera_pos)
+        lookat = Matrix44.look_at(
+            tuple(camera_pos+self.origin),  # eye
+            tuple(self.origin),             # target
+            (0.0, 0.0, 1.0),                # up
+        )
+
+        self.light.value = (0, -3, 3)
         self.texture.use()
-        self.vao.render()
+
+        for coord in self.coords:
+            model = Matrix44.from_translation(coord)
+            self.mvp.write((proj * lookat * model).astype('f4'))
+            self.vao.render()
 
 
     def mouse_drag_event(self, x, y, dx, dy):
-        self.angleX += dx * -0.01
-        self.angleY += dy * 0.01
-
-        #self.angleX = min(max(self.angleX, 0), 2*math.pi)
-        self.angleY = min(max(self.angleY, 0), math.pi / 2)
-
-        print("Mouse drag:", x, y, dx, dy, self.angleX, self.angleY)
-
-    '''
-    def mouse_position_event(self, x, y, dx, dy):
-        print("Mouse position:", x, y, dx, dy)
+        if self.mouse_button == 2:
+            self.angleX += dx * -0.01
+            self.angleY += dy * 0.01
+            self.angleY = min(max(self.angleY, 0), (math.pi-0.2) / 2)
+        elif self.mouse_button == 1:
+            self.origin += np.array([dy*-0.01, dx*-0.01, 0.0])
+        #print("Mouse drag:", x, y, dx, dy, self.angleX, self.angleY)
 
     def mouse_scroll_event(self, x_offset: float, y_offset: float):
-        print("Mouse wheel:", x_offset, y_offset)
+        #print("Mouse wheel:", x_offset, y_offset)
+        self.distance += y_offset * -0.1
 
     def mouse_press_event(self, x, y, button):
-        #self.lastX = x
-        #self.lastY = y
-        print("Mouse button {} pressed at {}, {}".format(button, x, y))
+        self.mouse_button = button
+        #print("Mouse button {} pressed at {}, {}".format(button, x, y))
 
     def mouse_release_event(self, x: int, y: int, button: int):
-        print("Mouse button {} released at {}, {}".format(button, x, y))
-    '''
+        self.mouse_button = 0
+        #print("Mouse button {} released at {}, {}".format(button, x, y))
 
 if __name__ == '__main__':
     CrateExample.run()

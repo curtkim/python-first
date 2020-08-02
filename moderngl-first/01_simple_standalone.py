@@ -39,6 +39,7 @@ g = np.zeros(50)
 b = np.zeros(50)
 
 vertices = np.dstack([x, y, r, g, b]).astype('f4')
+print(vertices.shape)
 
 vbo = ctx.buffer(vertices)
 vao = ctx.simple_vertex_array(prog, vbo, 'in_vert', 'in_color')

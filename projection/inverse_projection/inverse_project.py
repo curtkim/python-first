@@ -42,8 +42,7 @@ def make_pointcloud(rgb_file, depth_file):
     all_coords = np.vstack((cam_coords, rgb_coords))
     all_coords = all_coords[:, np.where(all_coords[0] > -150)[0]]
 
-    all_coords = all_coords.T.astype('f4')
-    all_coords = np.copy(all_coords, order='c')
+    all_coords = all_coords.T.astype('f4').copy()
     print(all_coords.shape)
 
     return all_coords

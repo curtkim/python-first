@@ -6,55 +6,48 @@ from geometry_utils import *
 
 import moderngl
 import moderngl_window as mglw
-import pyrr
 from pyrr import Matrix44
 
 
-# Load images
-rgb = cv2.cvtColor(cv2.imread('rgb.png'), cv2.COLOR_BGR2RGB)
-rgb = rgb.astype('f4')/255
-rgb_coords = np.transpose(rgb, (2,0,1)).reshape((3, -1))
-print(rgb_coords.shape)
-print(rgb[0,0])
-print(rgb_coords[:,0])
+def make_pointcloud(rgb_file, depth_file):
 
-print(rgb[0,1])
-print(rgb_coords[:,1])
+    # Load images
+    rgb = cv2.cvtColor(cv2.imread(rgb_file), cv2.COLOR_BGR2RGB)
+    rgb = rgb.astype('f4')/255                                      # int -> float
+    rgb_coords = np.transpose(rgb, (2,0,1)).reshape((3, -1))        # reshape (3, height*width)
+    print(rgb_coords.shape)
 
-# Depth is stored as float32 in meters
-depth = cv2.imread('depth.exr', cv2.IMREAD_ANYDEPTH)
+    # Depth is stored as float32 in meters
+    depth = cv2.imread(depth_file, cv2.IMREAD_ANYDEPTH)
 
-# Get intrinsic parameters
-height, width, _ = rgb.shape
-K = intrinsic_from_fov(height, width, 90)  # +- 45 degrees
-K_inv = np.linalg.inv(K)
+    # Get intrinsic parameters
+    height, width, _ = rgb.shape
+    K = intrinsic_from_fov(height, width, 90)  # +- 45 degrees
+    K_inv = np.linalg.inv(K)
 
-# Get pixel coordinates
-pixel_coords = pixel_coord_np(width, height)  # [3, npoints]
+    # Get pixel coordinates
+    pixel_coords = pixel_coord_np(width, height)  # [3, npoints]
 
-# Apply back-projection: K_inv @ pixels * depth
-cam_coords = K_inv[:3, :3] @ pixel_coords * depth.flatten()
-print(cam_coords[:,0])
-print(cam_coords[:,1])
+    # Apply back-projection: K_inv @ pixels * depth
+    cam_coords = K_inv[:3, :3] @ pixel_coords * depth.flatten()
 
-# Limit points to 150m in the z-direction for visualisation
-cam_coords[[0,1,2]] = cam_coords[[2,0,1]]  # x,y,z축을 바꾼다.
-cam_coords[2,:] = cam_coords[2,:]*-1 # z축을 뒤집는
-cam_coords[0,:] = cam_coords[0,:]*-1 # x축을 뒤집는
+    # Limit points to 150m in the z-direction for visualisation
+    cam_coords[[0,1,2]] = cam_coords[[2,0,1]]  # x,y,z축을 바꾼다.
+    cam_coords[2,:] = cam_coords[2,:]*-1 # z축을 뒤집는
+    cam_coords[0,:] = cam_coords[0,:]*-1 # x축을 뒤집는
 
-r = np.ones(height*width)
-g = np.zeros(height*width)
-b = np.zeros(height*width)
+    #aabb = pyrr.aabb.create_from_points(cam_coords)
+    #print(cam_coords.shape, aabb)
 
-all_coords = np.vstack((cam_coords, rgb_coords))
-all_coords = all_coords[:, np.where(all_coords[0] > -150)[0]]
+    all_coords = np.vstack((cam_coords, rgb_coords))
+    all_coords = all_coords[:, np.where(all_coords[0] > -150)[0]]
 
-all_coords = all_coords.T.astype('f4')
-all_coords = np.copy(all_coords, order='c')
-print(all_coords.shape)
+    all_coords = all_coords.T.astype('f4').copy()
+    print(all_coords.shape)
 
-aabb = pyrr.aabb.create_from_points(cam_coords)
-print(aabb)
+    return all_coords
+
+pc = make_pointcloud('rgb.png', 'depth.exr')
 
 
 vertex_shader = '''
@@ -106,7 +99,7 @@ class MyExample(mglw.WindowConfig):
         self.mouse_button = 0
 
 
-        self.vbo = self.ctx.buffer(all_coords)
+        self.vbo = self.ctx.buffer(pc)
 
         # We control the 'in_vert' and `in_color' variables
         self.vao = self.ctx.vertex_array(

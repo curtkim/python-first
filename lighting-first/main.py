@@ -90,15 +90,19 @@ class MNISTDataModule(pl.LightningDataModule):
         mnist_test = DataLoader(self.mnist_test, batch_size=self.batch_size, num_workers=4)
         return mnist_test
 
-# init model
-model = LitModel()
+def main():
+    # init model
+    model = LitModel()
 
-# init data
-dm = MNISTDataModule()
+    # init data
+    dm = MNISTDataModule()
 
-# train
-trainer = pl.Trainer(gpus=1, max_epochs=10)
-trainer.fit(model, dm)
+    # train
+    trainer = pl.Trainer(gpus=2, max_epochs=20, distributed_backend='ddp')
+    trainer.fit(model, dm)
 
-# test
-trainer.test(datamodule=dm)
+    # test
+    trainer.test(datamodule=dm)
+
+if __name__ == '__main__':
+    main()

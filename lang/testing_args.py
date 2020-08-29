@@ -1,3 +1,5 @@
+# from https://book.pythontips.com/en/latest/args_and_kwargs.html
+
 # 1) *argv
 def test_var_args(f_arg, *argv):
     print("first normal arg:", f_arg)

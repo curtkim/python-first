@@ -7,7 +7,7 @@ def main():
     actor_list = []
 
     try:
-        client = carla.Client('35.184.47.60', 2000)
+        client = carla.Client('localhost', 2000)
         client.set_timeout(2.0)
 
         world = client.get_world()
@@ -26,10 +26,13 @@ def main():
 
         cc = carla.ColorConverter
 
+        '''
         tfs = [carla.Transform(carla.Location(x=1.5, y=0, z=2.4), carla.Rotation(yaw=0)),
                carla.Transform(carla.Location(x=0, y=1, z=2.4), carla.Rotation(yaw=90)),
                carla.Transform(carla.Location(x=-1.5, y=0, z=2.4), carla.Rotation(yaw=180)),
                carla.Transform(carla.Location(x=0, y=-1, z=2.4), carla.Rotation(yaw=270))]
+        '''
+        tfs = [carla.Transform(carla.Location(x=1.5, y=0, z=2.4), carla.Rotation(yaw=0))]
 
         def make_listener(format, idx):
             def callback(image):
@@ -38,6 +41,8 @@ def main():
 
         for i, tf in enumerate(tfs):
             rgb_bp = blueprint_library.find('sensor.camera.rgb')
+            rgb_bp.set_attribute('image_size_x', str(1920))
+            rgb_bp.set_attribute('image_size_y', str(1080))
             rgb_camera = world.spawn_actor(rgb_bp, tf, attach_to=vehicle)
             actor_list.append(rgb_camera)
             print('created %s' % rgb_camera.type_id)

@@ -23,6 +23,6 @@ def decorate_start_end(file_name, start_end):
 
 
 start_end = extract_start_end('output/0-frame.json')
-body = decorate_start_end('output/1-frame-nutonomoy.json', start_end)
-with open('output/1-frame-nutonomoy.json', 'w') as outfile:
+body = decorate_start_end('output/nutonomoy-1-frame.json', start_end)
+with open('output/nutonomoy-1-frame.json', 'w') as outfile:
     json.dump(body, outfile)

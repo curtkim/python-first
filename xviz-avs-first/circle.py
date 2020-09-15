@@ -35,37 +35,35 @@ class CircleScenario:
                 .stream_style({'fill_color': [200, 0, 70, 128]})\
                 .category(xviz.CATEGORY.PRIMITIVE)\
                 .type(xviz.PRIMITIVE_TYPES.CIRCLE)
-            builder.stream("/ground_grid_h")\
-                .coordinate(xviz.COORDINATE_TYPES.IDENTITY)\
-                .category(xviz.CATEGORY.PRIMITIVE)\
-                .type(xviz.PRIMITIVE_TYPES.POLYLINE)\
-                .stream_style({
-                    'stroked': True,
-                    'stroke_width': 0.2,
-                    'stroke_color': [0, 255, 0, 128]
-                })
-            builder.stream("/ground_grid_v")\
-                .coordinate(xviz.COORDINATE_TYPES.IDENTITY)\
-                .category(xviz.CATEGORY.PRIMITIVE)\
-                .type(xviz.PRIMITIVE_TYPES.POLYLINE)\
-                .stream_style({
-                    'stroked': True,
-                    'stroke_width': 0.2,
-                    'stroke_color': [0, 255, 0, 128]
-                })
-            builder.stream("/points")\
-                .coordinate(xviz.COORDINATE_TYPES.VEHICLE_RELATIVE)\
-                .category(xviz.CATEGORY.PRIMITIVE)\
-                .type(xviz.PRIMITIVE_TYPES.POINT)\
-                .stream_style({
-                    'radius_pixels': 15
-                })
+            # builder.stream("/ground_grid_h")\
+            #     .coordinate(xviz.COORDINATE_TYPES.IDENTITY)\
+            #     .category(xviz.CATEGORY.PRIMITIVE)\
+            #     .type(xviz.PRIMITIVE_TYPES.POLYLINE)\
+            #     .stream_style({
+            #         'stroked': True,
+            #         'stroke_width': 0.2,
+            #         'stroke_color': [0, 255, 0, 128]
+            #     })
+            # builder.stream("/ground_grid_v")\
+            #     .coordinate(xviz.COORDINATE_TYPES.IDENTITY)\
+            #     .category(xviz.CATEGORY.PRIMITIVE)\
+            #     .type(xviz.PRIMITIVE_TYPES.POLYLINE)\
+            #     .stream_style({
+            #         'stroked': True,
+            #         'stroke_width': 0.2,
+            #         'stroke_color': [0, 255, 0, 128]
+            #     })
+            # builder.stream("/points")\
+            #     .coordinate(xviz.COORDINATE_TYPES.VEHICLE_RELATIVE)\
+            #     .category(xviz.CATEGORY.PRIMITIVE)\
+            #     .type(xviz.PRIMITIVE_TYPES.POINT)\
+            #     .stream_style({
+            #         'radius_pixels': 15
+            #     })
 
-            '''
-            builder.stream("/camera")\
-                .category(xviz.CATEGORY.PRIMITIVE)\
-                .type(2)
-            '''
+            # builder.stream("/camera")\
+            #     .category(xviz.CATEGORY.PRIMITIVE)\
+            #     .type(2)
 
             builder.log_info({
                 "start_time": self._timestamp,
@@ -98,10 +96,11 @@ class CircleScenario:
 
         builder = xviz.XVIZBuilder(metadata=self._metadata)
         self._draw_pose(builder, timestamp)
-        self._draw_grid(builder)
+        #self._draw_grid(builder)
 
         #image = Image.open('cat.jpg')
         #self._put_image(builder, np.asarray(image))
+
         return builder.get_message()
 
     def get_message(self, time_offset):

@@ -13,6 +13,9 @@ except IndexError:
     pass
 
 
+import base64
+import json
+
 import carla
 import numpy as np
 import math
@@ -88,6 +91,20 @@ def my_control(curr_tf, curr_velocity, route_line):
     return carla.VehicleControl(throttle, steer, 0.0, manual_gear_shift=True, gear=1) #1단으로 달린다.
 
 
+def write_file(filename, str):
+    f = open(filename, "w")
+    f.write(str)
+    f.close()
+
+def write_frame(filename, vehicle_loc: carla.Location, lidar : carla.LidarMeasurement):
+    dict = {}
+    dict['pose'] = [vehicle_loc.x, vehicle_loc.y, vehicle_loc.z]
+    dict['lidar'] = base64.b64encode(lidar.raw_data).decode("utf-8")
+    f = open(filename, "w")
+    f.write(json.dumps(dict))
+    f.close()
+
+
 def main():
     try:
         client = carla.Client('localhost', 2000)
@@ -138,6 +155,7 @@ def main():
         print(vehicle.get_physics_control())
 
         #vehicle.set_velocity(carla.Vector3D(-10, 0, 0)) # 초기 속도를 지정할 수 있다.
+        frame = 0
         with CarlaSyncMode(world, camera_sensor, lidar_sensor, fps=10) as sync_mode:
             while True:
                 curr_tf = vehicle.get_transform()
@@ -147,16 +165,22 @@ def main():
                 vehicle.apply_control(my_control(curr_tf, curr_velocity, route_line))
 
                 snapshot, image_rgb, pointcloud = sync_mode.tick(timeout=2.0)
-                frame = snapshot.frame
-                print(f"frame={frame}, road_id={waypoint.road_id}")
+                frame += 1
+                print(f"frame={frame}, game_frame={snapshot.frame} road_id={waypoint.road_id}")
                 image_rgb.save_to_disk("_out/rgb_%06d.png" % (frame))
 
-                pointcloud.save_to_disk('_out/pc_%06d.ply' % frame)
+                new_location = vehicle.get_location()
+                #print(curr_location, new_location)
+                #pointcloud.save_to_disk('_out/pc_%06d.ply' % frame)
+                #print(type(base64.encodebytes(pointcloud.raw_data)))
+                write_frame('_out/pc_%06d.txt' % frame, new_location, pointcloud)
+
                 #for pt in pointcloud:
                 #    print(pt)
-                array = np.frombuffer(pointcloud.raw_data, dtype=np.dtype("float32"))
-                xyz = np.reshape(array, (-1, 3))
-                print(xyz.shape)
+                #print(len(pointcloud))
+                #array = np.frombuffer(pointcloud.raw_data, dtype=np.dtype("float32"))
+                #xyz = np.reshape(array, (-1, 3))
+                #print(xyz.shape)
 
                 spectator_tf = carla.Transform(carla.Location(curr_location.x, curr_location.y, curr_location.z+2.5), curr_tf.rotation)
                 world.get_spectator().set_transform(spectator_tf)

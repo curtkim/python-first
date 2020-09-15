@@ -14,8 +14,11 @@ except IndexError:
 
 
 import carla
+import numpy as np
 import math
 from shapely.geometry import Point, LineString
+
+from carla_sync_mode import CarlaSyncMode
 
 
 def load_world_if_needed(client, map_name):
@@ -88,12 +91,13 @@ def my_control(curr_tf, curr_velocity, route_line):
 def main():
     try:
         client = carla.Client('localhost', 2000)
-        client.set_timeout(2.0)
+        client.set_timeout(5.0)
 
         load_world_if_needed(client, "/Game/Carla/Maps/Town01")
  
-        world = client.get_world()        
-        world.apply_settings(carla.WorldSettings(True, False, 1.0/30))
+        world = client.get_world()
+        world.set_weather(carla.WeatherParameters(cloudiness=20, sun_altitude_angle=45))
+        #world.apply_settings(carla.WorldSettings(True, False, 1.0/30))
         map = world.get_map()
 
         start_tf = carla.Transform(carla.Location(x=230, y=55, z=0.1), carla.Rotation(0, 180, 0))
@@ -111,28 +115,60 @@ def main():
         vehicle = world.spawn_actor(bp, start_tf)
         print('created %s' % vehicle.type_id)
 
+        rgb_bp = blueprint_library.find('sensor.camera.rgb')
+        rgb_bp.set_attribute('image_size_x', str(1920))
+        rgb_bp.set_attribute('image_size_y', str(1080))
+        rgb_bp.set_attribute('fov', "90")
+
+        camera_sensor = world.spawn_actor(
+            rgb_bp,
+            carla.Transform(carla.Location(x=-5.5, z=2.8), carla.Rotation(pitch=-15)),
+            attach_to=vehicle)
+
+        lidar_bp = world.get_blueprint_library().find('sensor.lidar.ray_cast')
+        lidar_bp.set_attribute('range', str(200))
+        lidar_bp.set_attribute('channels', str(32))
+        lidar_bp.set_attribute('rotation_frequency', str(10))
+        lidar_bp.set_attribute('points_per_second', str(10*32*360*4)) #(44841, 3)
+        lidar_sensor = world.spawn_actor(lidar_bp, carla.Transform(carla.Location(x=1.5, y=0, z=2.4)),
+                                         attach_to=vehicle)
+
         print('===============')
         print('physics_control')
         print(vehicle.get_physics_control())
 
         #vehicle.set_velocity(carla.Vector3D(-10, 0, 0)) # 초기 속도를 지정할 수 있다.
-        while True:
-            curr_tf = vehicle.get_transform()
-            curr_location = vehicle.get_location()
-            curr_velocity = vehicle.get_velocity()
-            waypoint = map.get_waypoint(curr_location)
-            vehicle.apply_control(my_control(curr_tf, curr_velocity, route_line))
-            frame = world.tick()
-            print(f"frame={frame}, road_id={waypoint.road_id}")
+        with CarlaSyncMode(world, camera_sensor, lidar_sensor, fps=10) as sync_mode:
+            while True:
+                curr_tf = vehicle.get_transform()
+                curr_location = vehicle.get_location()
+                curr_velocity = vehicle.get_velocity()
+                waypoint = map.get_waypoint(curr_location)
+                vehicle.apply_control(my_control(curr_tf, curr_velocity, route_line))
 
-            spectator_tf = carla.Transform(carla.Location(curr_location.x, curr_location.y, curr_location.z+2.5), curr_tf.rotation)
-            world.get_spectator().set_transform(spectator_tf)
+                snapshot, image_rgb, pointcloud = sync_mode.tick(timeout=2.0)
+                frame = snapshot.frame
+                print(f"frame={frame}, road_id={waypoint.road_id}")
+                image_rgb.save_to_disk("_out/rgb_%06d.png" % (frame))
 
-            if curr_location.distance(end_loc) < 3: break
+                pointcloud.save_to_disk('_out/pc_%06d.ply' % frame)
+                #for pt in pointcloud:
+                #    print(pt)
+                array = np.frombuffer(pointcloud.raw_data, dtype=np.dtype("float32"))
+                xyz = np.reshape(array, (-1, 3))
+                print(xyz.shape)
+
+                spectator_tf = carla.Transform(carla.Location(curr_location.x, curr_location.y, curr_location.z+2.5), curr_tf.rotation)
+                world.get_spectator().set_transform(spectator_tf)
+
+                if curr_location.distance(end_loc) < 3: break
 
         print("success")
 
     finally:
+        camera_sensor.destroy()
+        lidar_sensor.destroy()
+
         print('destroying vehicle')
         vehicle.destroy()
 

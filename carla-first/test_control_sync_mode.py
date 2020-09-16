@@ -168,11 +168,11 @@ def main():
                 snapshot, image_rgb, pointcloud = sync_mode.tick(timeout=2.0)
                 frame += 1
                 print(f"frame={frame}, game_frame={snapshot.frame} road_id={waypoint.road_id}")
-                image_rgb.save_to_disk("_out/rgb_%06d.png" % (frame))
+                image_rgb.save_to_disk("_out/camera0_%d.png" % (frame))
 
                 #pointcloud.save_to_disk('_out/pc_%06d.ply' % frame)
                 #print(type(base64.encodebytes(pointcloud.raw_data)))
-                write_frame('_out/pc_%06d.txt' % frame, vehicle.get_transform(), pointcloud)
+                write_frame('_out/frame_%d.json' % frame, vehicle.get_transform(), pointcloud)
 
                 #for pt in pointcloud:
                 #    print(pt)

@@ -42,16 +42,17 @@ function base64_farray(base64str){
 
 const INITIAL_VIEW_STATE = {
   target: [229, -54, 0],
-  rotationX: 45,
-  rotationOrbit: 0,
+  rotationX: 25,
+  rotationOrbit: -90,
   //orbitAxis: 'Y',
-  fov: 50,
-  zoom: 3.5
+  fov: 70,
+  zoom: 5
 };
 
 //const BASE_URL = '//alpha-mk.kakao.com/dn/mobdata/omega-perception/temp';
 const BASE_URL = '//localhost:8000/_out';
 
+const LIDAR_HEIGHT = 2.4
 
 export default {
   name: 'ScenarioView',
@@ -84,7 +85,7 @@ export default {
   mounted() {
     this.deck = new Deck({
       canvas: "deckcanvas",
-      height: '90%',
+      height: '80%',
       width: '50%',
       views: new OrbitView({near: 0.1, far: 450}),
       initialViewState: this.viewState,
@@ -112,15 +113,12 @@ export default {
         });
     },
     fetchFrame() {
-      fetch(`${BASE_URL}/pc_000001.txt`)
+      fetch(`${BASE_URL}/frame_${this.frame}.json`)
         .then(res => res.json())
         .then(json => {
           
-          //mat4.invert(this.carposeMatrix, mat4.fromValues(...json.carposeMatrix))
-          //console.log(this.carposeMatrix)
-          //console.log(json.carpose)
           var t = mat4.create()
-          mat4.fromTranslation(t, [229.99989318847656, -54.99998092651367, 3])
+          mat4.fromTranslation(t, [229.99989318847656, -54.99998092651367, 2.4])
           var r = mat4.create()
           mat4.fromRotation(r, Math.PI/2, [0,0,1])
           mat4.mul(this.carposeMatrix, t, r)
@@ -144,7 +142,7 @@ export default {
   },
   computed: {
     imageUrl() {
-      return `${BASE_URL}/rgb_000001.png`;
+      return `${BASE_URL}/camera0_${this.frame}.png`;
     },
     computedLayers() {
       return [
@@ -210,7 +208,8 @@ span.right {
 }
 
 span.right canvas {
-  border : 1px solid silver;
+  border : 0px solid silver;
+  background-color: #e0e0e0;
 }
 
 </style>

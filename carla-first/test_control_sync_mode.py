@@ -22,6 +22,7 @@ import math
 from shapely.geometry import Point, LineString
 
 from carla_sync_mode import CarlaSyncMode
+from utils import tf2matrix4list
 
 
 def load_world_if_needed(client, map_name):
@@ -91,14 +92,13 @@ def my_control(curr_tf, curr_velocity, route_line):
     return carla.VehicleControl(throttle, steer, 0.0, manual_gear_shift=True, gear=1) #1단으로 달린다.
 
 
-def write_file(filename, str):
-    f = open(filename, "w")
-    f.write(str)
-    f.close()
-
-def write_frame(filename, vehicle_loc: carla.Location, lidar : carla.LidarMeasurement):
+def write_frame(filename, car_tf: carla.Transform, lidar : carla.LidarMeasurement):
     dict = {}
-    dict['pose'] = [vehicle_loc.x, vehicle_loc.y, vehicle_loc.z]
+    dict['carpose'] = {
+        'location': [car_tf.location.x, car_tf.location.y, car_tf.location.z],
+        'rotation': [car_tf.rotation.roll, car_tf.rotation.pitch, car_tf.rotation.yaw]
+    }
+    dict['carposeMatrix'] = tf2matrix4list(car_tf)
     dict['lidar'] = base64.b64encode(lidar.raw_data).decode("utf-8")
     f = open(filename, "w")
     f.write(json.dumps(dict))
@@ -160,6 +160,7 @@ def main():
             while True:
                 curr_tf = vehicle.get_transform()
                 curr_location = vehicle.get_location()
+
                 curr_velocity = vehicle.get_velocity()
                 waypoint = map.get_waypoint(curr_location)
                 vehicle.apply_control(my_control(curr_tf, curr_velocity, route_line))
@@ -169,11 +170,9 @@ def main():
                 print(f"frame={frame}, game_frame={snapshot.frame} road_id={waypoint.road_id}")
                 image_rgb.save_to_disk("_out/rgb_%06d.png" % (frame))
 
-                new_location = vehicle.get_location()
-                #print(curr_location, new_location)
                 #pointcloud.save_to_disk('_out/pc_%06d.ply' % frame)
                 #print(type(base64.encodebytes(pointcloud.raw_data)))
-                write_frame('_out/pc_%06d.txt' % frame, new_location, pointcloud)
+                write_frame('_out/pc_%06d.txt' % frame, vehicle.get_transform(), pointcloud)
 
                 #for pt in pointcloud:
                 #    print(pt)

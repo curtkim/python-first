@@ -1,6 +1,19 @@
 <template>
   <div class="scenario">
-    <h1>{{ msg }}</h1>
+    <div>
+      <h3>{{ msg }}</h3>
+      <button v-on:click="prevFrame(20)">prev20</button>      
+      <button v-on:click="prevFrame(5)">prev5</button>      
+      <button v-on:click="prevFrame(1)">prev</button>
+      <button v-on:click="nextFrame(1)">next</button>
+      <button v-on:click="nextFrame(5)">next5</button>
+      <button v-on:click="nextFrame(20)">next20</button>
+      <span>{{ frame }} </span>
+      <span>{{ carpose.rotation[2] }} zoom={{ viewState.zoom }} {{ viewState.rotationX }} {{ viewState.rotationOrbit }}</span>
+    </div>
+    <div>
+      <el-slider v-model="frame" :max="128"></el-slider>
+    </div>
     <div class="container">
       <span class="left">
         <img :src="imageUrl"/>
@@ -8,7 +21,7 @@
       <span class="right">
         <canvas id="deckcanvas"></canvas>
       </span>
-    </div>
+    </div>    
   </div>
 </template>
 
@@ -23,7 +36,7 @@ import {COORDINATE_SYSTEM, OrbitView,
 } from '@deck.gl/core';
 import {PointCloudLayer} from '@deck.gl/layers';
 import {GeoJsonLayer} from '@deck.gl/layers';
-import {mat4} from 'gl-matrix';
+import {mat4, quat} from 'gl-matrix';
 
 function chunking(data, length) {
   var result = [];
@@ -41,18 +54,19 @@ function base64_farray(base64str){
 }
 
 const INITIAL_VIEW_STATE = {
-  target: [229, -54, 0],
-  rotationX: 25,
+  target: [0,0,0],
+  rotationX: 85,
   rotationOrbit: -90,
   //orbitAxis: 'Y',
   fov: 70,
-  zoom: 5
+  zoom: 2
 };
 
 //const BASE_URL = '//alpha-mk.kakao.com/dn/mobdata/omega-perception/temp';
 const BASE_URL = '//localhost:8000/_out';
 
 const LIDAR_HEIGHT = 2.4
+const MAX_FRAME = 128
 
 export default {
   name: 'ScenarioView',
@@ -91,12 +105,12 @@ export default {
       initialViewState: this.viewState,
       controller: true,
       onViewStateChange: (props) => {
-        const {viewState} = props;        
+        const {viewState} = props;
         this.viewState = viewState;
-        console.log(viewState.target, viewState.rotationOrbit, viewState.rotationX)
-        this.$emit("viewStateChange", viewState);
+        //console.log(viewState.target, viewState.rotationOrbit, viewState.rotationX, viewState.zoom)
+        //this.$emit("viewStateChange", viewState);
       },
-      layers: this.computedLayers,
+      layers: this.makeLayers(),
     });
   },
   methods: {
@@ -113,38 +127,48 @@ export default {
         });
     },
     fetchFrame() {
+      var _frame = this.frame
       fetch(`${BASE_URL}/frame_${this.frame}.json`)
         .then(res => res.json())
         .then(json => {
-          
-          var t = mat4.create()
-          mat4.fromTranslation(t, [229.99989318847656, -54.99998092651367, 2.4])
-          var r = mat4.create()
-          mat4.fromRotation(r, Math.PI/2, [0,0,1])
-          mat4.mul(this.carposeMatrix, t, r)
+          if( _frame != this.frame) return;
 
+          var loc = json.carpose.location
+          var rot = json.carpose.rotation
+
+          var q = quat.create()
+          quat.fromEuler(q, 0, 0, -1*rot[2]+270)
+          mat4.fromRotationTranslationScale(this.carposeMatrix, q, [loc[0], -1*loc[1], LIDAR_HEIGHT], [1, -1, -1])
           this.carpose = json.carpose
-          //this.viewState.target = json.carpose.location
-          //this.viewState.OrbitView
+
+          console.log(this.viewState)
+          this.viewState = Object.assign(this.viewState, {
+            target: [loc[0], -1*loc[1], loc[2]],
+            rotationOrbit: rot[2]-270,
+          })
+
           this.lidarPoints = base64_farray(json.lidar)
+          console.log('this.lidarPoints.length',this.lidarPoints.length)
+          console.log(this.viewState.target, this.viewState.rotationOrbit, this.viewState.rotationX, this.viewState.zoom)
+          
         });
     },
     update() {
       this.deck.setProps({
-        layers: this.computedLayers,
+        layers: this.makeLayers(),
+        initialViewState: this.viewState,
       });
     },    
-  },
-  watch: {
-    lidarPoints: function(){
-      this.update();
+    prevFrame(step=1) {
+      var frame = this.frame - step
+      this.frame = Math.max(frame, 1)
     },
-  },
-  computed: {
-    imageUrl() {
-      return `${BASE_URL}/camera0_${this.frame}.png`;
+    nextFrame(step=1) {
+      var frame = this.frame + step
+      this.frame = Math.min(frame, MAX_FRAME)
     },
-    computedLayers() {
+
+    makeLayers() {
       return [
         new PointCloudLayer({
           id: 'point-cloud-layer',
@@ -156,10 +180,10 @@ export default {
           pointSize: 2,
           opacity: 0.9,
           getPosition: d => {
-            return [d[0],d[1],-1*d[2]]
+            return d//[d[0],d[1],-1*d[2]]
           },
           getNormal: [0, 1, 0],
-          getColor: [255, 255, 255],
+          getColor: [160, 160, 180],
           onHover: ({object, x, y}) => {
             if( object){
               const tooltip = object.join(', ');
@@ -176,13 +200,27 @@ export default {
           extruded: false,
           lineWidthScale: 0.2,
           lineWidthMinPixels: 1,
-          getFillColor: [160, 160, 180, 200],
+          getFillColor: [160, 160, 180],
           getLineColor: [100, 0, 0],
           getRadius: 1,
           getLineWidth: 1,
           getElevation: 30
         }),
       ]
+    }
+  },
+  watch: {
+    frame: function() {
+      this.fetchFrame()
+    },
+    lidarPoints: function(){
+      console.log('lidarPoints updated')
+      this.update();
+    },    
+  },
+  computed: {
+    imageUrl() {
+      return `${BASE_URL}/camera0_${this.frame}.png`;
     },
   }
 }
@@ -201,6 +239,7 @@ span.left img {
   background-color: silver;
   width: 50%;
   height: 100%;
+  /* object-fit: fill; */
 }
 
 span.right {

@@ -17,6 +17,7 @@ import base64
 import json
 
 import carla
+import time
 import numpy as np
 import math
 from shapely.geometry import Point, LineString
@@ -119,9 +120,13 @@ def main():
 
         start_tf = carla.Transform(carla.Location(x=230, y=55, z=0.1), carla.Rotation(0, 180, 0))
         start_wp = map.get_waypoint(start_tf.location)
-        end_loc = carla.Location(x=240, y=55, z=0)
-                                                                           
-        waypoints = find_waypoins(start_wp, [10, 172, 25, 32, 2, 88, 21, 188, 22, 158, 4, 141, 17, 114, 10], 1, end_loc)
+
+        #end_loc = carla.Location(x=240, y=55, z=0)
+        #waypoints = find_waypoins(start_wp, [10, 172, 25, 32, 2, 88, 21, 188, 22, 158, 4, 141, 17, 114, 10], 1, end_loc)
+
+        end_loc = carla.Location(x=168, y=27, z=0)
+        waypoints = find_waypoins(start_wp, [10, 172, 25], 1, end_loc)
+
         print('waypoint count ', len(waypoints))
         route_line = LineString([(wp.transform.location.x, wp.transform.location.y) for wp in waypoints])
 
@@ -132,13 +137,13 @@ def main():
         vehicle = world.spawn_actor(bp, start_tf)
         print('created %s' % vehicle.type_id)
 
-        rgb_bp = blueprint_library.find('sensor.camera.rgb')
-        rgb_bp.set_attribute('image_size_x', str(1920))
-        rgb_bp.set_attribute('image_size_y', str(1080))
-        rgb_bp.set_attribute('fov', "90")
+        camera_bp = blueprint_library.find('sensor.camera.rgb')
+        camera_bp.set_attribute('image_size_x', str(1920/2))
+        camera_bp.set_attribute('image_size_y', str(1080/2))
+        camera_bp.set_attribute('fov', "90")
 
         camera_sensor = world.spawn_actor(
-            rgb_bp,
+            camera_bp,
             carla.Transform(carla.Location(x=-5.5, z=2.8), carla.Rotation(pitch=-15)),
             attach_to=vehicle)
 
@@ -147,46 +152,57 @@ def main():
         lidar_bp.set_attribute('channels', str(32))
         lidar_bp.set_attribute('rotation_frequency', str(10))
         lidar_bp.set_attribute('points_per_second', str(10*32*360*4)) #(44841, 3)
-        lidar_sensor = world.spawn_actor(lidar_bp, carla.Transform(carla.Location(x=1.5, y=0, z=2.4)),
-                                         attach_to=vehicle)
+
+        lidar_sensor = world.spawn_actor(
+            lidar_bp,
+            carla.Transform(carla.Location(x=1.5, y=0, z=2.4)),
+            attach_to=vehicle)
 
         print('===============')
         print('physics_control')
         print(vehicle.get_physics_control())
 
         #vehicle.set_velocity(carla.Vector3D(-10, 0, 0)) # 초기 속도를 지정할 수 있다.
+        start_time = time.process_time()
         frame = 0
         with CarlaSyncMode(world, camera_sensor, lidar_sensor, fps=10) as sync_mode:
             while True:
                 curr_tf = vehicle.get_transform()
                 curr_location = vehicle.get_location()
-
                 curr_velocity = vehicle.get_velocity()
                 waypoint = map.get_waypoint(curr_location)
                 vehicle.apply_control(my_control(curr_tf, curr_velocity, route_line))
 
+                t1 = time.process_time()
+
                 snapshot, image_rgb, pointcloud = sync_mode.tick(timeout=2.0)
-                frame += 1
+                t2 = time.process_time()
+
                 print(f"frame={frame}, game_frame={snapshot.frame} road_id={waypoint.road_id}")
                 image_rgb.save_to_disk("_out/camera0_%d.png" % (frame))
-
-                #pointcloud.save_to_disk('_out/pc_%06d.ply' % frame)
+                t3 = time.process_time()
+                #pointcloud.save_to_disk('_out/lidar_%d.ply' % frame)
                 #print(type(base64.encodebytes(pointcloud.raw_data)))
-                write_frame('_out/frame_%d.json' % frame, vehicle.get_transform(), pointcloud)
 
+                write_frame('_out/frame_%d.json' % frame, vehicle.get_transform(), pointcloud)
+                t4 = time.process_time()
+
+                print(f"tick={t2-t1} camera={t3-t2} frame={t4-t3}")
                 #for pt in pointcloud:
                 #    print(pt)
-                #print(len(pointcloud))
+                #print('len(pointcloud)', len(pointcloud))
                 #array = np.frombuffer(pointcloud.raw_data, dtype=np.dtype("float32"))
                 #xyz = np.reshape(array, (-1, 3))
                 #print(xyz.shape)
 
                 spectator_tf = carla.Transform(carla.Location(curr_location.x, curr_location.y, curr_location.z+2.5), curr_tf.rotation)
                 world.get_spectator().set_transform(spectator_tf)
+                frame += 1
 
-                if curr_location.distance(end_loc) < 3: break
+                # 탈출조건
+                if curr_location.distance(end_loc) < 10: break
 
-        print("success")
+        print(f"success elapsed_time={time.process_time() - start_time}")
 
     finally:
         camera_sensor.destroy()

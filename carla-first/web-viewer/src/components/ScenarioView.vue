@@ -11,16 +11,24 @@
       <span>{{ frame }} </span>
       <span>{{ carpose.rotation[2] }} zoom={{ viewState.zoom }} {{ viewState.rotationX }} {{ viewState.rotationOrbit }}</span>
     </div>
-    <div>
+    <div class="sliderContainer">
       <el-slider v-model="frame" :max="128"></el-slider>
     </div>
     <div class="container">
-      <span class="left">
-        <img :src="imageUrl"/>
-      </span>
-      <span class="right">
+      <div class="left">
+        <img :src="imageUrls[7]"/>
+        <img :src="imageUrls[0]"/>
+        <img :src="imageUrls[1]"/><br/>
+        <img :src="imageUrls[6]"/>
+        <span class="dummy">&nbsp;</span>
+        <img :src="imageUrls[2]"/><br/>
+        <img :src="imageUrls[5]"/>
+        <img :src="imageUrls[4]"/>
+        <img :src="imageUrls[3]"/>
+      </div>
+      <div class="right">
         <canvas id="deckcanvas"></canvas>
-      </span>
+      </div>
     </div>    
   </div>
 </template>
@@ -99,8 +107,6 @@ export default {
   mounted() {
     this.deck = new Deck({
       canvas: "deckcanvas",
-      height: '80%',
-      width: '50%',
       views: new OrbitView({near: 0.1, far: 450}),
       initialViewState: this.viewState,
       controller: true,
@@ -128,7 +134,7 @@ export default {
     },
     fetchFrame() {
       var _frame = this.frame
-      fetch(`${BASE_URL}/frame_${this.frame}.json`)
+      fetch(`${BASE_URL}/${this.paddedFrame}_frame.json`)
         .then(res => res.json())
         .then(json => {
           if( _frame != this.frame) return;
@@ -219,8 +225,15 @@ export default {
     },    
   },
   computed: {
-    imageUrl() {
-      return `${BASE_URL}/camera0_${this.frame}.png`;
+    paddedFrame() {
+      var TARGET_LENGTH = 5
+      return (this.frame + '').padStart(TARGET_LENGTH, '0')
+    },
+    imageUrls() {      
+      var result = []
+      for (var i = 0; i < 8; i++)
+        result.push(`${BASE_URL}/${this.paddedFrame}_camera${i}.png`)        
+      return result;
     },
   }
 }
@@ -232,21 +245,31 @@ h3 {
   margin: 40px 0 0;
 }
 
-span.left {
+.sliderContainer {
+  padding: 0 20px 0 10px;
+}
+
+div.left {
+  position: absolute;
   width: 50%;
 }
-span.left img {
-  background-color: silver;
-  width: 50%;
-  height: 100%;
+div.left img {
+  width: 33.3%;
   /* object-fit: fill; */
 }
-
-span.right {
-  width: 50%;
+div.left span.dummy {
+  display: inline-block;
+  width: 33.3%;
 }
 
-span.right canvas {
+div.right {
+  position: absolute;
+  width: 50%;
+  left: 50%;
+  height: 800px;
+}
+
+div.right canvas {
   border : 0px solid silver;
   background-color: #e0e0e0;
 }

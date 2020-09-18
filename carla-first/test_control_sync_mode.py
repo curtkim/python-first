@@ -25,6 +25,31 @@ from shapely.geometry import Point, LineString
 from carla_sync_mode import CarlaSyncMode
 from utils import tf2matrix4list
 
+WIDTH = 2560
+HEIGHT = 1440
+
+UNIT_WIDTH = int(WIDTH / 3)
+UNIT_HEIGHT = int(HEIGHT / 3)
+
+CAMERA_CONFIGS = [
+    # [tranform, fov]
+    [carla.Transform(carla.Location(x=1.5, y=0, z=2.4), carla.Rotation(yaw=0)), 120],   # front120
+    [carla.Transform(carla.Location(x=1.5, y=0.1, z=2.4), carla.Rotation(yaw=0)), 90],  # front90
+    [carla.Transform(carla.Location(x=0, y=1.1, z=2.4), carla.Rotation(yaw=45)), 90],   # right1
+    [carla.Transform(carla.Location(x=1.0, y=1.1, z=1), carla.Rotation(yaw=135)), 120], # right2
+    [carla.Transform(carla.Location(x=-1.5, y=0, z=2.4), carla.Rotation(yaw=180)), 120],# back
+    [carla.Transform(carla.Location(x=1.0, y=-1.1, z=1), carla.Rotation(yaw=225)), 120],# left1
+    [carla.Transform(carla.Location(x=0, y=-1.1, z=2.4), carla.Rotation(yaw=315)), 90], # left2
+    [carla.Transform(carla.Location(x=1.5, y=-0.1, z=2.4), carla.Rotation(yaw=0)), 45], # front45
+]
+
+def make_sensor(world, vehicle, rgb_bp, tf, fov):
+    rgb_bp.set_attribute('image_size_x', str(UNIT_WIDTH))
+    rgb_bp.set_attribute('image_size_y', str(UNIT_HEIGHT))
+    rgb_bp.set_attribute('fov', str(fov))
+    rgb_bp.set_attribute('sensor_tick', '0.033')
+    return world.spawn_actor(rgb_bp, tf, attach_to=vehicle)
+
 
 def load_world_if_needed(client, map_name):
     if not map_name.endswith(client.get_world().get_map().name):
@@ -138,14 +163,7 @@ def main():
         print('created %s' % vehicle.type_id)
 
         camera_bp = blueprint_library.find('sensor.camera.rgb')
-        camera_bp.set_attribute('image_size_x', str(1920/2))
-        camera_bp.set_attribute('image_size_y', str(1080/2))
-        camera_bp.set_attribute('fov', "90")
-
-        camera_sensor = world.spawn_actor(
-            camera_bp,
-            carla.Transform(carla.Location(x=-5.5, z=2.8), carla.Rotation(pitch=-15)),
-            attach_to=vehicle)
+        camera_sensors = [make_sensor(world, vehicle, camera_bp, config[0], config[1]) for config in CAMERA_CONFIGS]
 
         lidar_bp = world.get_blueprint_library().find('sensor.lidar.ray_cast')
         lidar_bp.set_attribute('range', str(200))
@@ -165,7 +183,7 @@ def main():
         #vehicle.set_velocity(carla.Vector3D(-10, 0, 0)) # 초기 속도를 지정할 수 있다.
         start_time = time.process_time()
         frame = 0
-        with CarlaSyncMode(world, camera_sensor, lidar_sensor, fps=10) as sync_mode:
+        with CarlaSyncMode(world, camera_sensors[0], camera_sensors[1], camera_sensors[2], camera_sensors[3], camera_sensors[4], camera_sensors[5], camera_sensors[6], camera_sensors[7], lidar_sensor, fps=10) as sync_mode:
             while True:
                 curr_tf = vehicle.get_transform()
                 curr_location = vehicle.get_location()
@@ -175,16 +193,19 @@ def main():
 
                 t1 = time.process_time()
 
-                snapshot, image_rgb, pointcloud = sync_mode.tick(timeout=2.0)
+                snapshot, i0, i1, i2, i3, i4, i5, i6, i7, pointcloud = sync_mode.tick(timeout=2.0)
                 t2 = time.process_time()
 
+                images = [i0, i1, i2, i3, i4, i5, i6, i7]
                 print(f"frame={frame}, game_frame={snapshot.frame} road_id={waypoint.road_id}")
-                image_rgb.save_to_disk("_out/camera0_%d.png" % (frame))
+                for i in range(8):
+                    images[i].save_to_disk("_out/%05d_camera%d.png" % (frame, i))
+
                 t3 = time.process_time()
                 #pointcloud.save_to_disk('_out/lidar_%d.ply' % frame)
                 #print(type(base64.encodebytes(pointcloud.raw_data)))
 
-                write_frame('_out/frame_%d.json' % frame, vehicle.get_transform(), pointcloud)
+                write_frame('_out/%05d_frame.json' % frame, vehicle.get_transform(), pointcloud)
                 t4 = time.process_time()
 
                 print(f"tick={t2-t1} camera={t3-t2} frame={t4-t3}")
@@ -205,7 +226,8 @@ def main():
         print(f"success elapsed_time={time.process_time() - start_time}")
 
     finally:
-        camera_sensor.destroy()
+        for camera_sensor in camera_sensors:
+            camera_sensor.destroy()
         lidar_sensor.destroy()
 
         print('destroying vehicle')

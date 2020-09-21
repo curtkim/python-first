@@ -202,7 +202,7 @@ def main():
                     images[i].save_to_disk("_out/%05d_camera%d.png" % (frame, i))
 
                 t3 = time.process_time()
-                #pointcloud.save_to_disk('_out/lidar_%d.ply' % frame)
+                pointcloud.save_to_disk("_out/%05d_lidar.ply" % (frame))
                 #print(type(base64.encodebytes(pointcloud.raw_data)))
 
                 write_frame('_out/%05d_frame.json' % frame, vehicle.get_transform(), pointcloud)

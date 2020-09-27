@@ -23,4 +23,4 @@ RUN useradd -ms /bin/bash curt
 USER curt
 
 # docker build -t cqeditor .
-# docker run --rm -it --gpus all -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$DISPLAY -e QT_X11_NO_MITSHM=1 cqeditor bash
+# docker run --rm -it --gpus all -v /tmp/.X11-unix:/tmp/.X11-unix -v $(pwd):/home/curt -e DISPLAY=$DISPLAY -e QT_X11_NO_MITSHM=1 cqeditor bash

@@ -3,3 +3,5 @@ __pycache__
 .idea
 temp_*
 .ipynb_checkpoints
+**/*.pt
+

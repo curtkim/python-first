@@ -82,23 +82,29 @@ def torch_process(state):
     return state
 
 # create window with OpenGL context
-app.use('glfw')
+#app.use('glfw')
 window = app.Window(512, 512, fullscreen=False)
 
 @window.event
 def on_draw(dt):
     global state
-    window.set_title(str(
-    window.fps).encode("ascii"))
+    #window.set_title(str(window.fps).encode("ascii"))
     tex = screen['tex']
     h,w = tex.shape[:2]
     # mutate state in torch
     state = torch_process(state).detach() # prevent autograd from filling memory
     img = F.tanh(state).abs()
+
+    #print(img.shape) # [1, 3, 512, 512]
+    #print(img.squeeze().transpose(0,2).shape) # [512, 512, 3]
+
     # convert into proper format
-    tensor = img.squeeze().transpose(0,2).t().data # put in texture order
-    tensor = torch.cat((tensor, tensor[:,:,0]),2) # add the alpha channel
+    tensor = img.squeeze().transpose(0,2).data # put in texture order
+    #print(tensor.shape)
+    #print(tensor[:,:,0].shape)
+    tensor = torch.cat((tensor, tensor[:,:,0].unsqueeze(2)) ,2) # add the alpha channel
     tensor[:,:,3] = 1 # set alpha
+
     # check that tensor order matches texture:
     # img[:,:,2] = 1 # set blue
     # img[100,:,:] = 1 # horizontal white line
@@ -126,3 +132,4 @@ def on_close():
 if __name__=='__main__':
     setup()
     app.run()
+

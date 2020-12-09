@@ -9,4 +9,12 @@
 - "I" frames "intra" 
 - "P" frame "predicted"
 
+## reference
+http://dranger.com/ffmpeg/tutorial01.html
+
+## note
+- frame = container.decode(stream)
+- packet = container._demux(stream)
+- packets = codec.parse(chunk)
+- frames = codec.decode(packet)
 

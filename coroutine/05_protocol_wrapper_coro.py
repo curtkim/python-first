@@ -1,11 +1,11 @@
 # https://eli.thegreenplace.net/2009/08/29/co-routines-as-an-alternative-to-state-machines/
 
 def coroutine(func):
-    def start(*args, **kwargs):
+    def inner(*args, **kwargs):
         cr = func(*args, **kwargs)
         next(cr)
         return cr
-    return start
+    return inner
 
 
 @coroutine

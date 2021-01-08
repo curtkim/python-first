@@ -1,6 +1,6 @@
 import threading
 from contextvars import ContextVar
-from async_btree import FAILURE, SUCCESS, ExceptionDecorator, decision, fallback, repeat_until, selector, sequence
+from async_btree import FAILURE, SUCCESS, decision, fallback, repeat_until, selector, sequence
 
 
 async def a_func():

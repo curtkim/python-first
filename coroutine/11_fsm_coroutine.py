@@ -1,3 +1,5 @@
+# https://www.codementor.io/@arpitbhayani/building-finite-state-machines-with-python-coroutines-15nk03eh9l
+
 def prime(fn):
     def wrapper(*args, **kwargs):
         v = fn(*args, **kwargs)

@@ -50,6 +50,11 @@ def main():
         print('created %s' % walker.type_id)
         #print('created %s' % walker_controller.type_id)
 
+        # 1.5 static.prop.constructioncone
+        cone_bp = blueprint_library.find('static.prop.constructioncone')
+        cone = world.spawn_actor(cone_bp, carla.Transform(carla.Location(x=102, y=107, z=0.5), carla.Rotation(0, 0, 0)))
+        actor_list.append(cone)
+
         # 2. sensor
         collision_bp = blueprint_library.find('sensor.other.collision')
         collision_detector = world.spawn_actor(collision_bp, carla.Transform(carla.Location(x=0, y=0, z=0), carla.Rotation(yaw=0)), attach_to=walker)

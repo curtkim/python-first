@@ -32,7 +32,7 @@ def main():
                carla.Transform(carla.Location(x=-1.5, y=0, z=2.4), carla.Rotation(yaw=180)),
                carla.Transform(carla.Location(x=0, y=-1, z=2.4), carla.Rotation(yaw=270))]
         '''
-        tfs = [carla.Transform(carla.Location(x=1.5, y=0, z=2.4), carla.Rotation(yaw=0))]
+        tfs = [carla.Transform(carla.Location(x=1.5, y=0, z=2.4), carla.Rotation(yaw=180))]
 
         def make_listener(format, idx):
             def callback(image):
@@ -41,12 +41,12 @@ def main():
 
         for i, tf in enumerate(tfs):
             rgb_bp = blueprint_library.find('sensor.camera.rgb')
-            rgb_bp.set_attribute('image_size_x', str(1920))
-            rgb_bp.set_attribute('image_size_y', str(1080))
+            rgb_bp.set_attribute('image_size_x', str(1200))
+            rgb_bp.set_attribute('image_size_y', str(800))
             rgb_camera = world.spawn_actor(rgb_bp, tf, attach_to=vehicle)
             actor_list.append(rgb_camera)
             print('created %s' % rgb_camera.type_id)
-            rgb_camera.listen(make_listener('_out/rgb_%d_%06d.png', i))
+            rgb_camera.listen(make_listener('_out/rgb_%d_%06d.jpg', i))
 
             depth_bp = blueprint_library.find('sensor.camera.depth')
             depth_camera = world.spawn_actor(depth_bp, tf, attach_to=vehicle)
@@ -68,7 +68,7 @@ def main():
         lidar_sensor.listen(lidar_callback)
         """
 
-        time.sleep(2)
+        time.sleep(20)
 
     finally:
 

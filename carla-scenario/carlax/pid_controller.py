@@ -238,6 +238,6 @@ class PIDLateralController():
             _de = 0.0
             _ie = 0.0
 
-        print('target', w_loc, 'ego', ego_loc, 'diff', w_vec)
-        print(self._k_p,  _dot, self._k_d, _de, self._k_i, _ie, (self._k_p * _dot) + (self._k_d * _de) + (self._k_i * _ie))
+        #print('target', w_loc, 'ego', ego_loc, 'diff', w_vec)
+        #print(self._k_p,  _dot, self._k_d, _de, self._k_i, _ie, (self._k_p * _dot) + (self._k_d * _de) + (self._k_i * _ie))
         return np.clip((self._k_p * _dot) + (self._k_d * _de) + (self._k_i * _ie), -1.0, 1.0)

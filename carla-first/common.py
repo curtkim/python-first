@@ -1,3 +1,8 @@
+def load_world_if_needed(client, map_name):
+    if not map_name.endswith(client.get_world().get_map().name):
+        client.load_world(map_name)
+    else:
+        print('current map is already ', map_name)
 
 def find_waypoins(start, trace_road_ids, interval, end_loc):
     """

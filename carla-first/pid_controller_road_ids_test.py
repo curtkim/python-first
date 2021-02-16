@@ -7,13 +7,8 @@ from shapely.geometry import Point, LineString
 from carla_sync_mode import CarlaSyncMode
 from pid_controller import VehiclePIDController
 from common import find_waypoins
+from common import load_world_if_needed
 
-
-def load_world_if_needed(client, map_name):
-    if not map_name.endswith(client.get_world().get_map().name):
-        client.load_world(map_name)
-    else:
-        print('current map is already ', map_name)
 
 def remove_all_actors(world):
     actors = world.get_actors()
@@ -50,6 +45,7 @@ def main():
         print(route_line)
 
         vehicle = world.spawn_actor(vehicle_bp, vehicle_tf)
+        actor_list.append(vehicle)
 
         _dt = 1.0 / 20.0
         _max_brake = 0.3
@@ -81,7 +77,7 @@ def main():
         camera_bp.set_attribute('fov', str(90))
         camera_bp.set_attribute('sensor_tick', '0.033')
         camera = world.spawn_actor(camera_bp, carla.Transform(carla.Location(x=0, y=0, z=2.0), carla.Rotation(yaw=0)), attach_to=vehicle)
-
+        actor_list.append(camera)
 
         frame = 0
         with CarlaSyncMode(world, camera, fps=20) as sync_mode:
@@ -97,7 +93,7 @@ def main():
                 print('curr_loc', curr_location, 'next_point', next_point)
                 next_waypoint = map.get_waypoint(carla.Location(next_point.x, next_point.y, 0))
 
-                control = vehicle_controller.run_step(20, next_waypoint)
+                control = vehicle_controller.run_step(36, next_waypoint.transform)
                 vehicle.apply_control(control)
 
                 snapshot, image = sync_mode.tick(timeout=2.0)

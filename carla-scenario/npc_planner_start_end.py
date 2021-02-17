@@ -17,7 +17,7 @@ def main(cfg: DictConfig):
         client = carla.Client(carla_cfg.host, carla_cfg.port)
         client.set_timeout(carla_cfg.timeout)
 
-        load_world_if_needed(client, "/Game/Carla/Maps/Town01_Opt")
+        load_world_if_needed(client, "/Game/Carla/Maps/Town01")
 
         world = client.get_world()
         remove_all_actors(world)
@@ -76,6 +76,7 @@ def main(cfg: DictConfig):
 
     finally:
         destroy_actors(vehicle, camera)
+
 
 if __name__ == '__main__':
     conf = OmegaConf.create({

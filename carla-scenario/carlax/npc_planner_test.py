@@ -1,5 +1,5 @@
 import carla
-from npc_planner import _create_speed_points_npc_planner_inner
+from carlax.npc_planner import _create_speed_points_npc_planner_inner
 
 
 def test_create_speed_points_npc_planner_inner():

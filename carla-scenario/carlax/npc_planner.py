@@ -26,6 +26,7 @@ def find_waypoins(start, trace_road_ids, interval, end_loc):
         if len(filtered) != 1:
             print('failed count=', len(filtered))
             print('candidates road_ids', [c.road_id for c in candidates])
+            print('curr.transform.location', curr.transform.location)
             raise Exception("filtered count is not 1")
 
         curr = filtered[0]
@@ -44,11 +45,13 @@ def create_start_end_npc_planner(carla_map: carla.Map, start_loc: carla.Location
 
     start_wp = carla_map.get_waypoint(start_loc)
     end_wp = carla_map.get_waypoint(end_loc)
+    print(f"start road_id:{start_wp.road_id} land_id:{start_wp.lane_id}, end road_id:{end_wp.road_id}, land_id:{end_wp.lane_id}")
 
     pairs = carla_map.get_topology()
     G = nx.Graph()
     G.add_edges_from([(pair[0].road_id, pair[1].road_id) for pair in pairs])
     path = nx.shortest_path(G, start_wp.road_id, end_wp.road_id)
+    print(f"path={path}")
 
     INTERVAL = 1
     waypoints = find_waypoins(start_wp, path, INTERVAL, end_loc)

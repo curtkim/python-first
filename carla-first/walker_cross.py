@@ -3,20 +3,8 @@ import random
 import time
 
 
+from common import load_world_if_needed, remove_all_actors
 
-def load_world_if_needed(client, map_name):
-    if not map_name.endswith(client.get_world().get_map().name):
-        client.load_world(map_name)
-    else:
-        print('current map is already ', map_name)
-
-def remove_all_actors(world):
-    actors = world.get_actors()
-    for actor in actors:
-        one_depth_type = actor.type_id.split(".")[0]
-        if one_depth_type in ['vehicle', 'walker']:
-            print('remove', actor.type_id, actor.id)
-            actor.destroy()
 
 def main():
     actor_list = []
@@ -74,7 +62,7 @@ def main():
         # 4. etc
         spectator_tf = carla.Transform(carla.Location(x=100, y=107.5, z=10), carla.Rotation(-90, -90, 0))
         world.get_spectator().set_transform(spectator_tf)
-        
+
         world.debug.draw_arrow(
             carla.Location(x=100, y=103, z=0.5),
             carla.Location(x=100, y=111, z=0.5),
@@ -84,11 +72,11 @@ def main():
             10,
         )
         time.sleep(3)
-        print(walker.bounding_box)        
+        print(walker.bounding_box)
         world.debug.draw_box(
             carla.BoundingBox(walker.get_transform().location, walker.bounding_box.extent),
-            walker.get_transform().rotation, 
-            1, 
+            walker.get_transform().rotation,
+            1,
             carla.Color(255,0,0,127),
             1.0)
         time.sleep(4)

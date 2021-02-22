@@ -74,16 +74,16 @@ def main(cfg: DictConfig):
 
     vehicle_bp = blueprint_library.find('vehicle.lincoln.mkz2017')
 
-    points = [
+    waypoints = [
         [180, 59, 0],
         [150, 59, 50],
         [120, 55.5, 50],
         [100, 55.5, 20],
         [ 90, 55.5, 10],
     ]
-    print(points)
+    print(waypoints)
 
-    start_loc = carla.Location(x=points[0][0], y=points[0][1], z=BASE_HEIGHT)
+    start_loc = carla.Location(x=waypoints[0][0], y=waypoints[0][1], z=BASE_HEIGHT)
     #end_loc = carla.Location(x=120, y=-2, z=0)
     start_rotation = carla_map.get_waypoint(start_loc).transform.rotation
     print(start_rotation)
@@ -101,8 +101,8 @@ def main(cfg: DictConfig):
                                                     max_steering=pid_cfg.max_steer)
 
     #npc_planner = create_start_end_npc_planner(carla_map, start_loc, end_loc, 10, vehicle_controller)
-    end_loc = carla.Location(points[-1][0], points[-1][1], 0)
-    npc_planner = create_speed_points_npc_planner(points[1:], vehicle_controller)
+    end_loc = carla.Location(waypoints[-1][0], waypoints[-1][1], 0)
+    npc_planner = create_speed_points_npc_planner(waypoints[1:], vehicle_controller)
 
     camera_bp = blueprint_library.find('sensor.camera.rgb')
     camera_bp.set_attribute('image_size_x', str(800))
@@ -173,8 +173,9 @@ def main(cfg: DictConfig):
                                                   'angular_velocity_x', 'angular_velocity_y', 'angular_velocity_z',
                                                   'acceleration_x', 'acceleration_y', 'acceleration_z',
                                                   'speed'])
+    df.index.name = 'frame'
     df.to_csv('scenario001.csv', float_format = '%.2f')
-    show_results(df, points)
+    show_results(df, waypoints)
 
     destroy_actors(vehicle, camera)
 

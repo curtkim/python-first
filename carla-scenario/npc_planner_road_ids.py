@@ -75,22 +75,12 @@ def main(cfg: DictConfig):
 
     vehicle_bp = blueprint_library.find('vehicle.lincoln.mkz2017')
 
-    waypoints = [
-        [180, 59, 0],
-        [150, 59, 50],
-        [120, 55.5, 50],
-        [100, 55.5, 20],
-        [ 90, 55.5, 10],
-    ]
-    print(waypoints)
-
-    start_loc = carla.Location(x=waypoints[0][0], y=waypoints[0][1], z=BASE_HEIGHT)
-    #end_loc = carla.Location(x=120, y=-2, z=0)
+    start_loc = carla.Location(x=180, y=55.5, z=0.5)
+    end_loc = carla.Location(x=120, y=-2, z=0)
     start_rotation = carla_map.get_waypoint(start_loc).transform.rotation
     print(start_rotation)
 
-    vehicle = world.spawn_actor(vehicle_bp, carla.Transform(start_loc, carla.Rotation(pitch=0, yaw=180, roll=0)))
-    #vehicle2 = world.spawn_actor(vehicle_bp, carla.Transform(start_loc, start_rotation))
+    vehicle = world.spawn_actor(vehicle_bp, carla.Transform(start_loc, start_rotation))
 
     pid_cfg = cfg.vehicle_pid_controller
     vehicle_controller = VehiclePIDController(vehicle,
@@ -101,9 +91,7 @@ def main(cfg: DictConfig):
                                                     max_brake=pid_cfg.max_brake,
                                                     max_steering=pid_cfg.max_steer)
 
-    #npc_planner = create_start_end_npc_planner(carla_map, start_loc, end_loc, 10, vehicle_controller)
-    end_loc = carla.Location(waypoints[-1][0], waypoints[-1][1], 0)
-    npc_planner = create_speed_points_npc_planner(waypoints[1:], vehicle_controller)
+    npc_planner = create_start_end_npc_planner(carla_map, start_loc, end_loc, 10, vehicle_controller)
 
     camera_bp = blueprint_library.find('sensor.camera.rgb')
     camera_bp.set_attribute('image_size_x', str(800))

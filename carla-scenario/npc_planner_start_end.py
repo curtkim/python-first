@@ -7,7 +7,7 @@ from omegaconf import OmegaConf
 from carlax.carla_sync_mode import CarlaSyncMode
 from carlax.pid_controller import VehiclePIDController
 from carlax.common import remove_all_actors, load_world_if_needed, destroy_actors
-from carlax.npc_planner import create_start_end_npc_planner
+from carlax.npc_planner import create_start_end_npc_planner, create_speed_points_npc_planner
 
 
 def main(cfg: DictConfig):
@@ -28,6 +28,7 @@ def main(cfg: DictConfig):
 
         vehicle_bp = blueprint_library.find('vehicle.lincoln.mkz2017')
 
+
         start_loc = carla.Location(x=180, y=55, z=0.5)
         end_loc = carla.Location(x=120, y=-2, z=0)
         start_rotation = carla_map.get_waypoint(start_loc).transform.rotation
@@ -43,7 +44,17 @@ def main(cfg: DictConfig):
                                                         max_brake=pid_cfg.max_brake,
                                                         max_steering=pid_cfg.max_steer)
 
-        npc_planner = create_start_end_npc_planner(carla_map, start_loc, end_loc, 10, vehicle_controller)
+        #npc_planner = create_start_end_npc_planner(carla_map, start_loc, end_loc, 10, vehicle_controller)
+        points = [
+            [179, 55, 1],
+            [160, 57, 20],
+            [150, 58, 20],
+            [140, 57, 20],
+            [120, 55, 10],
+            [100, 55, 5],
+        ]
+        end_loc = carla.Location(x=100, y=55, z=0)
+        npc_planner = create_speed_points_npc_planner(points, vehicle_controller)
 
         camera_bp = blueprint_library.find('sensor.camera.rgb')
         camera_bp.set_attribute('image_size_x', str(800))
@@ -63,7 +74,7 @@ def main(cfg: DictConfig):
                 snapshot, image = sync_mode.tick(timeout=2.0)
                 #image.save_to_disk("_out/%05d_camera.png" % (frame))
 
-                print(frame, vehicle.get_velocity(), control)
+                print(frame, curr_location, vehicle.get_velocity(), control)
                 spectator_tf = carla.Transform(carla.Location(curr_location.x, curr_location.y, curr_location.z + 2.5),
                                                curr_tf.rotation)
                 world.get_spectator().set_transform(spectator_tf)

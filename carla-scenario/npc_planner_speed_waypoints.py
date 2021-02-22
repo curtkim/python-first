@@ -14,18 +14,26 @@ from carlax.pid_controller import VehiclePIDController
 from carlax.common import remove_all_actors, load_world_if_needed, destroy_actors, get_speed
 from carlax.npc_planner import create_start_end_npc_planner, create_speed_points_npc_planner
 
+from corner_cutting import chaikins_corner_cutting
+
+
 BASE_HEIGHT = 0.5
 FPS = 20 # frame per second
 
-def show_results(df):
+def show_results(df, waypoints):
 
     frame = np.arange(len(df)) / FPS
 
     fig, ax = plt.subplots(5, figsize=(5, 2.5*5))
+    fig.tight_layout()
 
     ax[0].title.set_text("xy")
     ax[0].invert_yaxis()
     ax[0].plot(df['x'], df['y'])
+
+    pts = np.array(waypoints)
+    ax[0].plot(pts[:,0], pts[:,1])
+
     for i in range(0, len(df), FPS):
         ax[0].annotate(int(i/FPS), (df['x'][i], df['y'][i]))
 
@@ -41,7 +49,6 @@ def show_results(df):
     ax[4].title.set_text("brake")
     ax[4].plot(frame, df['brake'])
 
-    fig.tight_layout()
     plt.show()
 
 
@@ -52,8 +59,8 @@ def main(cfg: DictConfig):
     client = carla.Client(carla_cfg.host, carla_cfg.port)
     client.set_timeout(carla_cfg.timeout)
 
-    load_world_if_needed(client, "/Game/Carla/Maps/Town01_Opt")
-    #client.load_world("/Game/Carla/Maps/Town01_Opt")
+    #load_world_if_needed(client, "/Game/Carla/Maps/Town01_Opt")
+    client.load_world("/Game/Carla/Maps/Town01_Opt")
 
     world = client.get_world()
     remove_all_actors(world)
@@ -72,6 +79,7 @@ def main(cfg: DictConfig):
         [100, 55.5, 20],
         [ 90, 55.5, 10],
     ]
+    print(points)
 
     start_loc = carla.Location(x=points[0][0], y=points[0][1], z=BASE_HEIGHT)
     #end_loc = carla.Location(x=120, y=-2, z=0)
@@ -149,7 +157,7 @@ def main(cfg: DictConfig):
     print("elapse time", time.process_time() - start_time, "frame", frame)
 
     df = pd.DataFrame(np.array(results), columns=['steer', 'throttle', 'brake', 'x', 'y', 'z', 'speed'])
-    show_results(df)
+    show_results(df, points)
 
     destroy_actors(vehicle, camera)
 
@@ -166,7 +174,7 @@ if __name__ == '__main__':
             "args_lateral": {
                 'K_P': 0.8,
                 'K_D': 0,
-                'K_I': 0.001,
+                'K_I': 0.01,
                 'dt': 1.0 / 20.0
             },
             "args_longitudinal": {

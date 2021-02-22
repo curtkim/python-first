@@ -1,5 +1,6 @@
 import carla
 import time
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -24,10 +25,10 @@ def show_results(df, waypoints):
 
     frame = np.arange(len(df)) / FPS
 
-    fig, ax = plt.subplots(5, figsize=(5, 2.5*5 + 2))
+    fig, ax = plt.subplots(5) # , figsize=(3, 1.5*5)
     fig.suptitle('npc planner speed waypoints', fontsize=14)
-    fig.tight_layout()
-    fig.subplots_adjust(top=2.85)
+    #fig.tight_layout()
+    #fig.subplots_adjust(top=2.85)
 
     ax[0].title.set_text("xy")
     ax[0].invert_yaxis()
@@ -174,11 +175,12 @@ def main(cfg: DictConfig):
                                                   'acceleration_x', 'acceleration_y', 'acceleration_z',
                                                   'speed'])
     df.index.name = 'frame'
-    df.to_csv('scenario001.csv', float_format = '%.2f')
-    show_results(df, waypoints)
+
+    Path("result").mkdir(parents=True, exist_ok=True)
+    df.to_csv('result/scenario001.csv', float_format = '%.2f')
 
     destroy_actors(vehicle, camera)
-
+    show_results(df, waypoints)
 
 
 if __name__ == '__main__':

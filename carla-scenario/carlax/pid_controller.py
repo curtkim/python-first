@@ -9,17 +9,7 @@ from collections import deque
 import math
 import numpy as np
 import carla
-#from agents.tools.misc import get_speed
-
-def get_speed(vehicle):
-    """
-    Compute speed of a vehicle in Km/h.
-        :param vehicle: the vehicle for which speed is calculated
-        :return: speed as a float in Km/h
-    """
-    vel = vehicle.get_velocity()
-
-    return 3.6 * math.sqrt(vel.x ** 2 + vel.y ** 2 + vel.z ** 2)
+from carlax.common import get_speed
 
 
 class VehiclePIDController():

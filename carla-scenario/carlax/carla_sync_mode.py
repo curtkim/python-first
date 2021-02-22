@@ -25,7 +25,10 @@ class CarlaSyncMode(object):
         self.frame = self.world.apply_settings(carla.WorldSettings(
             no_rendering_mode=False,
             synchronous_mode=True,
-            fixed_delta_seconds=self.delta_seconds))
+            fixed_delta_seconds=self.delta_seconds,
+            substepping = True,
+            max_substep_delta_time = 0.01,
+            max_substeps = 10))
 
         def make_queue(register_event):
             q = queue.Queue()

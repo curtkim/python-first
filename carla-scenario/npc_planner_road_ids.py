@@ -21,7 +21,7 @@ from corner_cutting import chaikins_corner_cutting
 BASE_HEIGHT = 0.5
 FPS = 20 # frame per second
 
-def show_results(df, waypoints):
+def show_results(df, waypoints = None):
 
     frame = np.arange(len(df)) / FPS
 
@@ -34,8 +34,9 @@ def show_results(df, waypoints):
     ax[0].invert_yaxis()
     ax[0].plot(df['position_x'], df['position_y'])
 
-    pts = np.array(waypoints)
-    ax[0].plot(pts[:,0], pts[:,1])
+    if waypoints != None:
+        pts = np.array(waypoints)
+        ax[0].plot(pts[:,0], pts[:,1])
 
     for i in range(0, len(df), FPS):
         ax[0].annotate(int(i/FPS), (df['position_x'][i], df['position_y'][i]))
@@ -91,7 +92,7 @@ def main(cfg: DictConfig):
                                                     max_brake=pid_cfg.max_brake,
                                                     max_steering=pid_cfg.max_steer)
 
-    npc_planner = create_start_end_npc_planner(carla_map, start_loc, end_loc, 10, vehicle_controller)
+    npc_planner = create_start_end_npc_planner(carla_map, start_loc, end_loc, 30, vehicle_controller)
 
     camera_bp = blueprint_library.find('sensor.camera.rgb')
     camera_bp.set_attribute('image_size_x', str(800))
@@ -168,7 +169,7 @@ def main(cfg: DictConfig):
     df.to_csv('result/scenario001.csv', float_format = '%.2f')
 
     destroy_actors(vehicle, camera)
-    show_results(df, waypoints)
+    show_results(df)
 
 
 if __name__ == '__main__':

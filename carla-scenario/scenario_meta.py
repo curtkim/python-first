@@ -26,6 +26,7 @@ def get_class( kls ):
 
 if __name__ == '__main__':
     for class_name in search_classes('scenario'):
+        print(class_name)
         MyScenario = get_class(class_name)
         s = MyScenario()
         print(s.description)

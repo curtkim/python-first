@@ -1,10 +1,12 @@
 import carla
 import time
+
 from pathlib import Path
+from dataclasses import dataclass
+from typing import Callable
 
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 
 
 from omegaconf import DictConfig
@@ -17,42 +19,55 @@ from carlax.npc_planner import create_start_end_npc_planner, create_speed_points
 
 from corner_cutting import chaikins_corner_cutting
 
+from reporting import show_results
+
+
+@dataclass
+class Role:
+    name: str
+    vehicle : carla.Vehicle
+    planner: Callable
+
 
 BASE_HEIGHT = 0.5
 FPS = 20 # frame per second
 
-def show_results(df, waypoints):
 
-    frame = np.arange(len(df)) / FPS
+def make_vehicle(world: carla.World, cfg) -> Role:
+    carla_map = world.get_map()
 
-    fig, ax = plt.subplots(5) # , figsize=(3, 1.5*5)
-    fig.suptitle('npc planner speed waypoints', fontsize=14)
-    #fig.tight_layout()
-    #fig.subplots_adjust(top=2.85)
+    blueprint_library = world.get_blueprint_library()
+    vehicle_bp = blueprint_library.find('vehicle.lincoln.mkz2017')
 
-    ax[0].title.set_text("xy")
-    ax[0].invert_yaxis()
-    ax[0].plot(df['position_x'], df['position_y'])
+    waypoints = [
+        [180, 59, 0],
+        [150, 59, 50],
+        [120, 55.5, 50],
+        [100, 55.5, 20],
+        [ 90, 55.5, 10],
+    ]
+    #print(waypoints)
 
-    pts = np.array(waypoints)
-    ax[0].plot(pts[:,0], pts[:,1])
+    start_loc = carla.Location(x=waypoints[0][0], y=waypoints[0][1], z=BASE_HEIGHT)
+    #end_loc = carla.Location(x=120, y=-2, z=0)
+    start_rotation = carla_map.get_waypoint(start_loc).transform.rotation
 
-    for i in range(0, len(df), FPS):
-        ax[0].annotate(int(i/FPS), (df['position_x'][i], df['position_y'][i]))
+    vehicle = world.spawn_actor(vehicle_bp, carla.Transform(start_loc, carla.Rotation(pitch=0, yaw=180, roll=0)))
 
-    ax[1].title.set_text("speed")
-    ax[1].plot(frame, df['speed'])
+    pid_cfg = cfg.vehicle_pid_controller
+    vehicle_controller = VehiclePIDController(vehicle,
+                                                    args_lateral=pid_cfg.args_lateral,
+                                                    args_longitudinal=pid_cfg.args_longitudinal,
+                                                    offset=pid_cfg.offset,
+                                                    max_throttle=pid_cfg.max_throttle,
+                                                    max_brake=pid_cfg.max_brake,
+                                                    max_steering=pid_cfg.max_steer)
 
-    ax[2].title.set_text("steer")
-    ax[2].plot(frame, df['steer'])
+    #npc_planner = create_start_end_npc_planner(carla_map, start_loc, end_loc, 10, vehicle_controller)
+    end_loc = carla.Location(waypoints[-1][0], waypoints[-1][1], 0)
+    npc_planner = create_speed_points_npc_planner(waypoints[1:], vehicle_controller)
 
-    ax[3].title.set_text("throttle")
-    ax[3].plot(frame, df['throttle'])
-
-    ax[4].title.set_text("brake")
-    ax[4].plot(frame, df['brake'])
-
-    plt.show()
+    return Role(name='ego', vehicle=vehicle, planner=npc_planner)
 
 
 def main(cfg: DictConfig):
@@ -68,49 +83,20 @@ def main(cfg: DictConfig):
     world = client.get_world()
     remove_all_actors(world)
     world.unload_map_layer(carla.MapLayer.All)
-    carla_map = world.get_map()
+
     time.sleep(1)
 
+    ego = make_vehicle(world, cfg)
+    end_loc = carla.Location(90, 55.5, 0)
+
     blueprint_library = world.get_blueprint_library()
-
-    vehicle_bp = blueprint_library.find('vehicle.lincoln.mkz2017')
-
-    waypoints = [
-        [180, 59, 0],
-        [150, 59, 50],
-        [120, 55.5, 50],
-        [100, 55.5, 20],
-        [ 90, 55.5, 10],
-    ]
-    print(waypoints)
-
-    start_loc = carla.Location(x=waypoints[0][0], y=waypoints[0][1], z=BASE_HEIGHT)
-    #end_loc = carla.Location(x=120, y=-2, z=0)
-    start_rotation = carla_map.get_waypoint(start_loc).transform.rotation
-    print(start_rotation)
-
-    vehicle = world.spawn_actor(vehicle_bp, carla.Transform(start_loc, carla.Rotation(pitch=0, yaw=180, roll=0)))
-    #vehicle2 = world.spawn_actor(vehicle_bp, carla.Transform(start_loc, start_rotation))
-
-    pid_cfg = cfg.vehicle_pid_controller
-    vehicle_controller = VehiclePIDController(vehicle,
-                                                    args_lateral=pid_cfg.args_lateral,
-                                                    args_longitudinal=pid_cfg.args_longitudinal,
-                                                    offset=pid_cfg.offset,
-                                                    max_throttle=pid_cfg.max_throttle,
-                                                    max_brake=pid_cfg.max_brake,
-                                                    max_steering=pid_cfg.max_steer)
-
-    #npc_planner = create_start_end_npc_planner(carla_map, start_loc, end_loc, 10, vehicle_controller)
-    end_loc = carla.Location(waypoints[-1][0], waypoints[-1][1], 0)
-    npc_planner = create_speed_points_npc_planner(waypoints[1:], vehicle_controller)
 
     camera_bp = blueprint_library.find('sensor.camera.rgb')
     camera_bp.set_attribute('image_size_x', str(800))
     camera_bp.set_attribute('image_size_y', str(600))
     camera_bp.set_attribute('fov', str(90))
     camera_bp.set_attribute('sensor_tick', '0.033')
-    camera = world.spawn_actor(camera_bp, carla.Transform(carla.Location(x=0, y=0, z=2.0), carla.Rotation(yaw=0)), attach_to=vehicle)
+    camera = world.spawn_actor(camera_bp, carla.Transform(carla.Location(x=0, y=0, z=2.0), carla.Rotation(yaw=0)), attach_to=ego.vehicle)
 
     '''
     collision_bp = world.get_blueprint_library().find('sensor.other.collision')
@@ -135,21 +121,21 @@ def main(cfg: DictConfig):
             world.tick()
 
         while True:
-            curr_tf = vehicle.get_transform()
-            curr_location = vehicle.get_location()
-            curr_velocity = vehicle.get_velocity()
-            curr_angular_velocity = vehicle.get_angular_velocity()
-            curr_accel = vehicle.get_acceleration()
+            curr_tf = ego.vehicle.get_transform()
+            curr_location = ego.vehicle.get_location()
+            curr_velocity = ego.vehicle.get_velocity()
+            curr_angular_velocity = ego.vehicle.get_angular_velocity()
+            curr_accel = ego.vehicle.get_acceleration()
 
-            control = npc_planner(curr_location)
-            vehicle.apply_control(control)
+            control = ego.planner(curr_location)
+            ego.vehicle.apply_control(control)
+
             results.append([control.steer, control.throttle, control.brake,
                             curr_location.x, curr_location.y, curr_location.z,
                             curr_tf.rotation.roll, curr_tf.rotation.pitch, curr_tf.rotation.yaw,
                             curr_velocity.x, curr_velocity.y, curr_velocity.z,
                             curr_angular_velocity.x, curr_angular_velocity.y, curr_angular_velocity.z,
-                            curr_accel.x, curr_accel.y, curr_accel.z,
-                            get_speed(vehicle)])
+                            curr_accel.x, curr_accel.y, curr_accel.z])
 
             #world.tick()
             snapshot, image = sync_mode.tick(timeout=2.0)
@@ -172,15 +158,15 @@ def main(cfg: DictConfig):
                                                   'orientation_x', 'orientation_y', 'orientation_z',
                                                   'linear_velocity_x', 'linear_velocity_y', 'linear_velocity_z',
                                                   'angular_velocity_x', 'angular_velocity_y', 'angular_velocity_z',
-                                                  'acceleration_x', 'acceleration_y', 'acceleration_z',
-                                                  'speed'])
+                                                  'acceleration_x', 'acceleration_y', 'acceleration_z'])
     df.index.name = 'frame'
+    df['speed'] = 3.6 * (df['linear_velocity_x'] ** 2 + df['linear_velocity_y'] ** 2 + df['linear_velocity_z'] ** 2) ** 0.5
 
     Path("result").mkdir(parents=True, exist_ok=True)
-    df.to_csv('result/scenario001.csv', float_format = '%.2f')
+    df.to_csv('result/scenario001.csv', float_format='%.3f')
 
-    destroy_actors(vehicle, camera)
-    show_results(df, waypoints)
+    destroy_actors(ego.vehicle, camera)
+    show_results(df, None)
 
 
 if __name__ == '__main__':

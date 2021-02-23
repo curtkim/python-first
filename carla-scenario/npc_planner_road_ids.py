@@ -4,7 +4,6 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 
 
 from omegaconf import DictConfig
@@ -16,44 +15,12 @@ from carlax.common import remove_all_actors, load_world_if_needed, destroy_actor
 from carlax.npc_planner import create_start_end_npc_planner, create_speed_points_npc_planner
 
 from corner_cutting import chaikins_corner_cutting
+from reporting import show_results
 
 
 BASE_HEIGHT = 0.5
 FPS = 20 # frame per second
 
-def show_results(df, waypoints = None):
-
-    frame = np.arange(len(df)) / FPS
-
-    fig, ax = plt.subplots(5) # , figsize=(3, 1.5*5)
-    fig.suptitle('npc planner speed waypoints', fontsize=14)
-    #fig.tight_layout()
-    #fig.subplots_adjust(top=2.85)
-
-    ax[0].title.set_text("xy")
-    ax[0].invert_yaxis()
-    ax[0].plot(df['position_x'], df['position_y'])
-
-    if waypoints != None:
-        pts = np.array(waypoints)
-        ax[0].plot(pts[:,0], pts[:,1])
-
-    for i in range(0, len(df), FPS):
-        ax[0].annotate(int(i/FPS), (df['position_x'][i], df['position_y'][i]))
-
-    ax[1].title.set_text("speed")
-    ax[1].plot(frame, df['speed'])
-
-    ax[2].title.set_text("steer")
-    ax[2].plot(frame, df['steer'])
-
-    ax[3].title.set_text("throttle")
-    ax[3].plot(frame, df['throttle'])
-
-    ax[4].title.set_text("brake")
-    ax[4].plot(frame, df['brake'])
-
-    plt.show()
 
 
 def main(cfg: DictConfig):
@@ -137,8 +104,7 @@ def main(cfg: DictConfig):
                             curr_tf.rotation.roll, curr_tf.rotation.pitch, curr_tf.rotation.yaw,
                             curr_velocity.x, curr_velocity.y, curr_velocity.z,
                             curr_angular_velocity.x, curr_angular_velocity.y, curr_angular_velocity.z,
-                            curr_accel.x, curr_accel.y, curr_accel.z,
-                            get_speed(vehicle)])
+                            curr_accel.x, curr_accel.y, curr_accel.z])
 
             #world.tick()
             snapshot, image = sync_mode.tick(timeout=2.0)
@@ -161,12 +127,12 @@ def main(cfg: DictConfig):
                                                   'orientation_x', 'orientation_y', 'orientation_z',
                                                   'linear_velocity_x', 'linear_velocity_y', 'linear_velocity_z',
                                                   'angular_velocity_x', 'angular_velocity_y', 'angular_velocity_z',
-                                                  'acceleration_x', 'acceleration_y', 'acceleration_z',
-                                                  'speed'])
+                                                  'acceleration_x', 'acceleration_y', 'acceleration_z'])
     df.index.name = 'frame'
+    df['speed'] = 3.6 * (df['linear_velocity_x'] ** 2 + df['linear_velocity_y'] ** 2 + df['linear_velocity_z'] ** 2) ** 0.5
 
     Path("result").mkdir(parents=True, exist_ok=True)
-    df.to_csv('result/scenario001.csv', float_format = '%.2f')
+    df.to_csv('result/scenario001.csv', float_format='%.3f')
 
     destroy_actors(vehicle, camera)
     show_results(df)

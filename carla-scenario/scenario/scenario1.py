@@ -9,8 +9,6 @@ class Scenario1:
         self.mapName = "/Game/Carla/Maps/Town01_Opt"
         self.timeout = 20.0
 
-        print("init")
-
     def make_ego_vehicle(self, world) -> carla.Vehicle:
         # blueprint
         # start_tf

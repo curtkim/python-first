@@ -2,10 +2,10 @@ import carla
 from typing import List
 
 
-class Scenario2:
+class 편향주행1:
 
     def __init__(self):
-        self.description = "second scenario"
+        self.description = "자세한 설명을 적는다."
         self.mapName = "/Game/Carla/Maps/Town01_Opt"
         self.timeout = 15.0
 

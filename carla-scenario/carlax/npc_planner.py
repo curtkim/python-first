@@ -1,3 +1,5 @@
+from typing import Callable
+
 import carla
 import math
 import networkx as nx
@@ -98,7 +100,7 @@ def _create_speed_points_npc_planner_inner(points):
     return fun
 
 
-def create_speed_points_npc_planner(points, vehicle_pid_controller: VehiclePIDController):
+def create_speed_points_npc_planner(points, vehicle_pid_controller: VehiclePIDController) -> Callable:
     inner_fun = _create_speed_points_npc_planner_inner(points)
 
     def fun(curr_loc: carla.Location) -> carla.VehicleControl:

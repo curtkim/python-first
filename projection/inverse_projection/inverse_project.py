@@ -9,16 +9,9 @@ import moderngl_window as mglw
 from pyrr import Matrix44
 
 
-def make_pointcloud(rgb_file, depth_file):
-
-    # Load images
-    rgb = cv2.cvtColor(cv2.imread(rgb_file), cv2.COLOR_BGR2RGB)
-    rgb = rgb.astype('f4')/255                                      # int -> float
+def make_pointcloud_inner(rgb, depth):
     rgb_coords = np.transpose(rgb, (2,0,1)).reshape((3, -1))        # reshape (3, height*width)
     print(rgb_coords.shape)
-
-    # Depth is stored as float32 in meters
-    depth = cv2.imread(depth_file, cv2.IMREAD_ANYDEPTH)
 
     # Get intrinsic parameters
     height, width, _ = rgb.shape
@@ -43,11 +36,40 @@ def make_pointcloud(rgb_file, depth_file):
     all_coords = all_coords[:, np.where(all_coords[0] > -150)[0]]
 
     all_coords = all_coords.T.astype('f4').copy()
-    print(all_coords.shape)
+    print('all_coords.shape', all_coords.shape)
 
     return all_coords
 
-pc = make_pointcloud('rgb.png', 'depth.exr')
+
+def make_pointcloud(rgb_file, depth_file):
+
+    # Load images
+    rgb = cv2.cvtColor(cv2.imread(rgb_file), cv2.COLOR_BGR2RGB)
+    rgb = rgb.astype('f4')/255                                      # int -> float
+
+    # Depth is stored as float32 in meters
+    depth = cv2.imread(depth_file, cv2.IMREAD_ANYDEPTH)
+    print('depth.shape', depth.shape)    
+
+    return make_pointcloud_inner(rgb, depth)
+
+
+def make_pointcloud2(rgb_file, depth_file):
+
+    # Load images
+    rgb = cv2.cvtColor(cv2.imread(rgb_file), cv2.COLOR_BGR2RGB)
+    rgb = rgb.astype('f4')/255                                      # int -> float
+    print('rgb.shape', rgb.shape)    
+
+    # Depth is stored as float32 in meters
+    depth_file = np.load(depth_file)
+    depth = depth_file['depth']
+    print('depth.shape', depth.shape)    
+
+    return make_pointcloud_inner(rgb, depth[:rgb.shape[0],:rgb.shape[1]]) #TODO
+
+#pc = make_pointcloud('rgb.png', 'depth.exr')
+pc = make_pointcloud2('0000000000.png', '0000000000.npz')
 
 
 vertex_shader = '''

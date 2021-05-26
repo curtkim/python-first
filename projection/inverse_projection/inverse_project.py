@@ -8,6 +8,8 @@ import moderngl
 import moderngl_window as mglw
 from pyrr import Matrix44
 
+import open3d
+
 
 def make_pointcloud_inner(rgb, depth):
     rgb_coords = np.transpose(rgb, (2,0,1)).reshape((3, -1))        # reshape (3, height*width)
@@ -71,6 +73,11 @@ def make_pointcloud2(rgb_file, depth_file):
 #pc = make_pointcloud('rgb.png', 'depth.exr')
 pc = make_pointcloud2('0000000000.png', '0000000000.npz')
 
+point_cloud = open3d.geometry.PointCloud()
+
+point_cloud.points = open3d.utility.Vector3dVector(pc[:, 0:3])
+point_cloud.colors = open3d.utility.Vector3dVector(pc[:, 3:6])
+open3d.io.write_point_cloud("result.pcd", point_cloud)
 
 vertex_shader = '''
     #version 330

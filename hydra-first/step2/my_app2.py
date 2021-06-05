@@ -13,15 +13,14 @@ $ python my_app.py
 {}
 
 
-$ python my_app2.py db=postgres
+$ python my_app2.py +db=mysql
 db:
-  driver: postgresql
-  pass: drowssap
-  timeout: 10
-  user: postgre_user
+  driver: mysql
+  user: omry
+  pass: secret
 
 
-$ python my_app2.py db=postgres db.timeout=20
+$ python my_app2.py +db=postgres db.timeout=20
 db:
   driver: postgresql
   pass: drowssap

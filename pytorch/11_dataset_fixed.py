@@ -10,8 +10,8 @@ class MapDataset(Dataset):
         return 10
 
     def __getitem__(self, idx):
-        return {"input": torch.tensor([idx, 2 * idx, 3 * idx],dtype=torch.float32),
-                "label": torch.tensor(idx,dtype=torch.float32)}
+        return {"input": torch.tensor([idx, 2 * idx, 3 * idx], dtype=torch.float32),
+                "label": torch.tensor(idx, dtype=torch.float32)}
 
 map_dataset = MapDataset()
 
@@ -22,16 +22,16 @@ for data in dataloader:
 
 # batch_size
 print("--- batch_size")
-dataloader = torch.utils.data.DataLoader(map_dataset,batch_size=4)
+dataloader = torch.utils.data.DataLoader(map_dataset, batch_size=4)
 for data in dataloader:
-    print(data['input'].shape, data['label'])
+    print(data['label'], data['input'].shape)
 
 # sampler
 print("--- sampler")
 point_sampler = RandomSampler(map_dataset)
-dataloader = torch.utils.data.DataLoader(map_dataset,batch_size=4,sampler=point_sampler)
+dataloader = torch.utils.data.DataLoader(map_dataset, batch_size=4, sampler=point_sampler)
 for data in dataloader:
-    print(data['input'].shape, data['label'])
+    print(data['label'], data['input'].shape)
 
 # batch sampler
 print("--- batch sampler")
@@ -40,22 +40,3 @@ batch_sampler = BatchSampler(point_sampler, 3, False)
 dataloader = torch.utils.data.DataLoader(map_dataset, batch_sampler=batch_sampler)
 for data in dataloader:
     print(data['input'].shape, data['label'])
-
-
-print("--- variable length dataset")
-class VarMapDataset(Dataset):
-    def __len__(self):
-        return 10
-
-    def __getitem__(self, idx):
-        return {"input": torch.tensor([idx] * (idx + 1),dtype=torch.float32),
-                "label": torch.tensor(idx,dtype=torch.float32)}
-
-var_map_dataset = VarMapDataset()
-dataloader = torch.utils.data.DataLoader(var_map_dataset)
-for data in dataloader:
-    print(data['input'])
-
-# collate_fn
-print("--- collate_fn")
-

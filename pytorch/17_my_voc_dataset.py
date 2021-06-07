@@ -239,15 +239,10 @@ class VOCDataset:
             return False, []
 
 
-import argparse
-parser = argparse.ArgumentParser()
-parser.add_argument("--image_sets_file", default='/Volumes/ssd-tlr/VOCdevkit_tlr/pangyo_front_main/ImageSets/Main/2020-10-30_09-40.txt', type=str)
-parser.add_argument("--label_fn", default='TLR_labels_compact.txt', type=str)
-args = parser.parse_args()
-
-
 def test_VOCDataset():
-    dataset = VOCDataset(image_sets_file=args.image_sets_file, label_fn=args.label_fn)
+
+    dataset = VOCDataset(image_sets_file='/data/datasets/omega-tlr/pangyo_front_main/ImageSets/Main/all.txt',
+                         label_fn='/data/datasets/omega-tlr/TLR_labels_compact.txt')
     nSample = dataset.__len__()
     print("# of sample : "+str(nSample))
 
@@ -259,10 +254,18 @@ def test_VOCDataset():
 
     nboxes = 0
     for i in range(nSample):
-        print(i)
         image, boxes, labels = dataset.__getitem__(i)
+        print(i, image.shape, boxes, labels)
+        # image.shape
+        # (1080, 1920, 3)
+        # boxes
+        # [[801. 439. 815. 500.]
+        #  [405. 449. 423. 518.]
+        #  [145. 273. 214. 308.]
+        #  [  0. 249.  62. 288.]]
+        # labels
+        # [17 15  2  2]
         nboxes += boxes.shape[0]
-
 
         #cv2.imshow('image', image)
         #cv2.waitKey(cv2_wait_val)

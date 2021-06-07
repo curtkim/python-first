@@ -195,7 +195,7 @@ classes = [
 ]
 
 
-class myVOCDetection(VOCDetection):
+class MyVOCDetection(VOCDetection):
 
     def __getitem__(self, index):
         img = np.array(Image.open(self.images[index]).convert('RGB'))
@@ -233,7 +233,7 @@ def show(img, targets, labels, classes=classes):
 
         color = [int(c) for c in colors[id_]]
         name = classes[id_]
-
+        #print(bbox[0], bbox[1], bbox[2], bbox[3])
         draw.rectangle(((bbox[0], bbox[1]), (bbox[2], bbox[3])), outline=tuple(color), width=3)
         draw.text((bbox[0], bbox[1]), name, fill=(255, 255, 255, 0))
     plt.imshow(np.array(img))
@@ -243,7 +243,7 @@ def show(img, targets, labels, classes=classes):
 if __name__ == '__main__':
 
     # train, validation dataset을 생성합니다.
-    train_ds = myVOCDetection(path2data, year='2012', image_set='train', download=False)
+    train_ds = MyVOCDetection(path2data, year='2012', image_set='train', download=False)
 
     # 샘플 이미지 확인
     img, target, label = train_ds[2]

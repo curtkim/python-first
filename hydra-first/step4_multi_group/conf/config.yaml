@@ -2,3 +2,5 @@ defaults:
   - db: mysql
   - ui: full
   - schema: school
+
+localhost: 127.0.0.1

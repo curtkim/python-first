@@ -1,4 +1,4 @@
-# @package _group_
+host: ${localhost}
 driver: mysql
 user: omry
 pass: secret

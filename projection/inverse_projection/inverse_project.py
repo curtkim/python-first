@@ -12,7 +12,7 @@ import open3d
 
 
 def make_pointcloud_inner(rgb, depth):
-    rgb_coords = np.transpose(rgb, (2,0,1)).reshape((3, -1))        # reshape (3, height*width)
+    rgb_coords = np.transpose(rgb, (2, 0, 1)).reshape((3, -1))        # reshape (3, height*width)
     print(rgb_coords.shape)
 
     # Get intrinsic parameters
@@ -28,8 +28,8 @@ def make_pointcloud_inner(rgb, depth):
 
     # Limit points to 150m in the z-direction for visualisation
     cam_coords[[0,1,2]] = cam_coords[[2,0,1]]  # x,y,z축을 바꾼다.
-    cam_coords[2,:] = cam_coords[2,:]*-1 # z축을 뒤집는
-    cam_coords[0,:] = cam_coords[0,:]*-1 # x축을 뒤집는
+    cam_coords[2,:] = cam_coords[2, :]*-1 # z축을 뒤집는
+    cam_coords[0,:] = cam_coords[0, :]*-1 # x축을 뒤집는
 
     #aabb = pyrr.aabb.create_from_points(cam_coords)
     #print(cam_coords.shape, aabb)
@@ -72,12 +72,23 @@ def make_pointcloud2(rgb_file, depth_file):
 
 #pc = make_pointcloud('rgb.png', 'depth.exr')
 pc = make_pointcloud2('0000000000.png', '0000000000.npz')
+print(pc.shape, pc.dtype)
+print(pc[1])
 
 point_cloud = open3d.geometry.PointCloud()
 
 point_cloud.points = open3d.utility.Vector3dVector(pc[:, 0:3])
 point_cloud.colors = open3d.utility.Vector3dVector(pc[:, 3:6])
-open3d.io.write_point_cloud("result.pcd", point_cloud)
+open3d.io.write_point_cloud("result.pcd", point_cloud)          # ,write_ascii=True
+
+'''
+point_cloud = open3d.io.read_point_cloud("result.pcd")
+xyz = np.asarray(point_cloud.points)
+colors = np.asarray(point_cloud.colors)
+pc = np.hstack((xyz, colors)).astype('f4')
+print(pc.shape, pc.dtype)
+print(pc[1])
+'''
 
 vertex_shader = '''
     #version 330

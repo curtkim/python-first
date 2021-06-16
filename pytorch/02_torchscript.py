@@ -9,4 +9,4 @@ print(img.shape)
 
 scripted_model = torch.jit.script(model)
 print(scripted_model.code)
-scripted_model.save('fasterrcnn_resnet50_fpn.pt')
+#scripted_model.save('fasterrcnn_resnet50_fpn.pt')

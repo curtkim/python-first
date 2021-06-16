@@ -1,0 +1,4 @@
+bond:
+  _target_: user.User
+  name: Bond
+  age: 7

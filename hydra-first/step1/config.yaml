@@ -2,3 +2,13 @@ db:
   driver: mysql
   user: omry
   pass: secret
+  tables: 
+    - a
+    - b
+    - c
+    - d
+    - e
+  mappings: 
+    a: 1
+    b: 2
+    c: 3

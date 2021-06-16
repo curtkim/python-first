@@ -1,0 +1,4 @@
+host: ${localhost}
+driver: mysql
+user: omry
+pass: secret

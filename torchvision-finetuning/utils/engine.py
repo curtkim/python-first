@@ -24,10 +24,20 @@ def train_one_epoch(model, optimizer, data_loader, device, epoch, print_freq):
         lr_scheduler = utils.warmup_lr_scheduler(optimizer, warmup_iters, warmup_factor)
 
     for images, targets in metric_logger.log_every(data_loader, print_freq, header):
+        #print(type(images), type(targets))         # tuple, tuple
         images = list(image.to(device) for image in images)
         targets = [{k: v.to(device) for k, v in t.items()} for t in targets]
 
+        #print(type(images), type(targets))         # list, list
+        #print(images[0].shape, targets[0].keys())  # [3, 375, 428], dict_keys([boxes, labels, masks, image_id, area, iscrowd])
         loss_dict = model(images, targets)
+        #print(loss_dict.keys())                    # loss_classifier, loss_box_reg, loss_mast, loss_objectness, loss_rpn_box_reg
+        #print(loss_dict)
+        # 'loss_classifier': tensor(0.7719, grad_fn= < NllLossBackward >),
+        # 'loss_box_reg': tensor(0.3604,grad_fn= < DivBackward0 >),
+        # 'loss_mask': tensor(2.6177, grad_fn= < BinaryCrossEntropyWithLogitsBackward >),
+        # 'loss_objectness': tensor(0.0138,grad_fn= < BinaryCrossEntropyWithLogitsBackward >),
+        # 'loss_rpn_box_reg': tensor(0.0060, grad_fn= < DivBackward0 >)}
 
         losses = sum(loss for loss in loss_dict.values())
 
@@ -42,6 +52,7 @@ def train_one_epoch(model, optimizer, data_loader, device, epoch, print_freq):
             print(loss_dict_reduced)
             sys.exit(1)
 
+        # 역전파 단계를 실행하기 전에 변화도(gradient)를 0으로 만듭니다.
         optimizer.zero_grad()
         losses.backward()
         optimizer.step()

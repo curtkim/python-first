@@ -1,5 +1,5 @@
 server:
   ip: "127.0.0.1"
   port: ???       # Missing value. Must be provided at command line
-  address: "${server.ip}:${server.port}" # String interpolation
+  address: "${server.ip}:${server.port}" # String step6_interpolation
 

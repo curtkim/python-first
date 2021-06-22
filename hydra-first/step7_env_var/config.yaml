@@ -1,0 +1,4 @@
+db:
+  driver: mysql
+  user: ${oc.env:USER}
+  pass: secret

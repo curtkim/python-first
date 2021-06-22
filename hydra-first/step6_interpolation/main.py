@@ -1,8 +1,8 @@
 import hydra
-import logging
 from omegaconf import DictConfig, OmegaConf
 
-@hydra.main(config_name="config")
+
+@hydra.main(config_path=".", config_name="config")
 def main_func(cfg: DictConfig):
     server_address = cfg.server.address
     print(f"The server address = {server_address}")

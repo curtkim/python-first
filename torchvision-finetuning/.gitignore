@@ -1,1 +1,3 @@
 *.pth
+lightning_logs
+

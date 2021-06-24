@@ -1,2 +1,6 @@
 lightning_logs
 MNIST
+logs
+*.gz
+cifar-10-batches-py
+

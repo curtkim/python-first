@@ -26,3 +26,6 @@ if __name__ == "__main__":
     numpy_image = np.random.randint(0, 256, size=(100, 100, 3), dtype=np.uint8)
     mlflow.log_image(numpy_image, "numpy_image.png")
 
+    artifact_uri = mlflow.get_artifact_uri(artifact_path="numpy_image.png")
+    print("Artifact uri: {}".format(artifact_uri))
+

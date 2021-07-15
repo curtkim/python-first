@@ -48,10 +48,11 @@ def make_pointcloud(rgb_file, depth_file):
     # Load images
     rgb = cv2.cvtColor(cv2.imread(rgb_file), cv2.COLOR_BGR2RGB)
     rgb = rgb.astype('f4')/255                                      # int -> float
+    print('rgb.shape', rgb.shape)                                   # (768, 1024, 3)
 
     # Depth is stored as float32 in meters
     depth = cv2.imread(depth_file, cv2.IMREAD_ANYDEPTH)
-    print('depth.shape', depth.shape)    
+    print('depth.shape', depth.shape)                               # (768, 1024)   grayscale
 
     return make_pointcloud_inner(rgb, depth)
 
@@ -61,19 +62,19 @@ def make_pointcloud2(rgb_file, depth_file):
     # Load images
     rgb = cv2.cvtColor(cv2.imread(rgb_file), cv2.COLOR_BGR2RGB)
     rgb = rgb.astype('f4')/255                                      # int -> float
-    print('rgb.shape', rgb.shape)    
+    print('rgb.shape', rgb.shape)                                   # (375, 1242, 3) H W C
 
     # Depth is stored as float32 in meters
     depth_file = np.load(depth_file)
     depth = depth_file['depth']
-    print('depth.shape', depth.shape)    
+    print('depth.shape', depth.shape)                               # (384, 1280)
 
     return make_pointcloud_inner(rgb, depth[:rgb.shape[0],:rgb.shape[1]]) #TODO
 
 #pc = make_pointcloud('rgb.png', 'depth.exr')
 pc = make_pointcloud2('0000000000.png', '0000000000.npz')
-print(pc.shape, pc.dtype)
-print(pc[1])
+print(pc.shape, pc.dtype)   # (463967, 6) float32
+print(pc[1])                
 
 point_cloud = open3d.geometry.PointCloud()
 
@@ -187,3 +188,4 @@ class MyExample(mglw.WindowConfig):
 
 if __name__ == '__main__':
     mglw.run_window_config(MyExample)
+

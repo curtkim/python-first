@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from threading import Thread
@@ -9,6 +10,7 @@ except ImportError:
     import _thread as thread
 
 
+# multithread환경에서 문제가 되지 않는 이유는 Python GIL(Global Interpreter Lock) 때문인것 같다.
 global ws
 new_messages = []
 

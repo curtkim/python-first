@@ -19,3 +19,6 @@ def on_button_clicked():
 button.clicked.connect(on_button_clicked)
 button.show()
 app.exec_()
+
+# windows가 닫히고 실행된다.
+print('end')

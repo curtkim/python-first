@@ -8,7 +8,7 @@ button = QPushButton('클릭')
 # font.setPointSize(25)
 # button.setFont(font)
 
-button.setStyleSheet("font-size: 100px;")
+button.setStyleSheet("font-size: 100px; font-weight: bold;")
 #button.setFont(QFont('Times', 25))
 
 def on_button_clicked():

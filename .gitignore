@@ -4,4 +4,4 @@ __pycache__
 temp_*
 .ipynb_checkpoints
 **/*.pt
-
+*.log

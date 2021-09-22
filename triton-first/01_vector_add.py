@@ -51,5 +51,3 @@ zb = add(x, y)
 print(za)
 print(zb)
 print(f'The maximum difference between torch and triton is ' f'{torch.max(torch.abs(za - zb))}')
-
-

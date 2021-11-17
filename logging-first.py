@@ -10,3 +10,6 @@ logging.basicConfig(
 )
 
 logging.info('Useful message')
+logging.info('variable %s', 'abc')
+logging.info('variable %d', 123)
+

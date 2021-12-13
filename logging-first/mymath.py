@@ -1,6 +1,6 @@
 import logging
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)    # __name__ == 'mymath'
 logger.propagate = False
 
 formatter = logging.Formatter('%(asctime)s:%(module)s:%(levelname)s:%(message)s', '%Y-%m-%d %H:%M:%S')

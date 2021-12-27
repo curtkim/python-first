@@ -5,3 +5,5 @@ temp_*
 .ipynb_checkpoints
 **/*.pt
 *.log
+*.log.*
+

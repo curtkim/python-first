@@ -15,12 +15,13 @@ dependencies = [
     "requests>=2.28.2",
     "flask>=1.0",
     "flask-sqlalchemy>=3.0.3",
-    "torch>=2.0.0",
+    "torch>=2.1.0",
+    "numpy>=1.26.1",
 ]
-requires-python = ">=3.11"
+requires-python = "==3.11.0"
 license = {text = "MIT"}
 
 [[tool.pdm.source]]
 type = "find_links"
-url = "https://download.pytorch.org/whl/cu118"
+url = "https://download.pytorch.org/whl/cu121"
 name = "torch"

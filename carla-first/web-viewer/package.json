@@ -15,7 +15,7 @@
     "@deck.gl/layers": "^8.2.2",
     "core-js": "^3.6.5",
     "element-ui": "^2.13.2",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.7",
     "vue": "^2.6.11"
   },
   "devDependencies": {
